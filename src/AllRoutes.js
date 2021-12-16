@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar";
 import CreatePost from "./components/screens/CreatePost";
 
 const AllRoutes = () => (
-  <BrowserRouter>
+  <div>
     <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
@@ -17,7 +17,7 @@ const AllRoutes = () => (
       <Route path="/profile" element={<Profile />} />
       <Route path="/create" element={<CreatePost />} />
     </Routes>
-  </BrowserRouter>
+  </div>
 );
 
 export default AllRoutes;

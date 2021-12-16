@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../Constants";
 const Signup = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,9 +21,11 @@ const Signup = () => {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          return alert("successfully signed up");
+          alert("successfully signed up");
+          navigate("/");
+        } else {
+          return response.json();
         }
-        return response.json();
       })
       .then((res) => {
         console.log(res);
