@@ -5,6 +5,7 @@ import Signin from "./components/screens/Signin";
 import Signup from "./components/screens/Signup";
 import Profile from "./components/screens/Profile";
 import Navbar from "./components/Navbar";
+import CreatePost from "./components/screens/CreatePost";
 
 const AllRoutes = () => (
   <BrowserRouter>
@@ -14,6 +15,7 @@ const AllRoutes = () => (
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/create" element={<CreatePost />} />
     </Routes>
   </BrowserRouter>
 );
