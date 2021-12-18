@@ -1,67 +1,128 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL } from "../../Constants";
-const Signup = () => {
+import { API_URL, axiosInstance } from "../../Constants";
+import { UserContext } from "../../App";
+import {
+  CustomButton,
+  Input,
+  LoginCard,
+  MainTitle,
+  RootContainer,
+  SubTitle,
+} from "./loginStyle/loginStyle";
+import { Divider } from "@mui/material";
+import axios from "axios";
+const Signin = () => {
+  const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  const postData = () => {
-    console.log({ name, email, password });
-    console.log(JSON.stringify({ name, email, password }));
+  useEffect(() => {
+    if (email && password.length > 7) {
+      setIsDisabled(false);
+    }
+  }, [email, password]);
 
-    fetch(`${API_URL}/signup`, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, password }),
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          alert("successfully signed up");
-          navigate("/");
-        } else {
-          return response.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        alert(res.error);
-      })
-      .catch((error) => {
-        alert(error);
-        console.error("Error:", error);
+  const submitHandler = async () => {
+    try {
+      const response = await axios.post(`${API_URL}/signup`, {
+        email,
+        password,
+        fullName,
+        userName,
       });
+      if (response.status === 201) {
+        alert("successfully signed in");
+        sessionStorage.setItem("token", response.token);
+        sessionStorage.setItem("user", response.user);
+        dispatch({ type: "USER", payload: response.user });
+        navigate("/");
+        setEmail("");
+        setPassword("");
+      } else {
+        alert("unable to signin");
+        throw new Error("Could not log in");
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
+
   return (
-    <div className="mycard">
-      <div className="card auth-card">
-        <h2>Instagram</h2>
-        <input
-          type="text"
-          placeholder="name"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="email"
+    <RootContainer>
+      <LoginCard top>
+        <MainTitle>Instagram</MainTitle>
+        <SubTitle>Sign up to see photos and videos from your friends.</SubTitle>
+        <CustomButton
+          style={{ fontSize: "1.1rem" }}
+          fullWidth
+          variant="contained"
+          color="primary"
+        >
+          <i class="fab fa-facebook-square"></i>
+          <span style={{ fontSize: "1rem", marginLeft: 10 }}>
+            Log in with Facebook
+          </span>
+        </CustomButton>
+        <Divider style={{ margin: "5px 0" }}>OR</Divider>
+        <Input
+          type="email"
+          placeholder="Mobile number or email address"
+          value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <input
+        <Input
           type="text"
-          placeholder="password"
+          placeholder="Full Name"
+          value={fullName || ""}
+          onChange={(e) => setFullName(e.target.value)}
+        />
+        <Input
+          type="text"
+          placeholder="Username"
+          value={userName || ""}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+        <Input
+          type="password"
+          placeholder="Password"
+          value={password || ""}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={postData}>Sign up</button>
-        <h5>
-          <Link to="/signin">Already have an account?</Link>
-        </h5>
-      </div>
-    </div>
+        <CustomButton
+          disabled={isDisabled}
+          style={{ margin: "10px 0" }}
+          fullWidth
+          color="primary"
+          variant="contained"
+          onClick={submitHandler}
+        >
+          Log in
+        </CustomButton>
+        <p style={{ textAlign: "center" }}>Forgetten your password?</p>
+      </LoginCard>
+      <LoginCard bottom>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "2%",
+            fontSize: "1.2rem",
+          }}
+        >
+          <span>Have an account?</span>
+          <span style={{ color: "#0095f6" }}>
+            <Link to="/signin">Log in</Link>
+          </span>
+        </div>
+      </LoginCard>
+    </RootContainer>
   );
 };
 
-export default Signup;
+export default Signin;
