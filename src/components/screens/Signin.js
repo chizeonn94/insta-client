@@ -19,18 +19,18 @@ const Signin = () => {
       .then((response) => {
         console.log(response);
         if (response.status === 201) {
-          alert("successfully signed in");
-          navigate("/");
+          alert("successfully signed in!");
         } else {
           alert("unable to signin");
         }
         return response.json();
       })
       .then((data) => {
-        console.log("data >>", data);
+        // console.log("data >>", data);
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("user", data.user);
         dispatch({ type: "USER", payload: data.user });
+        navigate("/");
       })
       .catch((error) => {
         alert(error);
