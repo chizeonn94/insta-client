@@ -10,7 +10,7 @@ const Profile = () => {
     console.log(state);
     if (sessionStorage.getItem("token")) {
       fetchWithAuth(`${API_URL}/allpost`).then((data) => {
-        //console.log(data);
+        console.log(data);
         setData(data.posts);
       });
     }
@@ -47,9 +47,8 @@ const Profile = () => {
         </div>
       </div>
       <div className={"gallery"}>
-        {data.map((post) => (
-          <img className={"item"} src={post.photo} />
-        ))}
+        {data?.length > 0 &&
+          data?.map((post) => <img className={"item"} src={post.photo} />)}
       </div>
     </div>
   );
