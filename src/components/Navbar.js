@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 const Navbar = () => {
   const { state, dispatch } = useContext(UserContext);
+  const logout = () => {
+    sessionStorage.clear();
+    dispatch({ type: "CLEAR" });
+  };
   const renderList = () => {
     if (state) {
       return [
@@ -12,6 +16,9 @@ const Navbar = () => {
         </li>,
         <li>
           <Link to="/create">Create </Link>
+        </li>,
+        <li>
+          <button onClick={logout}>Logout </button>
         </li>,
       ];
     } else {

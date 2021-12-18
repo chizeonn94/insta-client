@@ -5,7 +5,10 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+<<<<<<< HEAD
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
+=======
+>>>>>>> 552c7b63caecd724ab06549db3593a450511f8bf
     "@mui/material": "^5.2.4",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",

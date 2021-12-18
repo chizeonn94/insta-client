@@ -1,29 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../App";
 import { API_URL, axiosInstance } from "../../Constants";
 
 const Home = () => {
   const [data, setData] = useState("");
+  const { state, dispatch } = useContext(UserContext);
+  const getAllPost = async (url) => {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      //mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sessionStorage.getItem("token"),
+      },
+      redirect: "follow", // manual, *follow, error
+      //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      // body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  };
 
   useEffect(() => {
-    axiosInstance
-      .get(`${API_URL}/allpost`)
-      .then(function (response) {
-        // handle success
-
-        setData(response.data.posts);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
+    console.log("state>>.", state);
+    if (sessionStorage.getItem("token")) {
+      getAllPost(`${API_URL}/allpost`).then((data) => {
+        setData(data.posts);
       });
+    }
   }, []);
   return (
     <div className="home">
-      {data?.length > 0 &&
-        data.map((post, i) => {
+      {state &&
+        data?.length > 0 &&
+        data.map((post) => {
           return (
             <div className="card home-card" key={post._id}>
               <h5>{post.title}</h5>
