@@ -18,7 +18,6 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
 
-<<<<<<< HEAD
   useEffect(() => {
     if (email && password.length > 7) {
       setIsDisabled(false);
@@ -30,35 +29,6 @@ const Signin = () => {
       const response = await axios.post(`${API_URL}/signin`, {
         email,
         password,
-=======
-  const postData = () => {
-    fetch(`${API_URL}/signin`, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          alert("successfully signed in!");
-        } else {
-          alert("unable to signin");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // console.log("data >>", data);
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("user", data.user);
-        dispatch({ type: "USER", payload: data.user });
-        navigate("/");
-      })
-      .catch((error) => {
-        alert(error);
-        console.error("Error:", error);
->>>>>>> 552c7b63caecd724ab06549db3593a450511f8bf
       });
       if (response.status === 201) {
         alert("successfully signed in");
