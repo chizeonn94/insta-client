@@ -31,13 +31,10 @@ const Signin = () => {
         password,
       });
       if (response.status === 201) {
-        console.log(response);
-        console.log(JSON.parse(response.data.user));
-
         alert("successfully signed in");
         sessionStorage.setItem("token", response.data.token);
         sessionStorage.setItem("user", response.data.user);
-        dispatch({ type: "USER", payload: response.user });
+        dispatch({ type: "USER", payload: JSON.parse(response.data.user) });
         navigate("/");
         setEmail("");
         setPassword("");
