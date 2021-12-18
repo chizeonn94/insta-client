@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../App";
 import { API_URL, axiosInstance } from "../../Constants";
 
 const Home = () => {
   const [data, setData] = useState("");
-
-  const postData = async (url) => {
+  const { state, dispatch } = useContext(UserContext);
+  const getAllPost = async (url) => {
     // Default options are marked with *
     const response = await fetch(url, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -23,16 +24,18 @@ const Home = () => {
   };
 
   useEffect(() => {
+    console.log("state>>.", state);
     if (sessionStorage.getItem("token")) {
-      postData(`${API_URL}/allpost`).then((data) => {
+      getAllPost(`${API_URL}/allpost`).then((data) => {
         setData(data.posts);
       });
     }
   }, []);
   return (
     <div className="home">
-      {data?.length > 0 &&
-        data.map((post, i) => {
+      {state &&
+        data?.length > 0 &&
+        data.map((post) => {
           return (
             <div className="card home-card" key={post._id}>
               <h5>{post.title}</h5>
