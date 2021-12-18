@@ -31,9 +31,12 @@ const Signin = () => {
         password,
       });
       if (response.status === 201) {
+        console.log(response);
+        console.log(JSON.parse(response.data.user));
+
         alert("successfully signed in");
-        sessionStorage.setItem("token", response.token);
-        sessionStorage.setItem("user", response.user);
+        sessionStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("user", response.data.user);
         dispatch({ type: "USER", payload: response.user });
         navigate("/");
         setEmail("");
@@ -53,12 +56,14 @@ const Signin = () => {
         <MainTitle>Instagram</MainTitle>
         <Input
           type="email"
+          autocomplete="off"
           placeholder="Phone number, username or email address"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
         />
         <Input
           type="password"
+          autocomplete="off"
           placeholder="Password"
           value={password || ""}
           onChange={(e) => setPassword(e.target.value)}
@@ -84,7 +89,7 @@ const Signin = () => {
             fontSize: "1.2rem",
           }}
         >
-          <i class="fab fa-facebook-square"></i>
+          <i className="fab fa-facebook-square"></i>
           <span>Log in with Facebook</span>
         </div>
         <p style={{ textAlign: "center" }}>Forgetten your password?</p>

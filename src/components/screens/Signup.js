@@ -63,7 +63,7 @@ const Signin = () => {
           variant="contained"
           color="primary"
         >
-          <i class="fab fa-facebook-square"></i>
+          <i className="fab fa-facebook-square"></i>
           <span style={{ fontSize: "1rem", marginLeft: 10 }}>
             Log in with Facebook
           </span>
