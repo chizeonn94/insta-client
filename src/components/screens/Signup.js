@@ -35,12 +35,11 @@ const Signin = () => {
         fullName,
         userName,
       });
+      console.log("signup res ", response);
       if (response.status === 201) {
-        alert("successfully signed in");
-        sessionStorage.setItem("token", response.token);
-        sessionStorage.setItem("user", response.user);
-        dispatch({ type: "USER", payload: response.user });
-        navigate("/");
+        alert("successfully signed up");
+
+        navigate("/signin");
         setEmail("");
         setPassword("");
       } else {
@@ -48,7 +47,7 @@ const Signin = () => {
         throw new Error("Could not log in");
       }
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 
@@ -101,7 +100,7 @@ const Signin = () => {
           variant="contained"
           onClick={submitHandler}
         >
-          Log in
+          Sign up
         </CustomButton>
         <p style={{ textAlign: "center" }}>Forgetten your password?</p>
       </LoginCard>
