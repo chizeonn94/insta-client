@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-export const API_URL = "http://localhost:3000";
+export const API_URL = "https://instagram-clone-leah.herokuapp.com/";
 export const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 1000 * 30,
