@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-import { API_URL, axiosInstance, GetfetchWithAuth } from "../../Constants";
+import {
+  API_URL,
+  axiosInstance,
+  DEFAULT_IMG,
+  GetfetchWithAuth,
+} from "../../Constants";
 
 const Home = () => {
   const [data, setData] = useState("");
@@ -10,6 +15,7 @@ const Home = () => {
     // console.log("state>>.", state);
     if (sessionStorage.getItem("token")) {
       GetfetchWithAuth(`/allpost`).then((data) => {
+        //console.log(data);
         setData(data.posts);
       });
     }
@@ -21,6 +27,13 @@ const Home = () => {
         data.map((post) => {
           return (
             <div className="card home-card" key={post._id}>
+              <div style={{ display: "flex" }}>
+                <img
+                  src={post.postedBy.photo || DEFAULT_IMG}
+                  style={{ width: 50, height: 50, borderRadius: "50%" }}
+                />
+                <h5>{post.postedBy.userName}</h5>
+              </div>
               <h5>{post.title}</h5>
               <div className="card-image">
                 <img src={post.photo} />

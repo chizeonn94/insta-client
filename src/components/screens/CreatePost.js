@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL, API_URL2 } from "../../Constants";
+import { API_URL, API_URL2, CLOUD_API } from "../../Constants";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const CreatePost = () => {
     if (!title || !body || !file) {
       return alert("please add all the fields");
     }
-    fetch("https://api.cloudinary.com/v1_1/leah-instagram/image/upload", {
+    fetch(CLOUD_API, {
       method: "POST", // or 'PUT'
       body: data,
     })
