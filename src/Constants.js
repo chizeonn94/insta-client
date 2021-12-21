@@ -1,6 +1,8 @@
 const axios = require("axios");
 
 export const API_URL = "https://instagram-clone-leah.herokuapp.com";
+export const API_URL2 = "http://localhost:5000";
+
 export const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 1000 * 30,
@@ -12,7 +14,7 @@ export const axiosInstance = axios.create({
   },
 });
 
-export const fetchWithAuth = async (url) => {
+export const GetfetchWithAuth = async (url) => {
   // Default options are marked with *
   const response = await fetch(url, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -21,7 +23,7 @@ export const fetchWithAuth = async (url) => {
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: sessionStorage.getItem("token"),
+      authorization: sessionStorage.getItem("token"),
     },
     redirect: "follow", // manual, *follow, error
     //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url

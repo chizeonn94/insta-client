@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-import { API_URL, axiosInstance, fetchWithAuth } from "../../Constants";
+import { API_URL, axiosInstance, GetfetchWithAuth } from "../../Constants";
 
 const Home = () => {
   const [data, setData] = useState("");
@@ -9,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     // console.log("state>>.", state);
     if (sessionStorage.getItem("token")) {
-      fetchWithAuth(`${API_URL}/allpost`).then((data) => {
+      GetfetchWithAuth(`${API_URL}/allpost`).then((data) => {
         setData(data.posts);
       });
     }

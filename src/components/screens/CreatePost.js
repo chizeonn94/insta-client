@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL } from "../../Constants";
+import { API_URL, API_URL2 } from "../../Constants";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -9,16 +9,16 @@ const CreatePost = () => {
   const [file, setFile] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
 
-  //@Abcd1234
+  //cloudinary
+  //id: 5959_jis@naver.com
+  //password : @Abcd1234
   const postDetails = () => {
     let data = new FormData();
     console.log("file", file instanceof File);
     data.append("file", file);
     data.append("upload_preset", "insta-clone");
     data.append("cloud_name", "leah-instagram");
-    console.log("data000", data);
-    console.log("data000", data.getAll("file"));
-    console.log("data000", data.getAll("upload-preset"));
+
     if (!title || !body || !file) {
       return alert("please add all the fields");
     }
@@ -29,27 +29,34 @@ const CreatePost = () => {
       .then((res) => res.json())
       .then(async (data) => {
         alert("success");
-        console.log(data.url);
+        console.log(data);
         await setPhotoUrl(data.url);
-        postData();
+        if (data.url) {
+          postData(data.url);
+        }
       })
       .catch((err) => {
         alert("fail");
         console.log(err);
       });
   };
-  const postData = () => {
+  const postData = (url) => {
+    if (!title || !body || !url) {
+      return alert("please add all the fields");
+    }
+    console.log({ title, body, photo: url });
     fetch(`${API_URL}/createpost`, {
       method: "POST", // or 'PUT'
+      //mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
-        authorization: sessionStorage.getItem("token"),
+        authorization: "Bearer " + sessionStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, body, photo: photoUrl }),
+      body: JSON.stringify({ title, body, photo: url }),
     })
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
+        if (response.status === 201) {
           alert("successfully posted");
           navigate("/");
         } else {
@@ -102,11 +109,7 @@ const CreatePost = () => {
           />
         </div>
 
-        <button
-          className="btn waves-effect waves-light"
-          onClick={postDetails}
-          s
-        >
+        <button className="btn waves-effect waves-light" onClick={postDetails}>
           Submit Post
         </button>
       </div>

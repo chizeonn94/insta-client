@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-import { API_URL, fetchWithAuth } from "../../Constants";
+import { API_URL, GetfetchWithAuth } from "../../Constants";
 
 const Profile = () => {
   const { state, dispatch } = useContext(UserContext);
@@ -9,9 +9,9 @@ const Profile = () => {
   useEffect(() => {
     console.log(state);
     if (sessionStorage.getItem("token")) {
-      fetchWithAuth(`${API_URL}/allpost`).then((data) => {
+      GetfetchWithAuth(`${API_URL}/mypost`).then((data) => {
         console.log(data);
-        setData(data.posts);
+        setData(data.myPosts);
       });
     }
   }, []);
@@ -40,15 +40,18 @@ const Profile = () => {
               width: "108 %",
             }}
           >
-            <h5>{data.length}posts</h5>
+            <h5>{data?.length}posts</h5>
             <h5>40 followers</h5>
             <h5>40 following</h5>
           </div>
+          {/* <button onClick={}>edit profile</button> */}
         </div>
       </div>
       <div className={"gallery"}>
         {data?.length > 0 &&
-          data?.map((post) => <img className={"item"} src={post.photo} />)}
+          data?.map((post) => (
+            <img key={post._id} className={"item"} src={post.photo} />
+          ))}
       </div>
     </div>
   );
