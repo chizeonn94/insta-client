@@ -2,7 +2,11 @@ const axios = require("axios");
 
 export const API_URL = "https://instagram-clone-leah.herokuapp.com";
 export const API_URL2 = "http://localhost:5000";
+export const CLOUD_API =
+  "https://api.cloudinary.com/v1_1/leah-instagram/image/upload";
 
+export const DEFAULT_IMG =
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 export const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 1000 * 30,
@@ -16,7 +20,7 @@ export const axiosInstance = axios.create({
 
 export const GetfetchWithAuth = async (url) => {
   // Default options are marked with *
-  const response = await fetch(url, {
+  const response = await fetch(API_URL2 + url, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     //mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

@@ -1,17 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { UserContext } from "../../App";
-import { API_URL, GetfetchWithAuth } from "../../Constants";
+import { API_URL, DEFAULT_IMG, GetfetchWithAuth } from "../../Constants";
 
 const Profile = () => {
   const { state, dispatch } = useContext(UserContext);
+  const [profilePic, setProfilePic] = useState("");
+  const navigate = useNavigate();
   const [data, setData] = useState("");
 
   useEffect(() => {
     console.log(state);
     if (sessionStorage.getItem("token")) {
-      GetfetchWithAuth(`${API_URL}/mypost`).then((data) => {
+      GetfetchWithAuth(`/mypost`).then((data) => {
         console.log(data);
         setData(data.myPosts);
+      });
+      GetfetchWithAuth(`/profile`).then((data) => {
+        console.log(data);
+        setProfilePic(data.userData.photo);
       });
     }
   }, []);
@@ -28,7 +35,7 @@ const Profile = () => {
         <div>
           <img
             style={{ width: 160, height: 160, borderRadius: "50%" }}
-            src={"https://img.hankyung.com/photo/201701/01.13096371.1.jpg"}
+            src={profilePic || DEFAULT_IMG}
           />
         </div>
         <div>
@@ -44,7 +51,13 @@ const Profile = () => {
             <h5>40 followers</h5>
             <h5>40 following</h5>
           </div>
-          {/* <button onClick={}>edit profile</button> */}
+          <button
+            onClick={() => {
+              navigate("/edit-profile");
+            }}
+          >
+            edit profile
+          </button>
         </div>
       </div>
       <div className={"gallery"}>

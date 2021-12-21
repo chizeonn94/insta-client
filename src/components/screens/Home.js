@@ -9,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     // console.log("state>>.", state);
     if (sessionStorage.getItem("token")) {
-      GetfetchWithAuth(`${API_URL}/allpost`).then((data) => {
+      GetfetchWithAuth(`/allpost`).then((data) => {
         setData(data.posts);
       });
     }
