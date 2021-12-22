@@ -22,7 +22,7 @@ const EditProfile = () => {
   const [photoUrl, setPhotoUrl] = useState("");
 
   useEffect(() => {
-    GetfetchWithAuth("/profile").then((res) => {
+    GetfetchWithAuth("/myprofile").then((res) => {
       console.log("profile", res);
       const userData = res.userData;
       setUserInfo(userData);

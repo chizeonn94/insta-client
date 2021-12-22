@@ -14,8 +14,8 @@ const Home = () => {
   useEffect(() => {
     // console.log("state>>.", state);
     if (sessionStorage.getItem("token")) {
-      GetfetchWithAuth(`/allpost`).then((data) => {
-        //console.log(data);
+      GetfetchWithAuth(`/getsubpost`).then((data) => {
+        console.log(data);
         setData(data.posts);
       });
     }

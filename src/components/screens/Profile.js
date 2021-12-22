@@ -16,7 +16,7 @@ const Profile = () => {
         console.log(data);
         setData(data.myPosts);
       });
-      GetfetchWithAuth(`/profile`).then((data) => {
+      GetfetchWithAuth(`/myprofile`).then((data) => {
         console.log(data);
         setProfilePic(data.userData.photo);
       });
