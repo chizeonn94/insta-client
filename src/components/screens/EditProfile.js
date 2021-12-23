@@ -63,7 +63,7 @@ const EditProfile = () => {
       });
   };
   const postData = (photoUrl) => {
-    fetch(`${API_URL2}/profile`, {
+    fetch(`${API_URL}/profile`, {
       method: "PUT", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
