@@ -39,31 +39,31 @@ const CreatePost = () => {
       });
   };
   const postData = () => {
-    fetch(`${API_URL}/createpost`, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-        authorization: sessionStorage.getItem("token"),
-      },
-      body: JSON.stringify({ title, body, photo: photoUrl }),
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          alert("successfully posted");
-          navigate("/");
-        } else {
-          return response.json();
-        }
-      })
-      // .then((res) => {
-      //   console.log(res);
-      //   alert(res.error);
-      // })
-      .catch((error) => {
-        alert(error);
-        console.error("Error:", error);
-      });
+    // fetch(`${API_URL}/createpost`, {
+    //   method: "POST", // or 'PUT'
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     authorization: sessionStorage.getItem("token"),
+    //   },
+    //   body: JSON.stringify({ title, body, photo: photoUrl }),
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (response.status === 200) {
+    //       alert("successfully posted");
+    //       navigate("/");
+    //     } else {
+    //       return response.json();
+    //     }
+    //   })
+    //   // .then((res) => {
+    //   //   console.log(res);
+    //   //   alert(res.error);
+    //   // })
+    //   .catch((error) => {
+    //     alert(error);
+    //     console.error("Error:", error);
+    //   });
   };
 
   return (

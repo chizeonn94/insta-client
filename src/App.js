@@ -18,7 +18,7 @@ function AllRoutes() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const user = sessionStorage.getItem("user");
     if (!user) {
       return navigate("/signin");
     }

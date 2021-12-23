@@ -29,7 +29,7 @@ const Signin = () => {
 
   const submitHandler = async () => {
     try {
-      const response = await axios.post(`${API_URL}/signup`, {
+      const response = await axiosInstance.post(`${API_URL}/signup`, {
         email,
         password,
         fullName,

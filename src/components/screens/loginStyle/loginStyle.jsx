@@ -28,7 +28,7 @@ flex-direction: column;
 export const MainTitle = styled.p`
 font-size: 3rem;
 text-align:center;
-font-family: dancing;
+font-family: "Grand Hotel";
 `;
 
 export const CustomButton = styled(Button)`
