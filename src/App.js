@@ -19,11 +19,11 @@ function AllRoutes() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const user = JSON.parse(sessionStorage.getItem("user"));
-    // if (!user) {
-    //   return navigate("/signin");
-    // }
-    // dispatch({ type: "USER", payload: user });
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    if (!user) {
+      return navigate("/signin");
+    }
+    dispatch({ type: "USER", payload: user });
   }, []);
   return (
     <div>
