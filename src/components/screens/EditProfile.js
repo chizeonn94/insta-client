@@ -58,7 +58,7 @@ const EditProfile = () => {
         }
       })
       .catch((err) => {
-        alert("fail");
+        alert("fail!");
         console.log(err);
       });
   };
