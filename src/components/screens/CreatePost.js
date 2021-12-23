@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL } from "../../Constants";
+import { API_URL, API_URL2, CLOUD_API } from "../../Constants";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -9,29 +9,31 @@ const CreatePost = () => {
   const [file, setFile] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
 
-  //@Abcd1234
+  //cloudinary
+  //id: 5959_jis@naver.com
+  //password : @Abcd1234
   const postDetails = () => {
     let data = new FormData();
     console.log("file", file instanceof File);
     data.append("file", file);
     data.append("upload_preset", "insta-clone");
     data.append("cloud_name", "leah-instagram");
-    console.log("data000", data);
-    console.log("data000", data.getAll("file"));
-    console.log("data000", data.getAll("upload-preset"));
+
     if (!title || !body || !file) {
       return alert("please add all the fields");
     }
-    fetch("https://api.cloudinary.com/v1_1/leah-instagram/image/upload", {
+    fetch(CLOUD_API, {
       method: "POST", // or 'PUT'
       body: data,
     })
       .then((res) => res.json())
       .then(async (data) => {
         alert("success");
-        console.log(data.url);
+        console.log(data);
         await setPhotoUrl(data.url);
-        postData();
+        if (data.url) {
+          postData(data.url);
+        }
       })
       .catch((err) => {
         alert("fail");
@@ -39,31 +41,31 @@ const CreatePost = () => {
       });
   };
   const postData = () => {
-    // fetch(`${API_URL}/createpost`, {
-    //   method: "POST", // or 'PUT'
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     authorization: sessionStorage.getItem("token"),
-    //   },
-    //   body: JSON.stringify({ title, body, photo: photoUrl }),
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response.status === 200) {
-    //       alert("successfully posted");
-    //       navigate("/");
-    //     } else {
-    //       return response.json();
-    //     }
-    //   })
-    //   // .then((res) => {
-    //   //   console.log(res);
-    //   //   alert(res.error);
-    //   // })
-    //   .catch((error) => {
-    //     alert(error);
-    //     console.error("Error:", error);
-    //   });
+    fetch(`${API_URL}/createpost`, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        authorization: sessionStorage.getItem("token"),
+      },
+      body: JSON.stringify({ title, body, photo: photoUrl }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          alert("successfully posted");
+          navigate("/");
+        } else {
+          return response.json();
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        alert(res.error);
+      })
+      .catch((error) => {
+        alert(error);
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -102,11 +104,7 @@ const CreatePost = () => {
           />
         </div>
 
-        <button
-          className="btn waves-effect waves-light"
-          onClick={postDetails}
-          s
-        >
+        <button className="btn waves-effect waves-light" onClick={postDetails}>
           Submit Post
         </button>
       </div>

@@ -10,6 +10,7 @@ import Signin from "./components/screens/Signin";
 import Signup from "./components/screens/Signup";
 import Profile from "./components/screens/Profile";
 import CreatePost from "./components/screens/CreatePost";
+import EditProfile from "./components/screens/EditProfile";
 
 export const UserContext = createContext();
 
@@ -32,6 +33,7 @@ function AllRoutes() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/create" element={<CreatePost />} />
       </Routes>
     </div>
