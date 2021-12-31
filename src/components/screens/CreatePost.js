@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL, API_URL2, CLOUD_API } from "../../Constants";
@@ -12,62 +13,35 @@ const CreatePost = () => {
   //cloudinary
   //id: 5959_jis@naver.com
   //password : @Abcd1234
-  const postDetails = () => {
+  const postDetails = async () => {
+    if (!title || !body || !file) {
+      return alert("please add all the fields");
+    }
     let data = new FormData();
     console.log("file", file instanceof File);
     data.append("file", file);
     data.append("upload_preset", "insta-clone");
     data.append("cloud_name", "leah-instagram");
 
-    if (!title || !body || !file) {
-      return alert("please add all the fields");
+    const response = await axios.post(CLOUD_API, data);
+    const resData = await response?.data;
+    const url = await resData?.url;
+    console.log("url", url);
+    setPhotoUrl(url);
+    if (url) {
+      const response = await axios.post(`${API_URL}/createpost`, {
+        title,
+        body,
+        photo: url,
+      });
+      if (response.status === 201) {
+        alert("succesfully posted");
+        navigate("/");
+      } else {
+        alert("something went wrong");
+      }
     }
-    fetch(CLOUD_API, {
-      method: "POST", // or 'PUT'
-      body: data,
-    })
-      .then((res) => res.json())
-      .then(async (data) => {
-        alert("success");
-        console.log(data);
-        await setPhotoUrl(data.url);
-        if (data.url) {
-          postData(data.url);
-        }
-      })
-      .catch((err) => {
-        alert("fail");
-        console.log(err);
-      });
   };
-  const postData = () => {
-    fetch(`${API_URL}/createpost`, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-        authorization: sessionStorage.getItem("token"),
-      },
-      body: JSON.stringify({ title, body, photo: photoUrl }),
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          alert("successfully posted");
-          navigate("/");
-        } else {
-          return response.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        alert(res.error);
-      })
-      .catch((error) => {
-        alert(error);
-        console.error("Error:", error);
-      });
-  };
-
   return (
     <div
       className="card input-field"

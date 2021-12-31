@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-export const API_URL2 = "https://instagram-clone-leah.herokuapp.com";
+// export const API_URL2 = "https://instagram-clone-leah.herokuapp.com";
 export const API_URL = "http://localhost:5000";
 export const CLOUD_API =
   "https://api.cloudinary.com/v1_1/leah-instagram/image/upload";

@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import styled from "styled-components";
 import { Avatar } from "@mui/material";
+import ProfilePopUp from "./profile/ProfilePopUp";
 const NavCover = styled.div`
   width: 100%;
   min-height: 5vh;
@@ -19,6 +20,7 @@ const RightButtonsCover = styled.div`
   display: flex;
   align-items: center;
   gap: 10%;
+  height: fit-content;
 `;
 const CustomLink = styled(Link)`
   font-size: 18px;
@@ -29,11 +31,13 @@ const CustomLink = styled(Link)`
 const Navbar = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext);
+  const [openPopUp, setOpenPopUp] = useState(false);
   const logout = () => {
     sessionStorage.clear();
     dispatch({ type: "CLEAR" });
     navigate("/signin");
   };
+
   const user = sessionStorage.getItem("user");
   return (
     <NavCover>
@@ -59,9 +63,7 @@ const Navbar = () => {
         <CustomLink to="/">
           <i class="far fa-heart"></i>
         </CustomLink>
-        <CustomLink to="/profile">
-          <Avatar sx={{ width: 24, height: 24 }} />
-        </CustomLink>
+        <ProfilePopUp />
       </RightButtonsCover>
     </NavCover>
   );
