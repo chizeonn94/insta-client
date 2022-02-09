@@ -11,6 +11,7 @@ import Signup from "./components/screens/Signup";
 import Profile from "./components/screens/Profile";
 import CreatePost from "./components/screens/CreatePost";
 import EditProfile from "./components/screens/EditProfile";
+import Chat from "./components/screens/chat/Chat";
 
 export const UserContext = createContext();
 
@@ -35,6 +36,7 @@ function AllRoutes() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/create" element={<CreatePost />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </div>
   );

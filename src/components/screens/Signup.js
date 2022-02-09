@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL, axiosInstance } from "../../Constants";
+import { API_URL, LOCAL_API, axiosInstance } from "../../Constants";
 import { UserContext } from "../../App";
 import {
   CustomButton,
@@ -29,7 +29,7 @@ const Signin = () => {
 
   const submitHandler = async () => {
     try {
-      const response = await axiosInstance.post(`${API_URL}/signup`, {
+      const response = await axiosInstance.post(`${LOCAL_API}/signup`, {
         email,
         password,
         fullName,

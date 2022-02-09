@@ -1,5 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 a {
   color: block;
+  text-decoration: none;
 }
 .mycard {
   margin-top: 30px;
@@ -24,4 +30,28 @@ a {
   max-width: 500px;
   height: max-content;
   margin: 26px auto;
+}
+.pointer {
+  cursor: pointer;
+}
+.flex {
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+}
+.width100 {
+  width: 100%;
+}
+.borderNone {
+  border: none;
+}
+.radius50 {
+  border-radius: 50%;
+}
+textarea:focus {
+  outline: none;
+}
+.overhidden {
+  overflow: hidden;
 }

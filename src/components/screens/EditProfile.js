@@ -1,3 +1,5 @@
+import { makeStyles } from "@mui/styles";
+import { TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -7,8 +9,13 @@ import {
   DEFAULT_IMG,
   GetfetchWithAuth,
 } from "../../Constants";
-
+const useStyles = makeStyles({
+  fieldName: { width: "30%", textAlign: "right", paddingRight: 12 },
+  inputDiv: { width: "70%" },
+  inputField: { width: "100%" },
+});
 const EditProfile = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     fullName: "",
@@ -107,41 +114,105 @@ const EditProfile = () => {
       }}
     >
       <h1>EditProfile</h1>
-      <input
-        type="text"
-        placeholder="full name"
-        name="fullName"
-        value={userInfo.fullName || ""}
-        onChange={changeInput}
-      />
-      <input
-        type="text"
-        placeholder="user name"
-        name="userName"
-        value={userInfo.userName || ""}
-        onChange={changeInput}
-      />
-      <input
-        type="text"
-        placeholder="website"
-        name="website"
-        value={userInfo.website || ""}
-        onChange={changeInput}
-      />
-      <input
-        type="text"
-        placeholder="bio"
-        name="bio"
-        value={userInfo.bio || ""}
-        onChange={changeInput}
-      />
-      <input
-        type="text"
-        placeholder="email"
-        name="email"
-        value={userInfo.email || ""}
-        onChange={changeInput}
-      />
+      <div className={"flex alignCenter"}>
+        <p>
+          <img />
+        </p>
+      </div>
+
+      <div className={"flex alignCenter"}>
+        <p className={classes.fieldName}>Name</p>
+        <div className={classes.inputDiv}>
+          <TextField
+            size={"small"}
+            type="text"
+            placeholder="full name"
+            name="fullName"
+            value={userInfo.fullName || ""}
+            onChange={changeInput}
+            className={classes.inputField}
+          />
+        </div>
+      </div>
+      <div className={"flex alignCenter"}>
+        <p className={classes.fieldName}></p>
+        <div className={classes.inputDiv}>
+          Help people discover your account by using the name that you're known
+          by: either your full name, nickname or business name. You can only
+          change your name twice within 14 days.
+        </div>
+      </div>
+      <div className={"flex alignCenter"}>
+        <p className={classes.fieldName}>Username</p>
+        <div className={classes.inputDiv}>
+          <TextField
+            size={"small"}
+            type="text"
+            placeholder="user name"
+            name="userName"
+            value={userInfo.userName || ""}
+            onChange={changeInput}
+            className={classes.inputField}
+          />
+        </div>
+      </div>
+      <div className={"flex alignCenter"}>
+        <p className={classes.fieldName}>Website</p>
+        <div className={classes.inputDiv}>
+          <TextField
+            size={"small"}
+            type="text"
+            placeholder="website"
+            name="website"
+            value={userInfo.website || ""}
+            onChange={changeInput}
+            className={classes.inputField}
+          />
+        </div>
+      </div>
+      <div className={"flex alignCenter"}>
+        <p className={classes.fieldName}>Bio</p>
+        <div className={classes.inputDiv}>
+          <TextField
+            size={"small"}
+            type="text"
+            placeholder="bio"
+            name="bio"
+            value={userInfo.bio || ""}
+            onChange={changeInput}
+            className={classes.inputField}
+          />
+        </div>
+      </div>
+      <div className={"flex alignCenter"}>
+        <p className={classes.fieldName}>Email address</p>
+        <div className={classes.inputDiv}>
+          <TextField
+            size={"small"}
+            type="text"
+            placeholder="email"
+            name="email"
+            value={userInfo.email || ""}
+            onChange={changeInput}
+            className={classes.inputField}
+          />
+        </div>
+      </div>
+      <div className={"flex alignCenter"}>
+        <p className={classes.fieldName}>Phone number</p>
+        <div className={classes.inputDiv}>
+          <TextField
+            size={"small"}
+            type="text"
+            placeholder="email"
+            name="email"
+            value={userInfo.email || ""}
+            onChange={changeInput}
+            className={classes.inputField}
+          />
+        </div>
+      </div>
+
       <div className="file-field input-field">
         <div className="btn">
           <span>My picture</span>

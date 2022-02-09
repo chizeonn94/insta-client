@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import styled from "styled-components";
-import { Avatar } from "@mui/material";
 import ProfilePopUp from "./profile/ProfilePopUp";
+import PostDialog from "./screens/PostDialog";
 const NavCover = styled.div`
   width: 100%;
   min-height: 5vh;
@@ -22,8 +22,8 @@ const RightButtonsCover = styled.div`
   gap: 10%;
   height: fit-content;
 `;
-const CustomLink = styled(Link)`
-  font-size: 18px;
+const CustomLink = styled.span`
+  font-size: 25px;
   color: black;
   font-size: 24px;
 `;
@@ -32,6 +32,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext);
   const [openPopUp, setOpenPopUp] = useState(false);
+  const [openPostDialog, setOpenPostDialog] = useState(false);
+
   const logout = () => {
     sessionStorage.clear();
     dispatch({ type: "CLEAR" });
@@ -49,21 +51,26 @@ const Navbar = () => {
       </LogoCover>
       <RightButtonsCover>
         <CustomLink to="/">
-          <i class="fas fa-home"></i>
+          <i className="fas fa-home pointer"></i>
         </CustomLink>
         <CustomLink to="/chat">
-          <i class="fab fa-telegram-plane"></i>
+          <i className="fab fa-telegram-plane pointer"></i>
         </CustomLink>
-        <CustomLink to="/create">
-          <i class="far fa-plus-square"></i>
-        </CustomLink>
-        <CustomLink to="/">
-          <i class="far fa-compass"></i>
+        <CustomLink to="/chat" onClick={() => setOpenPostDialog(true)}>
+          <i className="far fa-plus-square pointer"></i>
         </CustomLink>
         <CustomLink to="/">
-          <i class="far fa-heart"></i>
+          <i className="far fa-compass pointer"></i>
         </CustomLink>
-        <ProfilePopUp />
+        <CustomLink to="/">
+          <i className="far fa-heart pointer"></i>
+        </CustomLink>
+
+        <ProfilePopUp onClick={() => alert("hi")} />
+        <PostDialog
+          openPostDialog={openPostDialog}
+          setOpenPostDialog={setOpenPostDialog}
+        />
       </RightButtonsCover>
     </NavCover>
   );

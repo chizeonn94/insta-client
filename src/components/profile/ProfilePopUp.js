@@ -49,23 +49,26 @@ const FaceBookCard = styled.div`
 //   }
 // `;
 const ProfilePopUp = () => {
-  const [openPopUp, setOpenPopUp] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
-    setOpenPopUp(event.currentTarget);
+    setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    setOpenPopUp(null);
+    setAnchorEl(null);
   };
   const URL = "https://www.koreamedis.com/";
   return (
     <React.Fragment>
       <Avatar
-        onClick={() => setOpenPopUp(!openPopUp)}
+        className={"pointer"}
+        onClick={handleClick}
         sx={{ width: 24, height: 24 }}
       />
       <Menu
-        anchorEl={openPopUp}
-        open={openPopUp}
+        anchorEl={anchorEl}
+        open={open}
         onClose={handleClose}
         onClick={handleClose}
         PaperProps={{
@@ -101,14 +104,16 @@ const ProfilePopUp = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>Profile</MenuItem>
+        <MenuItem>
+          <a href="/profile">Profile</a>
+        </MenuItem>
         <MenuItem>
           {/* <InstaCard>
             <InstapaperShareButton url={URL} quote={'korea meds'} hashtag={'#hashtag'}>
               <i className="fab fa-instagram"></i>Instagram
             </InstapaperShareButton>
           </InstaCard> */}
-          Saved
+          <a href="/">Saved </a>
         </MenuItem>
         <MenuItem>
           {/* <TwitterCard>
@@ -116,10 +121,10 @@ const ProfilePopUp = () => {
               <i className="fab fa-twitter"></i>Twitter
             </TwitterShareButton>
           </TwitterCard> */}
-          Settings
+          <a href="/">Settings</a>
         </MenuItem>
         <MenuItem>
-          Switch accounts
+          <a href="/">Switch accounts</a>
           {/* <LinkCard>
             <LinkCover>
               <i className="fas fa-link"></i>
