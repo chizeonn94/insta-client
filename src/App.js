@@ -9,6 +9,7 @@ import Home from "./components/screens/Home";
 import Signin from "./components/screens/Signin";
 import Signup from "./components/screens/Signup";
 import Profile from "./components/screens/Profile";
+import Followers from "./components/screens/Followers";
 import CreatePost from "./components/screens/CreatePost";
 import EditProfile from "./components/screens/EditProfile";
 import Chat from "./components/screens/chat/Chat";
@@ -34,6 +35,7 @@ function AllRoutes() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/followers" element={<Followers />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/create" element={<CreatePost />} />
         <Route path="/chat" element={<Chat />} />

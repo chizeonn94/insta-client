@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #333;
 }
 a {
   color: block;
@@ -19,13 +20,18 @@ a {
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
 }
 
 .item {
-  width: 30%;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
 }
-
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .home-card {
   max-width: 500px;
   height: max-content;
@@ -43,6 +49,12 @@ a {
 .width100 {
   width: 100%;
 }
+.width50 {
+  width: 50%;
+}
+.padding12 {
+  padding: 12px;
+}
 .borderNone {
   border: none;
 }
@@ -54,4 +66,29 @@ textarea:focus {
 }
 .overhidden {
   overflow: hidden;
+}
+.bottom12 {
+  padding-bottom: 12px;
+}
+.none {
+  display: none;
+}
+.bold {
+  font-weight: bold;
+}
+.textCenter {
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .item {
+    width: 33.3vw;
+    height: 33.3vw;
+    overflow: hidden;
+  }
+  .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }

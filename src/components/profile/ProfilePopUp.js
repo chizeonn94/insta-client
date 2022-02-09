@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 // import { SocialSHareBtn } from './HospitalDetail';
 import styled from "styled-components";
 import { Avatar } from "@mui/material";
+import { DEFAULT_IMG, GetfetchWithAuth } from "../../Constants";
 // import { FacebookShareButton, InstapaperShareButton, TwitterShareButton } from 'react-share';
 
 const FaceBookCard = styled.div`
@@ -15,53 +16,34 @@ const FaceBookCard = styled.div`
   align-items: center;
   text-align: center;
 `;
-// const InstaCard = styled(FaceBookCard)`
-//   background-color: #fff;
-//   border: 1px solid #aaa;
-//   color: #aaa;
-//   & i {
-//     margin-right: 4px;
-//     color: #f05930;
-//   }
-// `;
 
-// const TwitterCard = styled(FaceBookCard)`
-//   background-color: #2aa8e0;
-//   & i {
-//     margin-right: 4px;
-//   }
-// `;
-
-// const LinkCard = styled(InstaCard)`
-//   & i {
-//     color: #aaa;
-//     margin: 5px;
-//   }
-// `;
-// const LinkCover = styled.div`
-//   text-overflow: ellipsis;
-//   overflow: hidden;
-//   margin-top: -2px;
-//   width: 35px;
-//   height: 100%;
-//   background: #f1f1f1;
-//   & span {
-//   }
-// `;
 const ProfilePopUp = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
+  const [userInfo, setUserInfo] = useState({
+    fullName: "",
+    userName: "",
+    website: "",
+    bio: "",
+    email: "",
+  });
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const URL = "https://www.koreamedis.com/";
+  useEffect(() => {
+    GetfetchWithAuth("/myprofile").then((res) => {
+      console.log("profile", res);
+      const userData = res.userData;
+      setUserInfo(userData);
+    });
+  }, []);
   return (
     <React.Fragment>
       <Avatar
+        src={userInfo?.photo || DEFAULT_IMG}
         className={"pointer"}
         onClick={handleClick}
         sx={{ width: 24, height: 24 }}

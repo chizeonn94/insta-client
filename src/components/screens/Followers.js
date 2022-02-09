@@ -1,10 +1,11 @@
-import { Button } from "@mui/material";
+import { ClassNames } from "@emotion/react";
+import { Button, TextField } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../App";
 import { API_URL, DEFAULT_IMG, GetfetchWithAuth } from "../../Constants";
 
-const Profile = () => {
+const Followers = () => {
   const { state, dispatch } = useContext(UserContext);
   const [profilePic, setProfilePic] = useState("");
   const navigate = useNavigate();
@@ -16,18 +17,20 @@ const Profile = () => {
     bio: "",
     email: "",
   });
+  const [followers, setFollowers] = useState("");
+  const [followings, setFollowings] = useState("");
 
   useEffect(() => {
-    GetfetchWithAuth("/myprofile").then((res) => {
-      console.log("profile", res);
-      const userData = res.userData;
-      setUserInfo(userData);
-    });
     console.log(state);
     if (sessionStorage.getItem("token")) {
-      GetfetchWithAuth(`/mypost`).then((data) => {
-        console.log(data);
-        setData(data.myPosts);
+      // GetfetchWithAuth(`/following/${}`).then((data) => {
+      //   console.log(data);
+      //   setData(data.myPosts);
+      // });
+      GetfetchWithAuth("/myprofile").then((res) => {
+        console.log("profile", res);
+        const userData = res.userData;
+        setUserInfo(userData);
       });
     }
   }, []);
@@ -38,7 +41,13 @@ const Profile = () => {
   };
   return (
     <div style={{ maxWidth: 600, margin: "0 auto" }}>
+      <div className={"flex alignCenter"}>
+        <p className={"textCenter width50 padding12"}>followers</p>
+        <p className={"textCenter width50 padding12"}>following</p>
+      </div>
+
       <div style={{ padding: 10 }}>
+        <TextField fullWidth size={"small"} placeholder={"search"} />
         <div className={"flex alignCenter"}>
           <div style={{ paddingRight: 50 }}>
             <p
@@ -64,17 +73,11 @@ const Profile = () => {
             <p className={"textCenter"}>
               <b>{data?.length}</b> <br /> posts
             </p>
-            <p
-              className={"textCenter pointer"}
-              onClick={() => navigate("/followers")}
-            >
+            <p className={"textCenter"}>
               <b>40</b>
               <br /> followers
             </p>
-            <p
-              className={"textCenter pointer"}
-              onClick={() => navigate("/followers")}
-            >
+            <p className={"textCenter"}>
               <b>40</b>
               <br /> following
             </p>
@@ -106,4 +109,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Followers;

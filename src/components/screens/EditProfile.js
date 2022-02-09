@@ -1,5 +1,5 @@
 import { makeStyles } from "@mui/styles";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -10,8 +10,13 @@ import {
   GetfetchWithAuth,
 } from "../../Constants";
 const useStyles = makeStyles({
-  fieldName: { width: "30%", textAlign: "right", paddingRight: 12 },
-  inputDiv: { width: "70%" },
+  fieldName: {
+    width: "30%",
+    textAlign: "right",
+    paddingRight: 12,
+    fontWeight: "bold",
+  },
+  inputDiv: { width: "70%", textAlign: "left" },
   inputField: { width: "100%" },
 });
 const EditProfile = () => {
@@ -113,14 +118,45 @@ const EditProfile = () => {
         textAlign: "center",
       }}
     >
-      <h1>EditProfile</h1>
-      <div className={"flex alignCenter"}>
-        <p>
-          <img />
-        </p>
+      <div className={"flex alignCenter bottom12"}>
+        <div
+          className={classes.fieldName}
+          style={{ justifyContent: "flex-end", display: "flex" }}
+        >
+          <p
+            style={{ width: 50, height: 50 }}
+            className={"radius50 overhidden"}
+          >
+            <img
+              className={"width100"}
+              src={
+                file instanceof File
+                  ? URL.createObjectURL(file)
+                  : userInfo.photo || DEFAULT_IMG
+              }
+              onClick={() => document.getElementById("file").click()}
+            />
+          </p>
+        </div>
+        <div>
+          <p style={{ fontSize: "1.2em", textAlign: "left" }}>
+            <b>{userInfo.userName}</b>
+          </p>
+          <label htmlFor="file" className={"pointer"}>
+            <b style={{ color: "#0095f6", fontSize: "0.9em" }}>
+              Change profile photo
+            </b>
+          </label>
+          <input
+            type="file"
+            id="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            className={"none"}
+          />
+        </div>
       </div>
 
-      <div className={"flex alignCenter"}>
+      <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}>Name</p>
         <div className={classes.inputDiv}>
           <TextField
@@ -134,7 +170,7 @@ const EditProfile = () => {
           />
         </div>
       </div>
-      <div className={"flex alignCenter"}>
+      <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}></p>
         <div className={classes.inputDiv}>
           Help people discover your account by using the name that you're known
@@ -142,7 +178,7 @@ const EditProfile = () => {
           change your name twice within 14 days.
         </div>
       </div>
-      <div className={"flex alignCenter"}>
+      <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}>Username</p>
         <div className={classes.inputDiv}>
           <TextField
@@ -156,7 +192,14 @@ const EditProfile = () => {
           />
         </div>
       </div>
-      <div className={"flex alignCenter"}>
+      <div className={"flex alignCenter bottom12"}>
+        <p className={classes.fieldName}></p>
+        <div className={classes.inputDiv}>
+          In most cases, you'll be able to change your username back to
+          chizeon_lea for another 14 days. Learn more
+        </div>
+      </div>
+      <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}>Website</p>
         <div className={classes.inputDiv}>
           <TextField
@@ -170,7 +213,7 @@ const EditProfile = () => {
           />
         </div>
       </div>
-      <div className={"flex alignCenter"}>
+      <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}>Bio</p>
         <div className={classes.inputDiv}>
           <TextField
@@ -184,7 +227,7 @@ const EditProfile = () => {
           />
         </div>
       </div>
-      <div className={"flex alignCenter"}>
+      <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}>Email address</p>
         <div className={classes.inputDiv}>
           <TextField
@@ -198,7 +241,15 @@ const EditProfile = () => {
           />
         </div>
       </div>
-      <div className={"flex alignCenter"}>
+      <div className={"flex alignCenter bottom12"}>
+        <p className={classes.fieldName}></p>
+        <div className={classes.inputDiv}>
+          Personal information Provide your personal information, even if the
+          account is used for a business, pet or something else. This won't be
+          part of your public profile.
+        </div>
+      </div>
+      <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}>Phone number</p>
         <div className={classes.inputDiv}>
           <TextField
@@ -214,29 +265,14 @@ const EditProfile = () => {
       </div>
 
       <div className="file-field input-field">
-        <div className="btn">
-          <span>My picture</span>
-          <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        </div>
-
-        {
-          <img
-            src={
-              file instanceof File
-                ? URL.createObjectURL(file)
-                : userInfo.photo || DEFAULT_IMG
-            }
-            style={{ width: 200 }}
-          />
-        }
-
         <p>
-          <button
+          <Button
+            variant={"contained"}
             className="btn waves-effect waves-light"
             onClick={submitHandler}
           >
             Submit Post
-          </button>
+          </Button>
         </p>
       </div>
     </div>
