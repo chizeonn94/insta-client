@@ -9,7 +9,9 @@ import {
 import { Avatar } from "@mui/material";
 import { PostContainer, PostHeader } from "./homeStyle";
 import PostFooter from "./post/PostFooter";
+import { useNavigate } from "react-router";
 const Home = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState("");
   const { state, dispatch } = useContext(UserContext);
   const token = sessionStorage.getItem("token");
@@ -29,7 +31,14 @@ const Home = () => {
           return (
             <div className="card home-card" key={post._id}>
               <PostHeader style={{ display: "flex" }}>
-                <div style={{ display: "flex", gap: "10%", cursor: "pointer" }}>
+                <div
+                  style={{ display: "flex", gap: "10%", cursor: "pointer" }}
+                  onClick={() =>
+                    navigate(`/profile/${post.postedBy.userName}`, {
+                      state: { _id: post.postedBy._id },
+                    })
+                  }
+                >
                   <Avatar
                     src={post.postedBy.photo || DEFAULT_IMG}
                     sizes="small"

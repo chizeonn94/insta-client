@@ -8,6 +8,15 @@ a {
   color: block;
   text-decoration: none;
 }
+.blueColor {
+  color: #0095f6;
+}
+.lightGray {
+  color: #777;
+}
+.whiteColor {
+  color: #fff;
+}
 .mycard {
   margin-top: 30px;
 }
@@ -46,6 +55,9 @@ a {
 .alignCenter {
   align-items: center;
 }
+.spacebt {
+  justify-content: space-between;
+}
 .width100 {
   width: 100%;
 }
@@ -55,6 +67,7 @@ a {
 .padding12 {
   padding: 12px;
 }
+
 .borderNone {
   border: none;
 }
@@ -79,7 +92,11 @@ textarea:focus {
 .textCenter {
   text-align: center;
 }
-
+.imgFit {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 @media only screen and (max-width: 600px) {
   .item {
     width: 33.3vw;

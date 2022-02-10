@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL, axiosInstance } from "../../Constants";
+import { API_URL, axiosInstance, LOCAL_API } from "../../Constants";
 import { UserContext } from "../../App";
 import {
   CustomButton,
@@ -9,7 +9,7 @@ import {
   MainTitle,
   RootContainer,
 } from "./loginStyle/loginStyle";
-import { Divider } from "@mui/material";
+import { Divider, TextField } from "@mui/material";
 import axios from "axios";
 const Signin = () => {
   const { state, dispatch } = useContext(UserContext);
@@ -22,20 +22,25 @@ const Signin = () => {
     if (email && password.length > 7) {
       setIsDisabled(false);
     }
+    return () => setIsDisabled(false);
   }, [email, password]);
 
   const submitHandler = async () => {
     try {
-      const response = await axios.post(`${API_URL}/signin`, {
+      const response = await axios.post(`${LOCAL_API}/signin`, {
         email,
         password,
       });
       console.log("response :", response);
+      const parsed = JSON.parse(response.data.user);
+      console.log("parsed", JSON.parse(response.data.user));
       if (response.status === 201) {
         alert("successfully signed in");
         sessionStorage.setItem("token", response.data.token);
-        sessionStorage.setItem("user", response.data.user.email);
-        dispatch({ type: "USER", payload: response.data.user });
+        sessionStorage.setItem("user", response.data.user);
+        sessionStorage.setItem("userName", parsed.userName);
+
+        dispatch({ type: "USER", payload: parsed });
         navigate("/");
         setEmail("");
         setPassword("");
@@ -50,22 +55,38 @@ const Signin = () => {
 
   return (
     <RootContainer>
-      <LoginCard top>
+      <LoginCard>
         <MainTitle>Instagram</MainTitle>
-        <Input
+        <p style={{ height: 30 }} />
+        <TextField
+          fullWidth
+          size={"small"}
           type="email"
-          autocomplete="off"
+          autoComplete="off"
           placeholder="Phone number, username or email address"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Input
+        <p style={{ height: 8 }} />
+        <TextField
+          fullWidth
+          size={"small"}
           type="password"
-          autocomplete="off"
+          autoComplete="off"
           placeholder="Password"
           value={password || ""}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <p
+          style={{
+            textAlign: "right",
+            fontWeight: "bold",
+            fontSize: "0.9em",
+            padding: "12px 0 20px",
+          }}
+        >
+          <a className={"pointer blueColor"}>Forgot password?</a>
+        </p>
         <CustomButton
           disabled={isDisabled}
           style={{ margin: "10px 0" }}
@@ -76,7 +97,7 @@ const Signin = () => {
         >
           Log in
         </CustomButton>
-        <Divider style={{ margin: "5px 0" }}>OR</Divider>
+        <Divider style={{ margin: "5px 0", fontSize: "0.9em" }}>OR</Divider>
         <div
           style={{
             display: "flex",
@@ -85,26 +106,27 @@ const Signin = () => {
             gap: "5%",
             color: "#385185",
             fontSize: "1.2rem",
+            display: "none",
           }}
         >
           <i className="fab fa-facebook-square"></i>
           <span>Log in with Facebook</span>
         </div>
-        <p style={{ textAlign: "center" }}>Forgetten your password?</p>
-      </LoginCard>
-      <LoginCard bottom>
+
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             gap: "2%",
-            fontSize: "1.2rem",
+            fontSize: "0.9em",
           }}
         >
           <span>Don't have an account?</span>
-          <span style={{ color: "#0095f6" }}>
-            <Link to="/signup">Sign up</Link>
+          <span>
+            <Link to="/signup" style={{ color: "#0095f6" }}>
+              Sign up
+            </Link>
           </span>
         </div>
       </LoginCard>

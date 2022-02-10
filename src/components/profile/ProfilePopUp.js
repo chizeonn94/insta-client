@@ -18,6 +18,7 @@ const FaceBookCard = styled.div`
 `;
 
 const ProfilePopUp = () => {
+  const userName = sessionStorage.getItem("userName");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [userInfo, setUserInfo] = useState({
@@ -34,11 +35,13 @@ const ProfilePopUp = () => {
     setAnchorEl(null);
   };
   useEffect(() => {
-    GetfetchWithAuth("/myprofile").then((res) => {
-      console.log("profile", res);
-      const userData = res.userData;
-      setUserInfo(userData);
-    });
+    if (open) {
+      GetfetchWithAuth("/myprofile").then((res) => {
+        console.log("profile", res);
+        const userData = res.userData;
+        setUserInfo(userData);
+      });
+    }
   }, []);
   return (
     <React.Fragment>
@@ -54,7 +57,7 @@ const ProfilePopUp = () => {
         onClose={handleClose}
         onClick={handleClose}
         PaperProps={{
-          elevation: 0,
+          // elevation: 0,
           sx: {
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
@@ -87,7 +90,7 @@ const ProfilePopUp = () => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <a href="/profile">Profile</a>
+          <a href={`/profile/${userName}`}>Profile</a>
         </MenuItem>
         <MenuItem>
           {/* <InstaCard>

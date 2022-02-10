@@ -4,13 +4,12 @@ import { API_URL, LOCAL_API, axiosInstance } from "../../Constants";
 import { UserContext } from "../../App";
 import {
   CustomButton,
-  Input,
   LoginCard,
   MainTitle,
   RootContainer,
   SubTitle,
 } from "./loginStyle/loginStyle";
-import { Divider } from "@mui/material";
+import { Divider, TextField } from "@mui/material";
 import axios from "axios";
 const Signin = () => {
   const { state, dispatch } = useContext(UserContext);
@@ -53,45 +52,65 @@ const Signin = () => {
 
   return (
     <RootContainer>
-      <LoginCard top>
+      <LoginCard>
         <MainTitle>Instagram</MainTitle>
-        <SubTitle>Sign up to see photos and videos from your friends.</SubTitle>
+        <SubTitle>
+          Sign up to see photos and videos <br />
+          from your friends.
+        </SubTitle>
         <CustomButton
           style={{ fontSize: "1.1rem" }}
           fullWidth
           variant="contained"
           color="primary"
         >
-          <i className="fab fa-facebook-square"></i>
-          <span style={{ fontSize: "1rem", marginLeft: 10 }}>
+          <i className="fab fa-facebook-square whiteColor"></i>
+          <span style={{ fontSize: "1rem", marginLeft: 10, color: "white" }}>
             Log in with Facebook
           </span>
         </CustomButton>
-        <Divider style={{ margin: "5px 0" }}>OR</Divider>
-        <Input
+        <Divider style={{ margin: "5px 0", fontSize: "0.9em" }}>OR</Divider>
+        <TextField
+          fullWidth
+          size={"small"}
           type="email"
           placeholder="Mobile number or email address"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Input
+        <p style={{ height: 8 }} />
+
+        <TextField
+          fullWidth
+          size={"small"}
           type="text"
           placeholder="Full Name"
           value={fullName || ""}
           onChange={(e) => setFullName(e.target.value)}
         />
-        <Input
+        <p style={{ height: 8 }} />
+
+        <TextField
+          fullWidth
+          size={"small"}
           type="text"
           placeholder="Username"
           value={userName || ""}
           onChange={(e) => setUserName(e.target.value)}
         />
-        <Input
+        <p style={{ height: 8 }} />
+
+        <TextField
+          fullWidth
+          size={"small"}
           type="password"
+          size={"small"}
           placeholder="Password"
           value={password || ""}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <p style={{ height: 8 }} />
+
         <CustomButton
           disabled={isDisabled}
           style={{ margin: "10px 0" }}
@@ -102,21 +121,20 @@ const Signin = () => {
         >
           Sign up
         </CustomButton>
-        <p style={{ textAlign: "center" }}>Forgetten your password?</p>
-      </LoginCard>
-      <LoginCard bottom>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             gap: "2%",
-            fontSize: "1.2rem",
+            fontSize: "0.9em",
           }}
         >
           <span>Have an account?</span>
-          <span style={{ color: "#0095f6" }}>
-            <Link to="/signin">Log in</Link>
+          <span>
+            <Link to="/signin" className={"blueColor"}>
+              Log in
+            </Link>
           </span>
         </div>
       </LoginCard>

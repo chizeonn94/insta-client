@@ -9,7 +9,7 @@ import SentimentSatisfiedSharpIcon from "@mui/icons-material/SentimentSatisfiedS
 export default function PostInput() {
   return (
     <Paper
-      elevation="0"
+      // elevation="0"
       sx={{
         display: "flex",
         alignItems: "center",

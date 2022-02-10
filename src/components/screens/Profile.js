@@ -1,10 +1,17 @@
 import { Button } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { UserContext } from "../../App";
-import { API_URL, DEFAULT_IMG, GetfetchWithAuth } from "../../Constants";
+import {
+  API_URL,
+  DEFAULT_IMG,
+  FetchWithAuth,
+  GetfetchWithAuth,
+} from "../../Constants";
 
 const Profile = () => {
+  const location = useLocation();
+  const userName = location.pathname.split("/")[2];
   const { state, dispatch } = useContext(UserContext);
   const [profilePic, setProfilePic] = useState("");
   const navigate = useNavigate();
@@ -18,18 +25,17 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    GetfetchWithAuth("/myprofile").then((res) => {
+    console.log(location);
+    FetchWithAuth(`/profile/${userName}`, "GET").then((res) => {
       console.log("profile", res);
       const userData = res.userData;
       setUserInfo(userData);
     });
+    FetchWithAuth(`/post/${location.state._id}`, "GET").then((data) => {
+      console.log(data);
+      setData(data.posts);
+    });
     console.log(state);
-    if (sessionStorage.getItem("token")) {
-      GetfetchWithAuth(`/mypost`).then((data) => {
-        console.log(data);
-        setData(data.myPosts);
-      });
-    }
   }, []);
   const logout = () => {
     sessionStorage.clear();
@@ -48,7 +54,7 @@ const Profile = () => {
               <img className={"width100"} src={userInfo.photo || DEFAULT_IMG} />
             </p>
             <h4 className={"textCenter"} style={{ paddingTop: 8 }}>
-              {userInfo?.userName}
+              {userName}
             </h4>
           </div>
 
@@ -66,7 +72,11 @@ const Profile = () => {
             </p>
             <p
               className={"textCenter pointer"}
-              onClick={() => navigate("/followers")}
+              onClick={() =>
+                navigate("/followers", {
+                  state: { mode: "followers" },
+                })
+              }
             >
               <b>40</b>
               <br /> followers
@@ -96,8 +106,8 @@ const Profile = () => {
 
       <div className={"gallery"}>
         {data?.length > 0 &&
-          data?.map((post) => (
-            <p className={"item"}>
+          data?.map((post, i) => (
+            <p className={"item"} key={`photo-${i}`}>
               <img key={post._id} src={post.photo} />
             </p>
           ))}

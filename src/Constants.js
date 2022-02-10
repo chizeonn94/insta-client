@@ -21,7 +21,7 @@ export const axiosInstance = axios.create({
 
 export const GetfetchWithAuth = async (url) => {
   // Default options are marked with *
-  const response = await fetch(API_URL + url, {
+  const response = await fetch(LOCAL_API + url, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     //mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -36,10 +36,10 @@ export const GetfetchWithAuth = async (url) => {
   });
   return response.json(); // parses JSON response into native JavaScript objects
 };
-export const PostfetchWithAuth = async (url) => {
+export const FetchWithAuth = async (url, method) => {
   // Default options are marked with *
-  const response = await fetch(API_URL + url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
+  const response = await fetch(LOCAL_API + url, {
+    method: method, // *GET, POST, PUT, DELETE, etc.
     //mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, *same-origin, omit

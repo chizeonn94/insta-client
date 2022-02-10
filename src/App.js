@@ -13,13 +13,22 @@ import Followers from "./components/screens/Followers";
 import CreatePost from "./components/screens/CreatePost";
 import EditProfile from "./components/screens/EditProfile";
 import Chat from "./components/screens/chat/Chat";
+import { useLocation } from "react-router";
 
 export const UserContext = createContext();
 
 function AllRoutes() {
   const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const isNeedNav = () => {
+    const path = location.pathname;
+    if (path === "/signin" || path === "/signup") {
+      return false;
+    } else {
+      return true;
+    }
+  };
   useEffect(() => {
     const user = sessionStorage.getItem("user");
     if (!user) {
@@ -29,12 +38,13 @@ function AllRoutes() {
   }, []);
   return (
     <div>
-      <Navbar />
+      {isNeedNav() && <Navbar />}
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:userName" element={<Profile />} />
         <Route path="/followers" element={<Followers />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/create" element={<CreatePost />} />

@@ -35,17 +35,17 @@ const PostFooter = ({ title, content, comments, likes, createdAt }) => {
     <div>
       <Container>
         <IconContainer>
-          <i class="far fa-heart"></i>
-          <i class="far fa-comment"></i>
-          <i class="fab fa-telegram-plane"></i>
+          <i className="far fa-heart"></i>
+          <i className="far fa-comment"></i>
+          <i className="fab fa-telegram-plane"></i>
         </IconContainer>
-        <i style={{ fontSize: 25 }} class="far fa-bookmark"></i>
+        <i style={{ fontSize: 25 }} className="far fa-bookmark"></i>
       </Container>
       <Content expended={isExpended}>
         {likes.length > 0 && (
           <>
             {likes.slice(0, 1).map((like) => (
-              <div style={{ display: "flex" }}>
+              <div key={`likes-${like}`} style={{ display: "flex" }}>
                 <Avatar
                   key={like?.id}
                   sx={{ width: 25, height: 25 }}
