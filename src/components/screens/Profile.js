@@ -23,6 +23,8 @@ const Profile = () => {
     bio: "",
     email: "",
   });
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
 
   useEffect(() => {
     console.log(location);
@@ -34,6 +36,14 @@ const Profile = () => {
     FetchWithAuth(`/post/${location.state._id}`, "GET").then((data) => {
       console.log(data);
       setData(data.posts);
+    });
+    FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
+      console.log(data);
+      setFollowers(res.result.followers);
+    });
+    FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
+      console.log(data);
+      setFollowing(res.result.following);
     });
     console.log(state);
   }, []);
@@ -78,28 +88,31 @@ const Profile = () => {
                 })
               }
             >
-              <b>40</b>
+              <b>{followers?.length}</b>
               <br /> followers
             </p>
             <p
               className={"textCenter pointer"}
               onClick={() => navigate("/followers")}
             >
-              <b>40</b>
+              <b>{following?.length}</b>
               <br /> following
             </p>
           </div>
         </div>
         <div>
-          <Button
-            fullWidth
-            variant={"outlined"}
-            onClick={() => {
-              navigate("/edit-profile");
-            }}
-          >
-            edit profile
-          </Button>
+          {userName == state?.userName && (
+            <Button
+              fullWidth
+              variant={"outlined"}
+              onClick={() => {
+                navigate("/edit-profile");
+              }}
+            >
+              edit profile
+            </Button>
+          )}
+
           <button onClick={() => logout()}>Log out</button>
         </div>
       </div>

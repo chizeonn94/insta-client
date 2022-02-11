@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 // import { SocialSHareBtn } from './HospitalDetail';
 import styled from "styled-components";
 import { Avatar } from "@mui/material";
 import { DEFAULT_IMG, GetfetchWithAuth } from "../../Constants";
+import { useNavigate } from "react-router";
+import { UserContext } from "../../App";
 // import { FacebookShareButton, InstapaperShareButton, TwitterShareButton } from 'react-share';
 
 const FaceBookCard = styled.div`
@@ -18,6 +20,8 @@ const FaceBookCard = styled.div`
 `;
 
 const ProfilePopUp = () => {
+  const navigate = useNavigate();
+  const { state, dispatch } = useContext(UserContext);
   const userName = sessionStorage.getItem("userName");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -90,7 +94,15 @@ const ProfilePopUp = () => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <a href={`/profile/${userName}`}>Profile</a>
+          <p
+            onClick={() =>
+              navigate(`/profile/${state.userName}`, {
+                state: { _id: state._id },
+              })
+            }
+          >
+            Profile
+          </p>
         </MenuItem>
         <MenuItem>
           {/* <InstaCard>

@@ -45,11 +45,43 @@ const Followers = () => {
     }
   }, [selectedMode]);
   const clickFollow = (_id) => {
+    alert("follow");
     FetchWithAuth(`/follow/${_id}`, "PUT").then((res) => {
       console.log("hh", res);
+      dispatch({
+        type: "UPDATE",
+        payload: { following: res.result.myData.following },
+      });
+      const user = JSON.parse(sessionStorage.getItem("user"));
+
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          following: res.result.myData.following,
+        })
+      );
     });
   };
+  const clickUnfollow = (_id) => {
+    alert("unfollow");
+    FetchWithAuth(`/unfollow/${_id}`, "PUT").then((res) => {
+      console.log("hh", res);
+      dispatch({
+        type: "UPDATE",
+        payload: { following: res.result.myData.following },
+      });
+      const user = JSON.parse(sessionStorage.getItem("user"));
 
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          following: res.result.myData.following,
+        })
+      );
+    });
+  };
   const renderUsers = (datas) =>
     datas.map((data, i) => {
       return (
@@ -89,9 +121,17 @@ const Followers = () => {
               padding: "5px 10px",
               cursor: "pointer",
             }}
-            onClick={() => clickFollow(data._id)}
+            onClick={() =>
+              state?.following.includes(data._id)
+                ? clickUnfollow(data._id)
+                : clickFollow(data._id)
+            }
           >
-            <b>Follow</b>
+            <b>
+              {state && state?.following?.includes(data._id)
+                ? "Following"
+                : "Follow"}
+            </b>
           </p>
         </div>
       );
@@ -112,7 +152,7 @@ const Followers = () => {
           }
           onClick={() => setSelectedMode("followers")}
         >
-          {followers.length}&nbsp;followers
+          {state?.followers ? state?.followers.length : 0}&nbsp;followers
         </p>
         <p
           className={"textCenter width50 padding12 bold pointer"}
@@ -123,7 +163,7 @@ const Followers = () => {
           }
           onClick={() => setSelectedMode("following")}
         >
-          {following.length}&nbsp;following
+          {state?.following ? state?.following.length : 0}&nbsp;following
         </p>
       </div>
 

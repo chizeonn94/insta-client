@@ -34,7 +34,7 @@ function AllRoutes() {
     if (!user) {
       return navigate("/signin");
     }
-    dispatch({ type: "USER", payload: user });
+    dispatch({ type: "USER", payload: JSON.parse(user) });
   }, []);
   return (
     <div>
