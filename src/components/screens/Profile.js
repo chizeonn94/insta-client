@@ -8,6 +8,7 @@ import {
   FetchWithAuth,
   GetfetchWithAuth,
 } from "../../Constants";
+import { FollowButton } from "./homeStyle";
 
 const Profile = () => {
   const location = useLocation();
@@ -25,7 +26,60 @@ const Profile = () => {
   });
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const clickFollow = async (_id) => {
+    alert("follow");
+    await FetchWithAuth(`/follow/${_id}`, "PUT").then((res) => {
+      console.log("hh", res);
+      dispatch({
+        type: "UPDATE",
+        payload: { following: res.result.myData.following },
+      });
+      const user = JSON.parse(sessionStorage.getItem("user"));
 
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          following: res.result.myData.following,
+        })
+      );
+    });
+    await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
+      console.log("followers==", res);
+
+      setFollowers(res.result.followers);
+    });
+    await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
+      console.log("following==", res);
+      setFollowing(res.result.following);
+    });
+  };
+  const clickUnfollow = async (_id) => {
+    alert("unfollow");
+    await FetchWithAuth(`/unfollow/${_id}`, "PUT").then((res) => {
+      dispatch({
+        type: "UPDATE",
+        payload: { following: res.result.myData.following },
+      });
+      const user = JSON.parse(sessionStorage.getItem("user"));
+
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          following: res.result.myData.following,
+        })
+      );
+    });
+    await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
+      console.log("followers//", res);
+      setFollowers(res.result.followers);
+    });
+    await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
+      console.log("following//", res);
+      setFollowing(res.result.following);
+    });
+  };
   useEffect(() => {
     console.log(location);
     FetchWithAuth(`/profile/${userName}`, "GET").then((res) => {
@@ -83,7 +137,7 @@ const Profile = () => {
             <p
               className={"textCenter pointer"}
               onClick={() =>
-                navigate("/followers", {
+                navigate(`/followers/${userName}`, {
                   state: { mode: "followers" },
                 })
               }
@@ -93,7 +147,11 @@ const Profile = () => {
             </p>
             <p
               className={"textCenter pointer"}
-              onClick={() => navigate("/followers")}
+              onClick={() =>
+                navigate(`/followers/${userName}`, {
+                  state: { mode: "following" },
+                })
+              }
             >
               <b>{following?.length}</b>
               <br /> following
@@ -112,7 +170,21 @@ const Profile = () => {
               edit profile
             </Button>
           )}
-
+          {userName !== state?.userName && (
+            <FollowButton>
+              <b
+                onClick={() =>
+                  state?.following.includes(location.state._id)
+                    ? clickUnfollow(location.state._id)
+                    : clickFollow(location.state._id)
+                }
+              >
+                {state && state?.following?.includes(location.state._id)
+                  ? "Following"
+                  : "Follow"}
+              </b>
+            </FollowButton>
+          )}
           <button onClick={() => logout()}>Log out</button>
         </div>
       </div>

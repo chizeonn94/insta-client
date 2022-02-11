@@ -6,9 +6,11 @@ import ProfilePopUp from "./profile/ProfilePopUp";
 import PostDialog from "./screens/PostDialog";
 const NavCover = styled.div`
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   min-height: 5vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #aaa;
 `;

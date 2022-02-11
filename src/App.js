@@ -45,7 +45,7 @@ function AllRoutes() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile/:userName" element={<Profile />} />
-        <Route path="/followers" element={<Followers />} />
+        <Route path="/followers/:userName" element={<Followers />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/create" element={<CreatePost />} />
         <Route path="/chat" element={<Chat />} />

@@ -10,10 +10,11 @@ import {
   GetfetchWithAuth,
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
+import { FollowButton } from "./homeStyle";
 
 const Followers = () => {
   const location = useLocation();
-  const userName = sessionStorage.getItem("userName");
+  const userName = location.pathname.split("/")[2];
   const { state, dispatch } = useContext(UserContext);
   const [profilePic, setProfilePic] = useState("");
   const navigate = useNavigate();
@@ -44,9 +45,13 @@ const Followers = () => {
       setSelectedData(following);
     }
   }, [selectedMode]);
-  const clickFollow = (_id) => {
+  // useEffect(() => {
+  //   console.log("followers!1", followers);
+  //   console.log("following!!", following);
+  // }, [followers, following]);
+  const clickFollow = async (_id) => {
     alert("follow");
-    FetchWithAuth(`/follow/${_id}`, "PUT").then((res) => {
+    await FetchWithAuth(`/follow/${_id}`, "PUT").then((res) => {
       console.log("hh", res);
       dispatch({
         type: "UPDATE",
@@ -62,11 +67,19 @@ const Followers = () => {
         })
       );
     });
+    await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
+      console.log("followers==", res);
+
+      setFollowers(res.result.followers);
+    });
+    await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
+      console.log("following==", res);
+      setFollowing(res.result.following);
+    });
   };
-  const clickUnfollow = (_id) => {
+  const clickUnfollow = async (_id) => {
     alert("unfollow");
-    FetchWithAuth(`/unfollow/${_id}`, "PUT").then((res) => {
-      console.log("hh", res);
+    await FetchWithAuth(`/unfollow/${_id}`, "PUT").then((res) => {
       dispatch({
         type: "UPDATE",
         payload: { following: res.result.myData.following },
@@ -80,6 +93,14 @@ const Followers = () => {
           following: res.result.myData.following,
         })
       );
+    });
+    await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
+      console.log("followers//", res);
+      setFollowers(res.result.followers);
+    });
+    await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
+      console.log("following//", res);
+      setFollowing(res.result.following);
     });
   };
   const renderUsers = (datas) =>
@@ -90,7 +111,11 @@ const Followers = () => {
             <p
               className={"overhidden radius50 pointer"}
               style={{ width: 50, height: 50, marginRight: 12 }}
-              onClick={() => navigate(`/profile/${data.userName}`)}
+              onClick={() =>
+                navigate(`/profile/${data.userName}`, {
+                  state: { _id: data._id },
+                })
+              }
             >
               <img
                 src={data.photo}
@@ -100,7 +125,11 @@ const Followers = () => {
             </p>
             <div
               className={"pointer"}
-              onClick={() => navigate(`/profile/${data.userName}`)}
+              onClick={() =>
+                navigate(`/profile/${data.userName}`, {
+                  state: { _id: data._id },
+                })
+              }
             >
               <p>
                 <b>{data.userName}</b>
@@ -113,14 +142,7 @@ const Followers = () => {
               </p>
             </div>
           </div>
-
-          <p
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: 5,
-              padding: "5px 10px",
-              cursor: "pointer",
-            }}
+          <FollowButton
             onClick={() =>
               state?.following.includes(data._id)
                 ? clickUnfollow(data._id)
@@ -132,7 +154,7 @@ const Followers = () => {
                 ? "Following"
                 : "Follow"}
             </b>
-          </p>
+          </FollowButton>
         </div>
       );
     });
@@ -152,7 +174,7 @@ const Followers = () => {
           }
           onClick={() => setSelectedMode("followers")}
         >
-          {state?.followers ? state?.followers.length : 0}&nbsp;followers
+          {followers?.length}&nbsp;followers
         </p>
         <p
           className={"textCenter width50 padding12 bold pointer"}
@@ -163,7 +185,7 @@ const Followers = () => {
           }
           onClick={() => setSelectedMode("following")}
         >
-          {state?.following ? state?.following.length : 0}&nbsp;following
+          {following?.length}&nbsp;following
         </p>
       </div>
 

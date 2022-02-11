@@ -38,6 +38,11 @@ const ProfilePopUp = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const logout = () => {
+    sessionStorage.clear();
+    dispatch({ type: "CLEAR" });
+    navigate("/signin");
+  };
   useEffect(() => {
     if (open) {
       GetfetchWithAuth("/myprofile").then((res) => {
@@ -50,7 +55,7 @@ const ProfilePopUp = () => {
   return (
     <React.Fragment>
       <Avatar
-        src={userInfo?.photo || DEFAULT_IMG}
+        src={state?.photo || DEFAULT_IMG}
         className={"pointer"}
         onClick={handleClick}
         sx={{ width: 24, height: 24 }}
@@ -122,6 +127,15 @@ const ProfilePopUp = () => {
         </MenuItem>
         <MenuItem>
           <a href="/">Switch accounts</a>
+          {/* <LinkCard>
+            <LinkCover>
+              <i className="fas fa-link"></i>
+              <span> www.koreamedis.com</span>
+            </LinkCover>
+          </LinkCard> */}
+        </MenuItem>
+        <MenuItem>
+          <a onClick={logout}>Log out</a>
           {/* <LinkCard>
             <LinkCover>
               <i className="fas fa-link"></i>
