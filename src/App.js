@@ -14,6 +14,7 @@ import CreatePost from "./components/screens/CreatePost";
 import EditProfile from "./components/screens/EditProfile";
 import Chat from "./components/screens/chat/Chat";
 import { useLocation } from "react-router";
+import Likes from "./components/screens/Likes";
 
 export const UserContext = createContext();
 
@@ -48,6 +49,7 @@ function AllRoutes() {
         <Route path="/followers/:userName" element={<Followers />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/create" element={<CreatePost />} />
+        <Route path="/likes" element={<Likes />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>
     </div>

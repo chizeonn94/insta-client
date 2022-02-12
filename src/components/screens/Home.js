@@ -97,31 +97,6 @@ const Home = () => {
               <p>{post.title}</p>
               <input type="text" placeholder="add a comment" />
             </div> */}
-              {post.likes.includes("61c29b99bd8704b6c1aa4e0d") ? (
-                <>
-                  채워진하트
-                  <i
-                    className="material-icons"
-                    onClick={() => {
-                      dislikepost(post._id);
-                    }}
-                  >
-                    favorite
-                  </i>
-                </>
-              ) : (
-                <>
-                  빈하트
-                  <i
-                    className="material-icons"
-                    onClick={() => {
-                      likepost(post._id);
-                    }}
-                  >
-                    favorite_border
-                  </i>
-                </>
-              )}
               <PostFooter
                 postId={post._id}
                 title={post.title}

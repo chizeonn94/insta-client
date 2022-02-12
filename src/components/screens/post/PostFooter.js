@@ -6,6 +6,9 @@ import moment from "moment";
 import PostInput from "./PostInput";
 import { FetchWithAuth, LOCAL_API } from "../../../Constants";
 import { UserContext } from "../../../App";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useNavigate } from "react-router";
 const Container = styled.div`
   width: 100%;
   padding: 10px;
@@ -29,45 +32,37 @@ const InputContainer = styled.div`
 `;
 const CommentCover = styled.div``;
 const PostFooter = ({ postId, title, content, comments, likes, createdAt }) => {
+  const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext);
   const [isExpended, setIsExpended] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedlikes, setSelectedLikes] = useState(likes);
   const date = new Date(createdAt);
   const [commentValue, setCommentValue] = useState("");
-  // useEffect(() => {
-  //   console.log("likes>>", likes);
-  // }, []);
-  useCallback(() => {
-    renderHeart();
+  const [like, setLike] = useState(false);
+  useEffect(() => {
+    // console.log("set like");
+    selectedlikes.some(function (el) {
+      if (el._id === state._id) {
+        setLike(true);
+      } else {
+        setLike(false);
+      }
+    });
   }, [selectedlikes]);
   const clickHeart = async (likeOrUnlike) => {
-    alert(likeOrUnlike);
-    console.log(likeOrUnlike);
+    // alert(likeOrUnlike);
+    // console.log(likeOrUnlike);
     await FetchWithAuth(`/${likeOrUnlike}/${postId}`, "PUT").then((res) => {
-      console.log("++", res);
+      //console.log("++", res);
       //setSelectedLikes(res.result.likes);
     });
     await FetchWithAuth(`/post/${postId}`, "GET").then((res) => {
-      console.log("--", res);
+      // console.log("--", res);
       setSelectedLikes(res.post.likes);
     });
   };
-  const handleClick = () => {
-    console.log(selectedlikes);
-    console.log("c", likedBefore(selectedlikes));
-    if (likedBefore(selectedlikes)) {
-      clickHeart("unlike");
-    } else {
-      clickHeart("like");
-    }
-  };
-  const likedBefore = (array) => {
-    console.log(">>likebefore<<");
-    return array.some(function (el) {
-      return el._id === state._id;
-    });
-  };
+
   const submitComment = async () => {
     // await FetchWithAuth(`/comment/${postId}`, "PUT").then((res) => {
     //   console.log("++", res);
@@ -93,39 +88,24 @@ const PostFooter = ({ postId, title, content, comments, likes, createdAt }) => {
       .then((res) => res.json())
       .then((res) => console.log("dfdf", res));
   };
-  const renderHeart = () => {
-    if (likedBefore(selectedlikes)) {
-      console.log("채워진하트");
-      return (
-        <span onClick={() => clickHeart("unlike")}>
-          <i
-            className="far fa-heart pointer"
-            style={{
-              backgroundColor: "pink",
-            }}
-          ></i>
-        </span>
-      );
-    } else {
-      console.log("빈하트");
 
-      return (
-        <span onClick={() => clickHeart("like")}>
-          <i
-            className="far fa-heart pointer"
-            style={{
-              backgroundColor: "white",
-            }}
-          ></i>
-        </span>
-      );
-    }
-  };
   return (
     <div>
       <Container>
         <IconContainer>
-          {/* {renderHeart()} */}
+          <span
+            style={{}}
+            className={"pointer"}
+            onClick={() => {
+              like ? clickHeart("unlike") : clickHeart("like");
+            }}
+          >
+            {like ? (
+              <FavoriteIcon style={{ color: "rgb(237, 73, 86)" }} />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
+          </span>
           <i className="far fa-comment"></i>
           <i className="fab fa-telegram-plane"></i>
         </IconContainer>
@@ -135,7 +115,15 @@ const PostFooter = ({ postId, title, content, comments, likes, createdAt }) => {
         {selectedlikes.length > 0 && (
           <>
             {selectedlikes.slice(0, 1).map((like) => (
-              <div key={`selectedlikes-${like}`} style={{ display: "flex" }}>
+              <div
+                key={`selectedlikes-${like}`}
+                style={{ display: "flex", cursor: "pointer" }}
+                onClick={() =>
+                  navigate(`/likes`, {
+                    state: { likes },
+                  })
+                }
+              >
                 <Avatar
                   key={like?.id}
                   sx={{ width: 25, height: 25 }}
