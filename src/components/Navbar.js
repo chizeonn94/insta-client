@@ -4,6 +4,7 @@ import { UserContext } from "../App";
 import styled from "styled-components";
 import ProfilePopUp from "./profile/ProfilePopUp";
 import PostDialog from "./screens/PostDialog";
+import SearchBar from "./screens/SearchBar";
 const NavCover = styled.div`
   width: 100%;
   max-width: 600px;
@@ -51,9 +52,7 @@ const Navbar = () => {
       >
         Instagram
       </LogoCover>
-
-      <span style={{ fontSize: "0.8em" }}></span>
-
+      <SearchBar />
       <RightButtonsCover>
         <CustomLink to="/">
           <i className="fas fa-home pointer"></i>

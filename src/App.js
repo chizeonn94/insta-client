@@ -16,6 +16,7 @@ import Chat from "./components/screens/chat/Chat";
 import { useLocation } from "react-router";
 import Likes from "./components/screens/Likes";
 import Comments from "./components/screens/Comments";
+import ChangePW from "./components/screens/ChangePW";
 
 export const UserContext = createContext();
 
@@ -52,6 +53,7 @@ function AllRoutes() {
         <Route path="/create" element={<CreatePost />} />
         <Route path="/likes" element={<Likes />} />
         <Route path="/comments/:postId" element={<Comments />} />
+        <Route path="/changepassword" element={<ChangePW />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>
     </div>
