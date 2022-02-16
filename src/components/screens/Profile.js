@@ -17,86 +17,29 @@ const Profile = () => {
   const [profilePic, setProfilePic] = useState("");
   const navigate = useNavigate();
   const [data, setData] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    fullName: "",
-    userName: "",
-    website: "",
-    bio: "",
-    email: "",
-  });
+  const [userInfo, setUserInfo] = useState("");
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
-  const clickFollow = async (_id) => {
-    alert("follow");
-    await FetchWithAuth(`/follow/${_id}`, "PUT").then((res) => {
-      console.log("hh", res);
-      dispatch({
-        type: "UPDATE",
-        payload: { following: res.result.myData.following },
-      });
-      const user = JSON.parse(sessionStorage.getItem("user"));
+  const [isFollowing, setIsFollowing] = useState(false);
 
-      sessionStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...user,
-          following: res.result.myData.following,
-        })
-      );
-    });
-    await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
-      console.log("followers==", res);
-
-      setFollowers(res.result.followers);
-    });
-    await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
-      console.log("following==", res);
-      setFollowing(res.result.following);
-    });
-  };
-  const clickUnfollow = async (_id) => {
-    alert("unfollow");
-    await FetchWithAuth(`/unfollow/${_id}`, "PUT").then((res) => {
-      dispatch({
-        type: "UPDATE",
-        payload: { following: res.result.myData.following },
-      });
-      const user = JSON.parse(sessionStorage.getItem("user"));
-
-      sessionStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...user,
-          following: res.result.myData.following,
-        })
-      );
-    });
-    await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
-      console.log("followers//", res);
-      setFollowers(res.result.followers);
-    });
-    await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
-      console.log("following//", res);
-      setFollowing(res.result.following);
-    });
-  };
   useEffect(() => {
     console.log(location);
     FetchWithAuth(`/profile/${userName}`, "GET").then((res) => {
       console.log("profile", res);
-      const userData = res.userData;
+      const userData = res.userInfo;
       setUserInfo(userData);
+      setIsFollowing(userData.isFollowing);
     });
-    FetchWithAuth(`/post/${location.state._id}`, "GET").then((data) => {
-      console.log(data);
-      setData(data.posts);
-    });
+    // FetchWithAuth(`/post/${location.state._id}`, "GET").then((data) => {
+    //   console.log(data);
+    //   setData(data.posts);
+    // });
     FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
-      console.log(data);
+      console.log(res);
       setFollowers(res.result.followers);
     });
     FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
-      console.log(data);
+      console.log(res);
       setFollowing(res.result.following);
     });
     console.log(state);
@@ -105,6 +48,30 @@ const Profile = () => {
     sessionStorage.clear();
     dispatch({ type: "CLEAR" });
     navigate("/signin");
+  };
+  const handleClick = () => {
+    const followOrUnfollow = isFollowing ? "unfollow" : "follow";
+    alert(followOrUnfollow);
+    FetchWithAuth(`/${followOrUnfollow}/${userInfo?._id}`, "PUT").then(
+      (res) => {
+        console.log("after", res);
+        if (res.success) {
+          setIsFollowing(!isFollowing);
+          if (followOrUnfollow == "follow") {
+            let followers = userInfo.followers;
+            setUserInfo({ ...userInfo, followers: followers.push(state._id) });
+          } else {
+            let followers = userInfo.followers;
+            followers.indexOf(state._id) !== -1 &&
+              followers.splice(followers.indexOf(state._id), 1);
+            setUserInfo({ ...userInfo, followers: followers });
+          }
+          console.log(userInfo);
+        } else {
+          alert(`failed to ${followOrUnfollow}`);
+        }
+      }
+    );
   };
   return (
     <div style={{ maxWidth: 600, margin: "0 auto" }}>
@@ -115,7 +82,10 @@ const Profile = () => {
               style={{ width: 100, height: 100 }}
               className={"overhidden radius50"}
             >
-              <img className={"width100"} src={userInfo.photo || DEFAULT_IMG} />
+              <img
+                className={"width100"}
+                src={userInfo?.photo || DEFAULT_IMG}
+              />
             </p>
             <h4 className={"textCenter"} style={{ paddingTop: 8 }}>
               {userName}
@@ -142,7 +112,7 @@ const Profile = () => {
                 })
               }
             >
-              <b>{followers?.length}</b>
+              <b>{userInfo?.followers ? userInfo?.followers?.length : 0}</b>
               <br /> followers
             </p>
             <p
@@ -153,7 +123,7 @@ const Profile = () => {
                 })
               }
             >
-              <b>{following?.length}</b>
+              <b>{userInfo?.following ? userInfo?.following?.length : 0}</b>
               <br /> following
             </p>
           </div>
@@ -172,16 +142,8 @@ const Profile = () => {
           )}
           {userName !== state?.userName && (
             <FollowButton>
-              <b
-                onClick={() =>
-                  state?.following.includes(location.state._id)
-                    ? clickUnfollow(location.state._id)
-                    : clickFollow(location.state._id)
-                }
-              >
-                {state && state?.following?.includes(location.state._id)
-                  ? "Following"
-                  : "Follow"}
+              <b onClick={handleClick}>
+                {isFollowing ? "Following" : "Follow"}
               </b>
             </FollowButton>
           )}

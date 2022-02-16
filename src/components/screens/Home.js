@@ -22,6 +22,7 @@ const Home = () => {
     if (token) {
       GetfetchWithAuth(`/allpost`).then((data) => {
         console.log("state>>.", data);
+        data.posts.sort((a, b) => b.createdAt - a.createdAt);
         setData(data?.posts);
       });
     }
@@ -104,6 +105,7 @@ const Home = () => {
                 comments={post?.comments}
                 likes={post.likes}
                 createdAt={post?.createdAt}
+                pressedLiked={post?.pressedLiked}
               />
             </div>
           );

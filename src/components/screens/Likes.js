@@ -11,6 +11,7 @@ import {
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
 import { FollowButton } from "./homeStyle";
+import UserListSkeleton from "./UserListSkeleton";
 
 const Likes = () => {
   const location = useLocation();
@@ -54,59 +55,15 @@ const Likes = () => {
       );
     });
   };
-  const renderUsers = (datas) =>
-    datas.map((data, i) => {
+  const renderUsers = (users) =>
+    users.map((user, i) => {
       return (
-        <div key={data._id} className={"flex alignCenter spacebt"}>
-          <div className={"flex alignCenter"}>
-            <p
-              className={"overhidden radius50 pointer"}
-              style={{ width: 50, height: 50, marginRight: 12 }}
-              onClick={() =>
-                navigate(`/profile/${data.userName}`, {
-                  state: { _id: data._id },
-                })
-              }
-            >
-              <img
-                src={data.photo}
-                alt={"follower profile pic"}
-                className={"imgFit"}
-              />
-            </p>
-            <div
-              className={"pointer"}
-              onClick={() =>
-                navigate(`/profile/${data.userName}`, {
-                  state: { _id: data._id },
-                })
-              }
-            >
-              <p>
-                <b>{data.userName}</b>
-              </p>
-              <p
-                className={"lightGray"}
-                style={{ fontSize: "0.9em", paddingTop: 4 }}
-              >
-                {data.fullName}
-              </p>
-            </div>
-          </div>
-          <FollowButton
-            onClick={() =>
-              state?.following.includes(data._id)
-                ? clickUnfollow(data._id)
-                : clickFollow(data._id)
-            }
-          >
-            <b>
-              {state && state?.following?.includes(data._id)
-                ? "Following"
-                : "Follow"}
-            </b>
-          </FollowButton>
-        </div>
+        <UserListSkeleton
+          key={user._id}
+          userName={user.userName}
+          user={user}
+          isFollowing={user.isFollowing}
+        />
       );
     });
 

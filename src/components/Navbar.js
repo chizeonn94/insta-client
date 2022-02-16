@@ -51,6 +51,9 @@ const Navbar = () => {
       >
         Instagram
       </LogoCover>
+
+      <span style={{ fontSize: "0.8em" }}></span>
+
       <RightButtonsCover>
         <CustomLink to="/">
           <i className="fas fa-home pointer"></i>

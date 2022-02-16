@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 import { Button, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   API_URL,
@@ -8,7 +8,9 @@ import {
   CLOUD_API,
   DEFAULT_IMG,
   GetfetchWithAuth,
+  LOCAL_API,
 } from "../../Constants";
+import { UserContext } from "../../App";
 const useStyles = makeStyles({
   fieldName: {
     width: "30%",
@@ -20,6 +22,7 @@ const useStyles = makeStyles({
   inputField: { width: "100%" },
 });
 const EditProfile = () => {
+  const { state, dispatch } = useContext(UserContext);
   const classes = useStyles();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
@@ -75,7 +78,7 @@ const EditProfile = () => {
       });
   };
   const postData = (photoUrl) => {
-    fetch(`${API_URL}/profile`, {
+    fetch(`${LOCAL_API}/profile`, {
       method: "PUT", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -88,20 +91,22 @@ const EditProfile = () => {
     })
       .then((response) => {
         console.log(response);
-        if (response.status === 201) {
-          alert("successfully posted");
-          navigate("/");
-        } else {
-          return response.json();
-        }
+        return response.json();
+      })
+      .then((res) => {
+        console.log(res);
+
+        alert(res.message);
+
+        dispatch({ type: "USER", payload: res.newUser });
       })
       // .then((res) => {
       //   console.log(res);
       //   alert(res.error);
       // })
       .catch((error) => {
-        alert(error);
-        console.error("Error:", error);
+        alert("error", error);
+        console.log("Error:", error);
       });
   };
   const changeInput = (el) => {

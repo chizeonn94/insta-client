@@ -11,6 +11,7 @@ import {
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
 import { FollowButton } from "./homeStyle";
+import UserListSkeleton from "./UserListSkeleton";
 
 const Followers = () => {
   const location = useLocation();
@@ -27,12 +28,9 @@ const Followers = () => {
     console.log(state);
     // console.log(selectedMode);
     if (sessionStorage.getItem("token")) {
-      GetfetchWithAuth(`/followers/${userName}`).then((res) => {
-        console.log("followers", res);
+      GetfetchWithAuth(`/FollowersAndFollowing/${userName}`).then((res) => {
+        console.log("FollowersAndFollowing", res);
         setFollowers(res.result.followers);
-      });
-      GetfetchWithAuth(`/following/${userName}`).then((res) => {
-        console.log("following", res);
         setFollowing(res.result.following);
       });
     }
@@ -52,7 +50,7 @@ const Followers = () => {
   const clickFollow = async (_id) => {
     alert("follow");
     await FetchWithAuth(`/follow/${_id}`, "PUT").then((res) => {
-      console.log("hh", res);
+      console.log("hh-------", res);
       dispatch({
         type: "UPDATE",
         payload: { following: res.result.myData.following },
@@ -67,19 +65,20 @@ const Followers = () => {
         })
       );
     });
-    await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
-      console.log("followers==", res);
+    // await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
+    //   console.log("followers==", res);
 
-      setFollowers(res.result.followers);
-    });
-    await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
-      console.log("following==", res);
-      setFollowing(res.result.following);
-    });
+    //   setFollowers(res.result.followers);
+    // });
+    // await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
+    //   console.log("following==", res);
+    //   setFollowing(res.result.following);
+    // });
   };
   const clickUnfollow = async (_id) => {
     alert("unfollow");
     await FetchWithAuth(`/unfollow/${_id}`, "PUT").then((res) => {
+      console.log("kmkm", res);
       dispatch({
         type: "UPDATE",
         payload: { following: res.result.myData.following },
@@ -94,68 +93,24 @@ const Followers = () => {
         })
       );
     });
-    await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
-      console.log("followers//", res);
-      setFollowers(res.result.followers);
-    });
-    await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
-      console.log("following//", res);
-      setFollowing(res.result.following);
-    });
+    // await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
+    //   console.log("followers//", res);
+    //   setFollowers(res.result.followers);
+    // });
+    // await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
+    //   console.log("following//", res);
+    //   setFollowing(res.result.following);
+    // });
   };
-  const renderUsers = (datas) =>
-    datas.map((data, i) => {
+  const renderUsers = (users) =>
+    users.map((user, i) => {
       return (
-        <div key={data._id} className={"flex alignCenter spacebt"}>
-          <div className={"flex alignCenter"}>
-            <p
-              className={"overhidden radius50 pointer"}
-              style={{ width: 50, height: 50, marginRight: 12 }}
-              onClick={() =>
-                navigate(`/profile/${data.userName}`, {
-                  state: { _id: data._id },
-                })
-              }
-            >
-              <img
-                src={data.photo}
-                alt={"follower profile pic"}
-                className={"imgFit"}
-              />
-            </p>
-            <div
-              className={"pointer"}
-              onClick={() =>
-                navigate(`/profile/${data.userName}`, {
-                  state: { _id: data._id },
-                })
-              }
-            >
-              <p>
-                <b>{data.userName}</b>
-              </p>
-              <p
-                className={"lightGray"}
-                style={{ fontSize: "0.9em", paddingTop: 4 }}
-              >
-                {data.fullName}
-              </p>
-            </div>
-          </div>
-          <FollowButton
-            onClick={() =>
-              state?.following.includes(data._id)
-                ? clickUnfollow(data._id)
-                : clickFollow(data._id)
-            }
-          >
-            <b>
-              {state && state?.following?.includes(data._id)
-                ? "Following"
-                : "Follow"}
-            </b>
-          </FollowButton>
-        </div>
+        <UserListSkeleton
+          key={user._id}
+          userName={user.userName}
+          user={user}
+          isFollowing={user.isFollowing}
+        />
       );
     });
 
