@@ -17,8 +17,10 @@ import { useLocation } from "react-router";
 import Likes from "./components/screens/Likes";
 import Comments from "./components/screens/Comments";
 import ChangePW from "./components/screens/ChangePW";
+import { ConnectSocket } from "./socket/SocketActions";
 
 export const UserContext = createContext();
+export const SocketContext = createContext();
 
 function AllRoutes() {
   const { state, dispatch } = useContext(UserContext);
@@ -36,6 +38,8 @@ function AllRoutes() {
     const user = sessionStorage.getItem("user");
     if (!user) {
       return navigate("/signin");
+    } else {
+      ConnectSocket();
     }
     dispatch({ type: "USER", payload: JSON.parse(user) });
   }, []);

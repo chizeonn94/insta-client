@@ -118,6 +118,7 @@ const Comments = () => {
     })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         setData(res.comment.comments);
         setCommentValue("");
       });
