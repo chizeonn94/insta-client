@@ -7,6 +7,7 @@ import { Avatar } from "@mui/material";
 import { DEFAULT_IMG, GetfetchWithAuth } from "../../Constants";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../App";
+import { useDispatch, useSelector } from "react-redux";
 // import { FacebookShareButton, InstapaperShareButton, TwitterShareButton } from 'react-share';
 
 const FaceBookCard = styled.div`
@@ -20,8 +21,11 @@ const FaceBookCard = styled.div`
 `;
 
 const ProfilePopUp = () => {
+  const state = useSelector((state) => state);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state, dispatch } = useContext(UserContext);
+
   const userName = sessionStorage.getItem("userName");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -55,7 +59,7 @@ const ProfilePopUp = () => {
   return (
     <React.Fragment>
       <Avatar
-        src={state?.photo || DEFAULT_IMG}
+        src={state?.user?.photo || DEFAULT_IMG}
         className={"pointer"}
         onClick={handleClick}
         sx={{ width: 24, height: 24 }}
@@ -101,8 +105,8 @@ const ProfilePopUp = () => {
         <MenuItem>
           <p
             onClick={() =>
-              navigate(`/profile/${state.userName}`, {
-                state: { _id: state._id },
+              navigate(`/profile/${state?.user?.userName}`, {
+                state: { _id: state?.user?._id },
               })
             }
           >

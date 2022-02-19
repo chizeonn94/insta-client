@@ -11,10 +11,13 @@ import {
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
 import { FollowButton } from "./homeStyle";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserListSkeleton = ({ user, isFollowing }) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const location = useLocation();
-  const { state, dispatch } = useContext(UserContext);
+
   const navigate = useNavigate();
   const [following, setFollowing] = useState(isFollowing);
   const clickFollow = async (_id) => {
@@ -74,7 +77,7 @@ const UserListSkeleton = ({ user, isFollowing }) => {
             </p>
           </div>
         </div>
-        {user._id !== state._id && (
+        {user._id !== state?.user?._id && (
           <FollowButton
             onClick={() =>
               following ? clickUnfollow(user._id) : clickFollow(user._id)

@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import { UserContext } from "../../App";
 import {
@@ -12,8 +13,10 @@ import { FollowButton } from "./homeStyle";
 
 const Profile = () => {
   const location = useLocation();
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const userName = location.pathname.split("/")[2];
-  const { state, dispatch } = useContext(UserContext);
+
   const [profilePic, setProfilePic] = useState("");
   const navigate = useNavigate();
   const [data, setData] = useState("");
@@ -30,7 +33,7 @@ const Profile = () => {
       setUserInfo(userData);
       setIsFollowing(userData.isFollowing);
     });
-    // FetchWithAuth(`/post/${location.state._id}`, "GET").then((data) => {
+    // FetchWithAuth(`/post/${location.state?.user?._id}`, "GET").then((data) => {
     //   console.log(data);
     //   setData(data.posts);
     // });
@@ -59,11 +62,14 @@ const Profile = () => {
           setIsFollowing(!isFollowing);
           if (followOrUnfollow == "follow") {
             let followers = userInfo.followers;
-            setUserInfo({ ...userInfo, followers: followers.push(state._id) });
+            setUserInfo({
+              ...userInfo,
+              followers: followers.push(state?.user?._id),
+            });
           } else {
             let followers = userInfo.followers;
-            followers.indexOf(state._id) !== -1 &&
-              followers.splice(followers.indexOf(state._id), 1);
+            followers.indexOf(state?.user?._id) !== -1 &&
+              followers.splice(followers.indexOf(state?.user?._id), 1);
             setUserInfo({ ...userInfo, followers: followers });
           }
           console.log(userInfo);

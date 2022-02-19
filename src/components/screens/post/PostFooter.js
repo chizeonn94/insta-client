@@ -9,6 +9,9 @@ import { UserContext } from "../../../App";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useNavigate } from "react-router";
+import { useAppState } from "../../../AppState";
+import { useDispatch } from "react-redux";
+
 const Container = styled.div`
   width: 100%;
   padding: 10px;
@@ -40,8 +43,9 @@ const PostFooter = ({
   createdAt,
   pressedLiked,
 }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state, dispatch } = useContext(UserContext);
+
   const [isExpended, setIsExpended] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedlikes, setSelectedLikes] = useState(likes);

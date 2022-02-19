@@ -12,11 +12,13 @@ import {
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
 import { FollowButton } from "./homeStyle";
+import { useSelector } from "react-redux";
 
 const Comments = () => {
+  const state = useSelector((state) => state);
   const location = useLocation();
   const postId = location.pathname.split("/")[2];
-  const { state, dispatch } = useContext(UserContext);
+
   const navigate = useNavigate();
   const [data, setData] = useState("");
   const [postData, setPostData] = useState("");
@@ -111,7 +113,7 @@ const Comments = () => {
       },
       body: JSON.stringify({
         text: commentValue,
-        postedBy: state._id,
+        postedBy: state?.user?._id,
       }),
       redirect: "follow", // manual, *follow, error
       //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url

@@ -11,8 +11,8 @@ import {
 } from "./loginStyle/loginStyle";
 import { Divider, TextField } from "@mui/material";
 import axios from "axios";
+
 const Signin = () => {
-  const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

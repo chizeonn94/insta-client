@@ -12,11 +12,13 @@ import {
 import { useLocation } from "react-router-dom";
 import { FollowButton } from "./homeStyle";
 import UserListSkeleton from "./UserListSkeleton";
-
+import { useDispatch, useSelector } from "react-redux";
 const Followers = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const location = useLocation();
   const userName = location.pathname.split("/")[2];
-  const { state, dispatch } = useContext(UserContext);
+
   const [profilePic, setProfilePic] = useState("");
   const navigate = useNavigate();
   const [data, setData] = useState("");
@@ -24,6 +26,7 @@ const Followers = () => {
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
+
   useEffect(() => {
     console.log(state);
     // console.log(selectedMode);

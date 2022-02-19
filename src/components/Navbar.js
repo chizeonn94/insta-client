@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ProfilePopUp from "./profile/ProfilePopUp";
 import PostDialog from "./screens/PostDialog";
 import SearchBar from "./screens/SearchBar";
+import { useDispatch } from "react-redux";
 const NavCover = styled.div`
   width: 100%;
   max-width: 600px;
@@ -32,8 +33,9 @@ const CustomLink = styled.span`
 `;
 /////////////////////////////////////////
 const Navbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state, dispatch } = useContext(UserContext);
+
   const [openPopUp, setOpenPopUp] = useState(false);
   const [openPostDialog, setOpenPostDialog] = useState(false);
 

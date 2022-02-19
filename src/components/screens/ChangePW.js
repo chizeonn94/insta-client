@@ -1,5 +1,6 @@
 import { Avatar, Button, TextField } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { UserContext } from "../../App";
 import { DEFAULT_IMG, FetchWithAuth, LOCAL_API } from "../../Constants";
 //import { connect } from "react-redux";
@@ -20,7 +21,7 @@ import { DEFAULT_IMG, FetchWithAuth, LOCAL_API } from "../../Constants";
 // import div from "../SettingsForm/div/div";
 
 const ChangePW = ({ currentUser, token, showAlert }) => {
-  const { state, dispatch } = useContext(UserContext);
+  const state = useSelector((state) => state);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -72,7 +73,10 @@ const ChangePW = ({ currentUser, token, showAlert }) => {
   return (
     <form onSubmit={(event) => handleSubmit(event)}>
       <div>
-        <Avatar className="avatar--small" src={state?.photo || DEFAULT_IMG} />
+        <Avatar
+          className="avatar--small"
+          src={state?.user?.photo || DEFAULT_IMG}
+        />
         <h1 className="font-medium" style={{ fontSize: "2.5rem" }}>
           {state?.userName}
         </h1>

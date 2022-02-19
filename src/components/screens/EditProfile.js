@@ -11,6 +11,7 @@ import {
   LOCAL_API,
 } from "../../Constants";
 import { UserContext } from "../../App";
+import { useDispatch, useSelector } from "react-redux";
 const useStyles = makeStyles({
   fieldName: {
     width: "30%",
@@ -22,7 +23,8 @@ const useStyles = makeStyles({
   inputField: { width: "100%" },
 });
 const EditProfile = () => {
-  const { state, dispatch } = useContext(UserContext);
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const classes = useStyles();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({

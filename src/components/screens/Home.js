@@ -12,10 +12,13 @@ import { Avatar } from "@mui/material";
 import { PostContainer, PostHeader } from "./homeStyle";
 import PostFooter from "./post/PostFooter";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+
 const Home = () => {
+  const state = useSelector((state) => state);
+  console.log("state>llll>", state);
   const navigate = useNavigate();
   const [data, setData] = useState("");
-  const { state, dispatch } = useContext(UserContext);
   const token = sessionStorage.getItem("token");
   // console.log("data", data);
   useEffect(() => {

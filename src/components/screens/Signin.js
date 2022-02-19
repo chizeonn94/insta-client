@@ -11,8 +11,15 @@ import {
 } from "./loginStyle/loginStyle";
 import { Divider, TextField } from "@mui/material";
 import axios from "axios";
-const Signin = () => {
-  const { state, dispatch } = useContext(UserContext);
+//import { useDispatch, useSelector } from "react-redux";
+import { connectSocket } from "../../socket/SocketActions";
+import userTypes from "../../actionTypes/userTypes";
+import { connect, useSelector } from "react-redux";
+import { signInStart } from "../../actions/userActions";
+
+const Signin = ({ signInStart }) => {
+  //const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,29 +34,38 @@ const Signin = () => {
 
   const submitHandler = async () => {
     try {
-      const response = await axios.post(`${LOCAL_API}/signin`, {
-        email,
-        password,
-      });
-      console.log("response :", response);
-      const parsed = JSON.parse(response.data.user);
-      console.log("parsed", JSON.parse(response.data.user));
-      if (response.status === 201) {
-        alert("successfully signed in");
-        sessionStorage.setItem("token", response.data.token);
-        sessionStorage.setItem("user", response.data.user);
-        sessionStorage.setItem("userName", parsed.userName);
+      // const response = await axios.post(`${LOCAL_API}/signin`, {
+      //   email,
+      //   password,
+      //   authToken: null,
+      // });
+      // console.log("response :", response);
+      // const parsed = JSON.parse(response.data.user);
+      // console.log("parsed", JSON.parse(response.data.user));
+      // if (response.status === 201) {
+      //   alert("successfully signed in");
+      //   sessionStorage.setItem("token", response.data.token);
+      //   sessionStorage.setItem("user", response.data.user);
+      //   sessionStorage.setItem("userName", parsed.userName);
 
-        dispatch({ type: "USER", payload: parsed });
+      //   //dispatch({ type: userTypes.SIGN_IN_SUCCESS, payload: parsed });
+      //   signInStart(parsed);
+      //   navigate("/");
+      //   setEmail("");
+      //   setPassword("");
+      // } else {
+      //   alert("unable to signin");
+      //   throw new Error("Could not log in");
+      // }
+      alert("click");
+
+      signInStart(email, password, null);
+      if (state.user) {
         navigate("/");
-        setEmail("");
-        setPassword("");
-      } else {
-        alert("unable to signin");
-        throw new Error("Could not log in");
       }
     } catch (error) {
       alert(error);
+      alert("catch");
       console.log(error);
     }
   };
@@ -135,4 +151,10 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+// export default Signin;
+
+const mapDispatchToProps = (dispatch) => ({
+  signInStart: (email, password) => dispatch(signInStart(email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(Signin);

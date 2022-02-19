@@ -1,12 +1,10 @@
-import { useContext } from "react";
-import { SocketContext } from "../App";
-import { connect } from "./SocketServices";
+import { readyToconnect } from "./SocketServices";
 
-export const ConnectSocket = () => {
-  const { state, dispatch } = useContext(SocketContext);
-  const socket = connect();
+export const connectSocket = (dispatch) => {
+  const socket = readyToconnect();
 
   dispatch({ type: "CONNECT", payload: socket });
+  console.log("connecting socket");
 
   socket.on("newNotification", (data) => {
     dispatch({ type: "ADD_NOTIFICATION", payload: data });

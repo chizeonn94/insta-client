@@ -1,33 +1,36 @@
+import notificationTypes from "../actionTypes/notificationTypes";
+
 const INITIAL_STATE = {
   notifications: [],
   unreadCount: 0,
   fetching: false,
   error: false,
 };
-const NotificationReducer = (state = INITIAL_STATE, action) => {
+
+const notificationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "ADD_NOTIFICATION": {
+    case notificationTypes.ADD_NOTIFICATION: {
       return {
         ...state,
         notifications: [action.payload, ...state.notifications],
         unreadCount: state.unreadCount + 1,
       };
     }
-    case "FETCH_NOTIFICATIONS_START": {
+    case notificationTypes.FETCH_NOTIFICATIONS_START: {
       return {
         ...state,
         fetching: true,
         error: false,
       };
     }
-    case "FETCH_NOTIFICATIONS_FAILURE": {
+    case notificationTypes.FETCH_NOTIFICATIONS_FAILURE: {
       return {
         ...state,
         fetching: false,
         error: action.payload,
       };
     }
-    case "FETCH_NOTIFICATIONS_SUCCESS": {
+    case notificationTypes.FETCH_NOTIFICATIONS_SUCCESS: {
       const unreadCount = action.payload.filter(
         (notification) => notification.read === false
       ).length;
@@ -39,7 +42,7 @@ const NotificationReducer = (state = INITIAL_STATE, action) => {
         unreadCount,
       };
     }
-    case "READ_NOTIFICATIONS": {
+    case notificationTypes.READ_NOTIFICATIONS: {
       const notifications = JSON.parse(JSON.stringify(state.notifications));
       notifications.forEach((notification) => (notification.read = true));
       return {
@@ -48,7 +51,7 @@ const NotificationReducer = (state = INITIAL_STATE, action) => {
         notifications,
       };
     }
-    case "CLEAR_NOTIFICATIONS": {
+    case notificationTypes.CLEAR_NOTIFICATIONS: {
       return {
         ...state,
         unreadCount: 0,
@@ -61,4 +64,4 @@ const NotificationReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default NotificationReducer;
+export default notificationReducer;

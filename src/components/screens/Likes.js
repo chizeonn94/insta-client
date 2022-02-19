@@ -12,49 +12,15 @@ import {
 import { useLocation } from "react-router-dom";
 import { FollowButton } from "./homeStyle";
 import UserListSkeleton from "./UserListSkeleton";
+import { useDispatch, useSelector } from "react-redux";
 
 const Likes = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const location = useLocation();
-  const { state, dispatch } = useContext(UserContext);
+
   const navigate = useNavigate();
 
-  const clickFollow = async (_id) => {
-    //alert("follow");
-    await FetchWithAuth(`/follow/${_id}`, "PUT").then((res) => {
-      console.log("hh", res);
-      dispatch({
-        type: "UPDATE",
-        payload: { following: res.result.myData.following },
-      });
-      const user = JSON.parse(sessionStorage.getItem("user"));
-
-      sessionStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...user,
-          following: res.result.myData.following,
-        })
-      );
-    });
-  };
-  const clickUnfollow = async (_id) => {
-    //alert("unfollow");
-    await FetchWithAuth(`/unfollow/${_id}`, "PUT").then((res) => {
-      dispatch({
-        type: "UPDATE",
-        payload: { following: res.result.myData.following },
-      });
-      const user = JSON.parse(sessionStorage.getItem("user"));
-
-      sessionStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...user,
-          following: res.result.myData.following,
-        })
-      );
-    });
-  };
   const renderUsers = (users) =>
     users.map((user, i) => {
       return (
