@@ -22,12 +22,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...action.payload,
       };
     }
-    case "hi": {
-      console.log("hi");
-      return {
-        ...state,
-      };
-    }
     case userTypes.SIGN_UP_FAILURE:
     case userTypes.SIGN_IN_FAILURE: {
       return {
@@ -39,8 +33,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case userTypes.SIGN_OUT: {
       return {
         ...state,
-        currentUser: null,
-        token: null,
+        user: null,
       };
     }
     case userTypes.BOOKMARK_POST: {

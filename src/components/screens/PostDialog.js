@@ -57,12 +57,12 @@ export default function PostDialog({ openPostDialog, setOpenPostDialog }) {
         console.log(err);
       });
   };
-  const postData = (url) => {
+  const postData = async (url) => {
     // if (!title || !body || !url) {
     //   return alert("please add all the fields");
     // }
     console.log({ title, body, photo: url });
-    fetch(`${LOCAL_API}/createpost`, {
+    await fetch(`${LOCAL_API}/createpost`, {
       method: "POST", // or 'PUT'
       //mode: "no-cors",
       headers: {

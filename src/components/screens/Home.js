@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const state = useSelector((state) => state);
-  console.log("state>llll>", state);
   const navigate = useNavigate();
   const [data, setData] = useState("");
   const token = sessionStorage.getItem("token");
@@ -24,48 +23,16 @@ const Home = () => {
   useEffect(() => {
     if (token) {
       GetfetchWithAuth(`/allpost`).then((data) => {
-        console.log("state>>.", data);
         data.posts.sort((a, b) => b.createdAt - a.createdAt);
         setData(data?.posts);
       });
     }
   }, []);
-  const likepost = (id) => {
-    alert("like");
-    FetchWithAuth(`/like/${id}`, "PUT")
-      //.then((res) => res.json())
-      .then((result) => {
-        const newData = data.map((item) => {
-          if (item._id == result._id) {
-            return result;
-          } else {
-            return item;
-          }
-        });
-        setData(newData);
-      });
-  };
 
-  const dislikepost = (id) => {
-    alert("dislike");
-    FetchWithAuth(`/unlike/${id}`, "PUT")
-      //.then((res) => res.json())
-      .then((result) => {
-        const newData = data.map((item) => {
-          if (item._id == result._id) {
-            return result;
-          } else {
-            return item;
-          }
-        });
-        setData(newData);
-      });
-  };
   return (
     <PostContainer className="home">
       {data &&
         data.map((post) => {
-          console.log(post.likes);
           return (
             <div className="card home-card" key={post._id}>
               <PostHeader style={{ display: "flex" }}>

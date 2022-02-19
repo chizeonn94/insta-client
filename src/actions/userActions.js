@@ -5,7 +5,6 @@ import { LOCAL_API } from "../Constants";
 import store from "../redux/store";
 
 export const signInSuccess = (res) => {
-  console.log("signin successs>>>>>", res);
   sessionStorage.setItem("token", res.token);
   return {
     type: userTypes.SIGN_IN_SUCCESS,
@@ -14,8 +13,6 @@ export const signInSuccess = (res) => {
 };
 
 export const signInStart = (email, password, authToken) => async (dispatch) => {
-  alert("siginin start");
-
   dispatch({ type: userTypes.SIGN_IN_START });
 
   if (authToken) {

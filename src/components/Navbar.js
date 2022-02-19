@@ -6,6 +6,7 @@ import ProfilePopUp from "./profile/ProfilePopUp";
 import PostDialog from "./screens/PostDialog";
 import SearchBar from "./screens/SearchBar";
 import { useDispatch } from "react-redux";
+import NotificationBox from "./NotificationBox";
 const NavCover = styled.div`
   width: 100%;
   max-width: 600px;
@@ -68,8 +69,19 @@ const Navbar = () => {
         <CustomLink to="/">
           <i className="far fa-compass pointer"></i>
         </CustomLink>
-        <CustomLink to="/">
+
+        <CustomLink to="/" style={{ position: "relative" }}>
           <i className="far fa-heart pointer"></i>
+          <div
+            style={{
+              position: "absolute",
+              top: "100%",
+              left: "50%",
+              transform: "translate(-50%,0)",
+            }}
+          >
+            <NotificationBox />
+          </div>
         </CustomLink>
 
         <ProfilePopUp onClick={() => alert("hi")} />

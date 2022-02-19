@@ -31,7 +31,7 @@ const SearchBar = ({ style, setResult, onClick }) => {
       body: JSON.stringify({ query }),
     })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         return response.json();
       })
       .then((res) => {
