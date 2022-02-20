@@ -21,6 +21,7 @@ const FaceBookCard = styled.div`
 `;
 
 const ProfilePopUp = () => {
+  const token = sessionStorage.getItem("token");
   const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -48,7 +49,9 @@ const ProfilePopUp = () => {
     navigate("/signin");
   };
   useEffect(() => {
-    if (open) {
+    if (open && token) {
+      console.log(open);
+      console.log(token);
       GetfetchWithAuth("/myprofile").then((res) => {
         console.log("profile", res);
         const userData = res.userData;

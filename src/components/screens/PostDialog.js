@@ -21,6 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function PostDialog({ openPostDialog, setOpenPostDialog }) {
+  const token = sessionStorage.getItem("token");
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState("");
@@ -100,11 +101,13 @@ export default function PostDialog({ openPostDialog, setOpenPostDialog }) {
     photo: "",
   });
   React.useEffect(() => {
-    GetfetchWithAuth("/myprofile").then((res) => {
-      console.log("profile", res);
-      const userData = res.userData;
-      setUserInfo(userData);
-    });
+    if (token) {
+      GetfetchWithAuth("/myprofile").then((res) => {
+        console.log("profile", res);
+        const userData = res.userData;
+        setUserInfo(userData);
+      });
+    }
   }, []);
 
   const clickArrow = () => {

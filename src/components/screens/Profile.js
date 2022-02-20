@@ -33,10 +33,10 @@ const Profile = () => {
       setUserInfo(userData);
       setIsFollowing(userData.isFollowing);
     });
-    // FetchWithAuth(`/post/${location.state?.user?._id}`, "GET").then((data) => {
-    //   console.log(data);
-    //   setData(data.posts);
-    // });
+    FetchWithAuth(`/usersposts/${userName}`, "GET").then((data) => {
+      console.log("sgsgs", data);
+      setData(data.posts);
+    });
     FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
       console.log(res);
       setFollowers(res.result.followers);
@@ -135,7 +135,7 @@ const Profile = () => {
           </div>
         </div>
         <div>
-          {userName == state?.userName && (
+          {userName == state?.user.userName && (
             <Button
               fullWidth
               variant={"outlined"}
@@ -146,7 +146,7 @@ const Profile = () => {
               edit profile
             </Button>
           )}
-          {userName !== state?.userName && (
+          {userName !== state?.user.userName && (
             <FollowButton>
               <b onClick={handleClick}>
                 {isFollowing ? "Following" : "Follow"}

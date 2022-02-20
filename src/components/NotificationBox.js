@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import styled from "styled-components";
-import ProfilePopUp from "./profile/ProfilePopUp";
-import PostDialog from "./screens/PostDialog";
-import SearchBar from "./screens/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
+import FollowButton from "./FollowButton";
+import { Menu } from "@mui/material";
+import NotificationBubble from "./NotificationBubble";
 const NavCover = styled.div`
   width: 100%;
   max-width: 600px;
@@ -36,39 +36,92 @@ const NotificationBox = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const navigate = useNavigate();
-
-  const [openPopUp, setOpenPopUp] = useState(false);
-  const [openPostDialog, setOpenPostDialog] = useState(false);
-
-  const logout = () => {
-    sessionStorage.clear();
-    dispatch({ type: "CLEAR" });
-    navigate("/signin");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    alert("click");
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const renderType = (type) => {
+    switch (type) {
+      case "like":
+        return "liked your photo";
+      case "follow":
+        return "started following you";
+      case "comment":
+        return "commented:";
+      default:
+        return;
+    }
   };
 
-  const user = sessionStorage.getItem("user");
   return (
     <div>
-      {state.notifications.notifications.map((noti, i) => {
-        return (
-          <div className={"flex alignCenter"}>
+      <span onClick={handleClick}>
+        <i className="far fa-heart pointer"></i>
+      </span>
+      {state?.notifications?.unreadCount > 0 && <p className={"underDot"} />}
+      <NotificationBubble />
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+      >
+        {state?.notifications?.notifications.map((noti, i) => {
+          return (
             <div
-              onClick={() => navigate(`/profile/${noti.sender.username}`)}
+              key={`notification-${i}`}
               className={"flex alignCenter"}
+              style={{ padding: 10 }}
             >
-              <p
-                className={"flex alignCenter radius50 overhidden"}
-                style={{ width: 30, height: 30 }}
+              <div
+                onClick={() => navigate(`/profile/${noti.sender.userName}`)}
+                className={"flex alignCenter pointer"}
+                style={{ borderBottom: "1px solid #ccc" }}
               >
-                <img src={noti.sender.avatar} alt={""} className={"imgFit "} />
-              </p>
+                <p
+                  className={"radius50 overhidden"}
+                  style={{ width: 30, height: 30, border: "1px solid green" }}
+                >
+                  <img src={noti.sender.photo} alt={""} className={"imgFit"} />
+                </p>
+                <div>
+                  <p style={{ fontSize: "0.9em" }}>{noti.sender.userName}</p>
+                  <p style={{ fontSize: "0.9em" }}>
+                    {renderType(noti.notificationType)}
+                    {noti.notificationData?.comment}
+                  </p>
+                </div>
+              </div>
               <div>
-                <p style={{ fontSize: "0.9em" }}>{noti.sender.username}</p>
+                {noti.notificationType === "comment" ||
+                noti.notificationType === "like" ? (
+                  <p className={"overhidden"} style={{ width: 60, height: 80 }}>
+                    <img
+                      src={noti.notificationData.photo}
+                      alt={""}
+                      className={"imgFit"}
+                    />
+                  </p>
+                ) : (
+                  ""
+                )}
+
+                {noti.notificationType === "follow" && (
+                  <FollowButton
+                    isFollowing={noti.isFollowing}
+                    userId={noti.sender._id}
+                  />
+                )}
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </Menu>
     </div>
   );
 };

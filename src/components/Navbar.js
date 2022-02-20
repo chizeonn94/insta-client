@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ProfilePopUp from "./profile/ProfilePopUp";
 import PostDialog from "./screens/PostDialog";
 import SearchBar from "./screens/SearchBar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NotificationBox from "./NotificationBox";
 const NavCover = styled.div`
   width: 100%;
@@ -34,6 +34,7 @@ const CustomLink = styled.span`
 `;
 /////////////////////////////////////////
 const Navbar = () => {
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,7 +47,7 @@ const Navbar = () => {
     navigate("/signin");
   };
 
-  const user = sessionStorage.getItem("user");
+  const user = sessionStorage.getItem("token");
   return (
     <NavCover>
       <LogoCover
@@ -71,17 +72,7 @@ const Navbar = () => {
         </CustomLink>
 
         <CustomLink to="/" style={{ position: "relative" }}>
-          <i className="far fa-heart pointer"></i>
-          <div
-            style={{
-              position: "absolute",
-              top: "100%",
-              left: "50%",
-              transform: "translate(-50%,0)",
-            }}
-          >
-            <NotificationBox />
-          </div>
+          <NotificationBox />
         </CustomLink>
 
         <ProfilePopUp onClick={() => alert("hi")} />

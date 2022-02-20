@@ -97,6 +97,15 @@ textarea:focus {
   height: 100%;
   object-fit: cover;
 }
+.underDot {
+  width: 5px;
+  height: 5px;
+  background-color: green;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
 @media only screen and (max-width: 600px) {
   .item {
     width: 33.3vw;

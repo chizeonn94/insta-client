@@ -27,7 +27,7 @@ const Home = () => {
         setData(data?.posts);
       });
     }
-  }, []);
+  }, [token]);
 
   return (
     <PostContainer className="home">
