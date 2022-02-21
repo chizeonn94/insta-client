@@ -102,10 +102,7 @@ const EditProfile = () => {
 
         dispatch({ type: "USER", payload: res.newUser });
       })
-      // .then((res) => {
-      //   console.log(res);
-      //   alert(res.error);
-      // })
+
       .catch((error) => {
         alert("error", error);
         console.log("Error:", error);

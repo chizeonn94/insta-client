@@ -58,17 +58,8 @@ const Navbar = () => {
       </LogoCover>
       <SearchBar />
       <RightButtonsCover>
-        <CustomLink to="/">
-          <i className="fas fa-home pointer"></i>
-        </CustomLink>
-        <CustomLink to="/chat">
-          <i className="fab fa-telegram-plane pointer"></i>
-        </CustomLink>
         <CustomLink to="/chat" onClick={() => setOpenPostDialog(true)}>
           <i className="far fa-plus-square pointer"></i>
-        </CustomLink>
-        <CustomLink to="/">
-          <i className="far fa-compass pointer"></i>
         </CustomLink>
 
         <CustomLink to="/" style={{ position: "relative" }}>

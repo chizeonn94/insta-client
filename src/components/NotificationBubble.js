@@ -9,10 +9,29 @@ const BubbleOuter = styled.div`
   align-items: center;
   background-color: green;
   border-bottom: 1px solid #aaa;
+  padding: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin-top: 20px;
+  border-radius: 10px;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 9px;
+    bottom: 100%;
+    background-color: green;
+    -webkit-clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    box-shadow: 0 0 30px 0px #999;
+  },
 `;
 
 /////////////////////////////////////////
-const NotificationBubble = () => {
+const NotificationBubble = ({ follow, like, comment }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const navigate = useNavigate();
@@ -40,7 +59,11 @@ const NotificationBubble = () => {
 
   return (
     <div>
-      <BubbleOuter>{}nnn</BubbleOuter>
+      <BubbleOuter>
+        <i className="fa-solid fa-user"></i>&nbsp;{follow}&nbsp;&nbsp;
+        <i className="fa-solid fa-comment"></i>&nbsp;{comment}&nbsp;&nbsp;
+        <i className="fa-solid fa-image"></i>&nbsp;{like}
+      </BubbleOuter>
     </div>
   );
 };

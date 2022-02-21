@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  createContext,
-  useReducer,
-  useContext,
-  Fragment,
-} from "react";
+import React, { useEffect, createContext, useReducer, useContext } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
@@ -22,16 +16,18 @@ import Likes from "./components/screens/Likes";
 import Comments from "./components/screens/Comments";
 import ChangePW from "./components/screens/ChangePW";
 import { connectSocket } from "./socket/SocketActions";
-
-import { connect, Provider } from "react-redux";
-import { selectCurrentUser } from "./redux/usreSelectors";
-import { readyToconnect } from "./socket/SocketServices";
+import { connect, Provider, useSelector } from "react-redux";
 import { signInStart } from "./actions/userActions";
 import { fetchNotificationsStart } from "./actions/notificationActions";
 
-export function App({ signInStart, connectSocket, fetchNotificationsStart }) {
+export function App({
+  user,
+  signInStart,
+  connectSocket,
+  fetchNotificationsStart,
+}) {
   const navigate = useNavigate();
-
+  const state = useSelector((state) => state);
   const location = useLocation();
   const isNeedNav = () => {
     const path = location.pathname;
@@ -44,7 +40,7 @@ export function App({ signInStart, connectSocket, fetchNotificationsStart }) {
   const token = sessionStorage.getItem("token");
 
   useEffect(() => {
-    console.log("token in app.js", token);
+    // console.log("token in app.js", token);
     if (token) {
       signInStart(null, null, token);
       connectSocket();
@@ -52,10 +48,10 @@ export function App({ signInStart, connectSocket, fetchNotificationsStart }) {
     } else {
       navigate("/signin");
     }
-  }, [token]);
+  }, [signInStart, token]);
   const renderAllRoutes = () => {
     return (
-      <Fragment>
+      <div>
         {isNeedNav() && <Navbar />}
         <Routes>
           <Route path="/" element={<Home />} />
@@ -70,11 +66,14 @@ export function App({ signInStart, connectSocket, fetchNotificationsStart }) {
           <Route path="/changepassword" element={<ChangePW />} />
           <Route path="/chat" element={<Chat />} />
         </Routes>
-      </Fragment>
+      </div>
     );
   };
   return <div>{renderAllRoutes()}</div>;
 }
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   signInStart: (usernameOrEmail, password, token) =>
@@ -82,4 +81,4 @@ const mapDispatchToProps = (dispatch) => ({
   connectSocket: () => dispatch(connectSocket()),
   fetchNotificationsStart: (token) => dispatch(fetchNotificationsStart(token)),
 });
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

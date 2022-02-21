@@ -1,3 +1,4 @@
+import { fetchNotificationsStart } from "../actions/notificationActions";
 import notificationTypes from "../actionTypes/notificationTypes";
 import { connect } from "./SocketServices";
 
@@ -10,7 +11,9 @@ export const connectSocket = () => (dispatch) => {
   socket.on("newNotification", (data) => {
     console.log("newNotification", data);
     // alert("received newNotification");
-    dispatch({ type: notificationTypes.ADD_NOTIFICATION, payload: data });
+    //dispatch({ type: notificationTypes.ADD_NOTIFICATION, payload: data });
+    const token = sessionStorage.getItem("token");
+    dispatch(fetchNotificationsStart(token));
   });
 
   socket.on("newPost", (data) => {

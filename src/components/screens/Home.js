@@ -60,14 +60,7 @@ const Home = () => {
               <div className="card-image">
                 <img src={post.photo} className={"width100"} />
               </div>
-              {/* <div className="card-content">
-              <i className="material-icons" style={{ color: "red" }}>
-              favorite
-              </i>
-              <h6>title</h6>
-              <p>{post.title}</p>
-              <input type="text" placeholder="add a comment" />
-            </div> */}
+
               <PostFooter
                 postId={post._id}
                 title={post.title}
