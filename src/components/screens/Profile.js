@@ -153,14 +153,17 @@ const Profile = () => {
               </b>
             </FollowButton>
           )}
-          <button onClick={() => logout()}>Log out</button>
         </div>
       </div>
 
       <div className={"gallery"}>
         {data?.length > 0 &&
           data?.map((post, i) => (
-            <p className={"item"} key={`photo-${i}`}>
+            <p
+              className={"item pointer"}
+              key={`photo-${i}`}
+              onClick={() => navigate(`/post/${post._id}`)}
+            >
               <img key={post._id} src={post.photo} />
             </p>
           ))}

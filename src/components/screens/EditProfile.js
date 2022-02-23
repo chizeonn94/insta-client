@@ -102,7 +102,6 @@ const EditProfile = () => {
 
         dispatch({ type: "USER", payload: res.newUser });
       })
-
       .catch((error) => {
         alert("error", error);
         console.log("Error:", error);
@@ -132,7 +131,7 @@ const EditProfile = () => {
             className={"radius50 overhidden"}
           >
             <img
-              className={"width100"}
+              className={"imgFit"}
               src={
                 file instanceof File
                   ? URL.createObjectURL(file)

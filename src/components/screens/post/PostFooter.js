@@ -20,13 +20,14 @@ const Container = styled.div`
 `;
 const IconContainer = styled.div`
   font-size: 25px;
+  align-items: center;
   display: flex;
   gap: 15%;
 `;
 const Content = styled.div`
 width: 100%
 height: ${({ expended }) => (expended ? "" : "5vh")};
-padding: 10px 10px 0 10px;
+padding: 0px 10px;
 `;
 const InputContainer = styled.div`
   width: 100%;
@@ -42,6 +43,7 @@ const PostFooter = ({
   likes,
   createdAt,
   pressedLiked,
+  userName,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,10 +56,7 @@ const PostFooter = ({
   const [like, setLike] = useState(pressedLiked);
 
   const clickHeart = async (likeOrUnlike) => {
-    //alert(likeOrUnlike);
-    // console.log(likeOrUnlike);
     await FetchWithAuth(`/${likeOrUnlike}/${postId}`, "PUT").then((res) => {
-      console.log("++", res);
       setLike(!like);
       setSelectedLikes(res.result.likes);
     });
@@ -68,21 +67,6 @@ const PostFooter = ({
       return (
         <div key={data._id} className={"flex alignCenter spacebt"}>
           <div className={"flex alignCenter"}>
-            <p
-              className={"overhidden radius50 pointer"}
-              style={{ width: 30, height: 30, marginRight: 12 }}
-              onClick={() =>
-                navigate(`/profile/${data.postedBy.userName}`, {
-                  state: { _id: data._id },
-                })
-              }
-            >
-              <img
-                src={data.postedBy?.photo}
-                alt={"follower profile pic"}
-                className={"imgFit"}
-              />
-            </p>
             <div
               className={"pointer"}
               onClick={() =>
@@ -109,18 +93,22 @@ const PostFooter = ({
       <Container>
         <IconContainer>
           <span
-            style={{}}
+            style={{ marginRight: 7 }}
             className={"pointer"}
             onClick={() => {
               like ? clickHeart("unlike") : clickHeart("like");
             }}
           >
             {like ? (
-              <FavoriteIcon style={{ color: "rgb(237, 73, 86)" }} />
+              <i
+                className="fa-solid fa-heart pointer"
+                style={{ color: "rgb(237, 73, 86) !important" }}
+              ></i>
             ) : (
-              <FavoriteBorderIcon />
+              <i className="fa-regular fa-heart pointer"></i>
             )}
           </span>
+
           <span
             onClick={() =>
               navigate(`/comments/${postId}`, {
@@ -128,19 +116,22 @@ const PostFooter = ({
               })
             }
           >
-            <i className="far fa-comment"></i>
+            <i className="far fa-comment pointer"></i>
           </span>
-
-          <i className="fab fa-telegram-plane"></i>
         </IconContainer>
         <i style={{ fontSize: 25 }} className="far fa-bookmark"></i>
       </Container>
+
       <Content expended={isExpended}>
         {selectedlikes.length > 0 && (
           <>
             <div
               key={`selectedlikes-${like}`}
-              style={{ display: "flex", cursor: "pointer" }}
+              style={{
+                display: "flex",
+                cursor: "pointer",
+                alignItems: "center",
+              }}
               onClick={() =>
                 navigate(`/likes`, {
                   state: { likes },
@@ -162,21 +153,42 @@ const PostFooter = ({
             </div>
           </>
         )}
-        <span>{title}</span>
-        <p>{content}</p>
-        <div>{comments && renderComments(comments)}</div>
-        <p
-          style={{ color: "#aaa", fontSize: 14 }}
-          onClick={() => setModalOpen(true)}
-        >
-          View all {comments.length} comments
+        <p style={{ color: "#999", fontSize: "0.9em", paddingTop: 10 }}>
+          {moment(date).fromNow()}
         </p>
+        <div>
+          {content && (
+            <p style={{ padding: "12px 0 10px" }}>
+              <b>{userName}</b>
+              &nbsp;
+              {content}
+            </p>
+          )}{" "}
+          <div>{comments && renderComments(comments)}</div>
+          {comments?.length > 0 && (
+            <p
+              style={{
+                color: "#aaa",
+                fontSize: 14,
+                padding: "8px 0",
+                cursor: "pointer",
+              }}
+              onClick={() =>
+                navigate(`/comments/${postId}`, {
+                  state: { likes },
+                })
+              }
+            >
+              View all {comments.length} comments
+            </p>
+          )}
+        </div>
+
         <PostModal
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
           comments={comments}
         />
-        <p>{moment(date).fromNow()}</p>
       </Content>
     </div>
   );

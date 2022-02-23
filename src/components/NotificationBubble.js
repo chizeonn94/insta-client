@@ -7,7 +7,7 @@ import { Menu } from "@mui/material";
 const BubbleOuter = styled.div`
   display: flex;
   align-items: center;
-  background-color: green;
+  background-color: #ed4956 !important;
   border-bottom: 1px solid #aaa;
   padding: 10px;
   position: absolute;
@@ -15,15 +15,22 @@ const BubbleOuter = styled.div`
   transform: translate(-50%, 0);
   margin-top: 20px;
   border-radius: 10px;
+  color:white;
+  & > * {
+    color:white;
+  }
+  & > span {
+    font-size:0.7em
+  }
   &:before {
     content: '';
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 12px;
-    height: 9px;
+    width: 15px;
+    height: 5px;
     bottom: 100%;
-    background-color: green;
+    background-color: #ed4956 !important;
     -webkit-clip-path: polygon(50% 0, 100% 100%, 0 100%);
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
     box-shadow: 0 0 30px 0px #999;
@@ -60,9 +67,24 @@ const NotificationBubble = ({ follow, like, comment }) => {
   return (
     <div>
       <BubbleOuter>
-        <i className="fa-solid fa-user"></i>&nbsp;{follow}&nbsp;&nbsp;
-        <i className="fa-solid fa-comment"></i>&nbsp;{comment}&nbsp;&nbsp;
-        <i className="fa-solid fa-image"></i>&nbsp;{like}
+        {follow > 0 && (
+          <>
+            <i className="fa-solid fa-user"></i>&nbsp;<span>{follow}</span>
+            &nbsp;&nbsp;
+          </>
+        )}
+        {comment > 0 && (
+          <>
+            <i className="fa-solid fa-comment"></i>&nbsp;<span>{comment}</span>
+            &nbsp;&nbsp;
+          </>
+        )}
+        {like > 0 && (
+          <>
+            <i className="fa-solid fa-image"></i>&nbsp;<span>{like}</span>
+            &nbsp;&nbsp;
+          </>
+        )}
       </BubbleOuter>
     </div>
   );

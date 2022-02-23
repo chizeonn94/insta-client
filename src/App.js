@@ -2,7 +2,6 @@ import React, { useEffect, createContext, useReducer, useContext } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-
 import Home from "./components/screens/Home";
 import Signin from "./components/screens/Signin";
 import Signup from "./components/screens/Signup";
@@ -19,6 +18,7 @@ import { connectSocket } from "./socket/SocketActions";
 import { connect, Provider, useSelector } from "react-redux";
 import { signInStart } from "./actions/userActions";
 import { fetchNotificationsStart } from "./actions/notificationActions";
+import PostDetail from "./components/screens/PostDetail";
 
 export function App({
   user,
@@ -65,6 +65,7 @@ export function App({
           <Route path="/comments/:postId" element={<Comments />} />
           <Route path="/changepassword" element={<ChangePW />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/post/:postId" element={<PostDetail />} />
         </Routes>
       </div>
     );

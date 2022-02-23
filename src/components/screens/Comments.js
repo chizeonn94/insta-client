@@ -13,7 +13,24 @@ import {
 import { useLocation } from "react-router-dom";
 import { FollowButton } from "./homeStyle";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 
+const CommentInput = styled.input`
+  border: none;
+  background-color: white;
+  font-family: inherit;
+  outline: none;
+  width: 100%;
+`;
+const CommentButton = styled.button`
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  font-family: inherit;
+  background-color: transparent;
+  border: none;
+  color: #0095f6 !important;
+`;
 const Comments = () => {
   const state = useSelector((state) => state);
   const location = useLocation();
@@ -36,11 +53,15 @@ const Comments = () => {
   const renderComments = (datas) =>
     datas.map((data, i) => {
       return (
-        <div key={data._id} className={"flex alignCenter spacebt"}>
+        <div
+          key={data._id}
+          className={"flex alignCenter spacebt"}
+          style={{ padding: "5px" }}
+        >
           <div className={"flex alignCenter"}>
             <p
               className={"overhidden radius50 pointer"}
-              style={{ width: 50, height: 50, marginRight: 12 }}
+              style={{ width: 40, height: 40, marginRight: 12 }}
               onClick={() =>
                 navigate(`/profile/${data.postedBy.userName}`, {
                   state: { _id: data._id },
@@ -76,10 +97,10 @@ const Comments = () => {
 
   const renderBody = (data) => {
     return (
-      <div className={"flex"}>
+      <div className={"flex alignCenter"} style={{ padding: "10px 5px" }}>
         <p
           className={"overhidden radius50 pointer"}
-          style={{ width: 50, height: 50, marginRight: 12 }}
+          style={{ width: 40, height: 40, marginRight: 12 }}
           onClick={() =>
             navigate(`/profile/${data.userName}`, {
               state: { _id: data._id },
@@ -96,6 +117,7 @@ const Comments = () => {
           <span>
             <b>{data.postedBy.userName}</b>
           </span>
+          &nbsp;&nbsp;
           {data.body}
         </div>
       </div>
@@ -126,19 +148,35 @@ const Comments = () => {
       });
   };
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto" }}>
+    <div
+      style={{
+        maxWidth: 600,
+        margin: "0 auto",
+        border: "1px solid #dbdbdb",
+        marginTop: 20,
+      }}
+    >
       {postData && renderBody(postData)}
-      <p style={{ backgroundColor: "#ccc", height: 1, margin: "20px 0" }} />
+      <p style={{ backgroundColor: "#ccc", height: 1 }} />
       {data && renderComments(data)}
-      <div style={{ padding: 10 }}>
-        <TextField
+      <div
+        style={{
+          padding: "16px 10px",
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 10,
+          borderTop: "1px solid #dbdbdb",
+        }}
+      >
+        <CommentInput
           fullWidth
           size={"small"}
           placeholder={"Write comment"}
           value={commentValue || ""}
           onChange={(e) => setCommentValue(e.target.value)}
         />
-        <Button onClick={submitComment}>post</Button>
+        <CommentButton onClick={submitComment}>Post</CommentButton>
       </div>
     </div>
   );

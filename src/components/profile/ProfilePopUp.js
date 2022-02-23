@@ -61,12 +61,10 @@ const ProfilePopUp = () => {
   }, []);
   return (
     <React.Fragment>
-      <Avatar
-        src={state?.user?.photo || DEFAULT_IMG}
-        className={"pointer"}
-        onClick={handleClick}
-        sx={{ width: 24, height: 24 }}
-      />
+      <span onClick={handleClick}>
+        <i className="fa-solid fa-circle-user fa-xl pointer"></i>
+      </span>
+
       <Menu
         anchorEl={anchorEl}
         open={open}
@@ -76,7 +74,7 @@ const ProfilePopUp = () => {
           // elevation: 0,
           sx: {
             overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            //filter: "drop-shadow(0px 0px 3px #dbdbdb)",
             mt: 1.5,
             "& .MuiAvatar-root": {
               width: 32,
@@ -116,39 +114,9 @@ const ProfilePopUp = () => {
             Profile
           </p>
         </MenuItem>
-        <MenuItem>
-          {/* <InstaCard>
-            <InstapaperShareButton url={URL} quote={'korea meds'} hashtag={'#hashtag'}>
-              <i className="fab fa-instagram"></i>Instagram
-            </InstapaperShareButton>
-          </InstaCard> */}
-          <a href="/">Saved </a>
-        </MenuItem>
-        <MenuItem>
-          {/* <TwitterCard>
-            <TwitterShareButton url={URL} quote={'korea meds'} hashtag={'#hashtag'}>
-              <i className="fab fa-twitter"></i>Twitter
-            </TwitterShareButton>
-          </TwitterCard> */}
-          <a href="/">Settings</a>
-        </MenuItem>
-        <MenuItem>
-          <a href="/">Switch accounts</a>
-          {/* <LinkCard>
-            <LinkCover>
-              <i className="fas fa-link"></i>
-              <span> www.koreamedis.com</span>
-            </LinkCover>
-          </LinkCard> */}
-        </MenuItem>
+
         <MenuItem>
           <a onClick={logout}>Log out</a>
-          {/* <LinkCard>
-            <LinkCover>
-              <i className="fas fa-link"></i>
-              <span> www.koreamedis.com</span>
-            </LinkCover>
-          </LinkCard> */}
         </MenuItem>
       </Menu>
     </React.Fragment>

@@ -34,31 +34,6 @@ const Signin = ({ signInStart }) => {
 
   const submitHandler = async () => {
     try {
-      // const response = await axios.post(`${LOCAL_API}/signin`, {
-      //   email,
-      //   password,
-      //   authToken: null,
-      // });
-      // console.log("response :", response);
-      // const parsed = JSON.parse(response.data.user);
-      // console.log("parsed", JSON.parse(response.data.user));
-      // if (response.status === 201) {
-      //   alert("successfully signed in");
-      //   sessionStorage.setItem("token", response.data.token);
-      //   sessionStorage.setItem("user", response.data.user);
-      //   sessionStorage.setItem("userName", parsed.userName);
-
-      //   //dispatch({ type: userTypes.SIGN_IN_SUCCESS, payload: parsed });
-      //   signInStart(parsed);
-      //   navigate("/");
-      //   setEmail("");
-      //   setPassword("");
-      // } else {
-      //   alert("unable to signin");
-      //   throw new Error("Could not log in");
-      // }
-      alert("click");
-
       signInStart(email, password, null);
       if (state.user) {
         navigate("/");
@@ -80,7 +55,7 @@ const Signin = ({ signInStart }) => {
           size={"small"}
           type="email"
           autoComplete="off"
-          placeholder="Phone number, username or email address"
+          placeholder="Email address"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
         />

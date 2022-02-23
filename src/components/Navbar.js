@@ -7,6 +7,13 @@ import PostDialog from "./screens/PostDialog";
 import SearchBar from "./screens/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationBox from "./NotificationBox";
+const NavCoverOuter = styled.div`
+  border-bottom: 1px solid #dbdbdb;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+`;
 const NavCover = styled.div`
   width: 100%;
   max-width: 600px;
@@ -15,17 +22,19 @@ const NavCover = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #aaa;
+  padding: 20px 0;
 `;
-const LogoCover = styled.div`
-  font-size: 45px;
+const LogoCover = styled.h1`
+  font-size: 30px;
   font-family: "Grand Hotel";
+  font-weight: normal;
 `;
 const RightButtonsCover = styled.div`
   display: flex;
   align-items: center;
-  gap: 10%;
+  gap: 20px;
   height: fit-content;
+  margin-right: -20px;
 `;
 const CustomLink = styled.span`
   font-size: 25px;
@@ -49,30 +58,31 @@ const Navbar = () => {
 
   const user = sessionStorage.getItem("token");
   return (
-    <NavCover>
-      <LogoCover
-        onClick={() => navigate(user ? "/" : "/signin")}
-        style={{ fontFamily: "Grand Hotel" }}
-      >
-        Instagram
-      </LogoCover>
-      <SearchBar />
-      <RightButtonsCover>
-        <CustomLink to="/chat" onClick={() => setOpenPostDialog(true)}>
-          <i className="far fa-plus-square pointer"></i>
-        </CustomLink>
+    <NavCoverOuter>
+      <NavCover>
+        <LogoCover
+          onClick={() => navigate(user ? "/" : "/signin")}
+          style={{ fontFamily: "Grand Hotel", cursor: "pointer" }}
+        >
+          Instagram
+        </LogoCover>
+        <SearchBar />
+        <RightButtonsCover>
+          <CustomLink onClick={() => setOpenPostDialog(true)}>
+            <i className="far fa-plus-square pointer"></i>
+          </CustomLink>
+          <CustomLink style={{ position: "relative" }}>
+            <NotificationBox />
+          </CustomLink>
 
-        <CustomLink to="/" style={{ position: "relative" }}>
-          <NotificationBox />
-        </CustomLink>
-
-        <ProfilePopUp onClick={() => alert("hi")} />
-        <PostDialog
-          openPostDialog={openPostDialog}
-          setOpenPostDialog={setOpenPostDialog}
-        />
-      </RightButtonsCover>
-    </NavCover>
+          <ProfilePopUp onClick={() => alert("hi")} />
+          <PostDialog
+            openPostDialog={openPostDialog}
+            setOpenPostDialog={setOpenPostDialog}
+          />
+        </RightButtonsCover>
+      </NavCover>
+    </NavCoverOuter>
   );
 };
 

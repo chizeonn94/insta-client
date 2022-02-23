@@ -1,61 +1,73 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { FetchWithAuth, LOCAL_API } from "../../Constants";
-//import { useHistory } from "react-router-dom";
+import UserCard from "./UserCard";
+import styled from "styled-components";
+import PopupCard from "./PopupCard";
 
-//import useSearchUsersDebounced from "../../hooks/useSearchUsersDebounced";
+const SearchInput = styled.input`
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  padding: 5px 10px;
+  background-color: #fafafa;
+  width: 200px;
+  text-align: center;
+  color: #999;
+`;
 
-// import Icon from "../Icon/Icon";
-// import PopupCard from "../PopupCard/PopupCard";
-// import UserCard from "../UserCard/UserCard";
-// import Divider from "../Divider/Divider";
-// import Loader from "../Loader/Loader";
+const style = {
+  width: "250px",
+  maxHeight: "30rem",
+  overflowY: "auto",
+  left: "50%",
+  transform: "translate(-50%, 0)",
+};
 
-const SearchBar = ({ style, setResult, onClick }) => {
+const SearchBar = ({ hide }) => {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  //   const { handleSearchDebouncedRef, result, fetching, setFetching } =
-  //     useSearchUsersDebounced();
-  //const history = useHistory();
+  const [result, setResult] = useState("");
+  const [fetching, setFetching] = useState(false);
 
-  // useEffect(() => {
-  //   if (result.length > 0 && setResult) {
-  //     setResult(result);
-  //   }
-  // }, [result, setResult]);
   useEffect(() => {
-    fetch(`${LOCAL_API}/search-users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: sessionStorage.getItem("token"),
-      },
-      body: JSON.stringify({ query }),
-    })
-      .then((response) => {
-        //console.log(response);
-        return response.json();
+    if (result.length > 0 && setResult) {
+      setResult(result);
+    }
+  }, [result, setResult]);
+  useEffect(() => {
+    if (query) {
+      fetch(`${LOCAL_API}/search-users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: sessionStorage.getItem("token"),
+        },
+        body: JSON.stringify({ query }),
       })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((res) => {
+          console.log(res);
+          setResult(res.result);
+          setFetching(false);
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    }
   }, [query]);
 
   return (
-    <Fragment>
-      <form
-        className="search-box"
-        style={style}
-        onSubmit={(event) => event.preventDefault()}
-      >
-        <input
+    <div>
+      <form className="search-box" onSubmit={(event) => event.preventDefault()}>
+        <SearchInput
           onChange={(event) => {
             //handleSearchDebouncedRef(event.target.value);
             setQuery(event.target.value);
             //event.target.value && setFetching(true);
           }}
-          onClick={onClick}
+          //onClick={onClick}
           value={query}
           className="search-box__input"
           placeholder="Search"
@@ -65,36 +77,37 @@ const SearchBar = ({ style, setResult, onClick }) => {
           {fetching && <Loader />}
         </span> */}
       </form>
-      {/* {query && !fetching && !setResult && (
-        <PopupCard hide={() => setQuery("")}>
-          {result.length === 0 && !fetching ? (
-            <h3
-              style={{ padding: "1rem 0" }}
-              className="heading-3 color-grey font-medium text-center"
-            >
-              No results found.
-            </h3>
-          ) : (
-            result &&
-            result.map((user, idx) => (
-              <Fragment key={idx}>
-                <UserCard
-                  avatar={user.avatar}
-                  username={user.username}
-                  subText={user.fullName}
-                  style={{ padding: "1.5rem 1.5rem" }}
-                  onClick={() => {
-                    //history.push(`/${user.username}`);
-                    setQuery("");
-                  }}
-                />
-                {result.length !== idx + 1 && <Divider />}
-              </Fragment>
-            ))
-          )}
+      {query && !fetching && result && (
+        <PopupCard hideModal={() => setQuery("")} style={style}>
+          <div>
+            {result.length === 0 && !fetching ? (
+              <h3
+                style={{ padding: "1rem 0" }}
+                className="heading-3 color-grey font-medium text-center"
+              >
+                No results found.
+              </h3>
+            ) : (
+              result &&
+              result.map((user, idx) => (
+                <div key={user._id}>
+                  <UserCard
+                    avatar={user.photo}
+                    userName={user.userName}
+                    subText={user.fullName}
+                    onClick={() => {
+                      navigate(`/${user.userName}`);
+                      setQuery("");
+                    }}
+                  />
+                  {result.length !== idx + 1 && <p />}
+                </div>
+              ))
+            )}
+          </div>
         </PopupCard>
-      )} */}
-    </Fragment>
+      )}
+    </div>
   );
 };
 
