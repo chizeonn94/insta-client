@@ -1,4 +1,10 @@
-import React, { useEffect, createContext, useReducer, useContext } from "react";
+import React, {
+  useEffect,
+  createContext,
+  useReducer,
+  useContext,
+  Suspense,
+} from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
@@ -70,7 +76,11 @@ export function App({
       </div>
     );
   };
-  return <div>{renderAllRoutes()}</div>;
+  return (
+    <Suspense fallback={<h1>Loading profile...</h1>}>
+      {renderAllRoutes()}
+    </Suspense>
+  );
 }
 const mapStateToProps = (state) => ({
   user: state.user,

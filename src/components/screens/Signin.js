@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL, axiosInstance, LOCAL_API } from "../../Constants";
-import { UserContext } from "../../App";
 import {
   CustomButton,
   Input,
@@ -39,8 +38,7 @@ const Signin = ({ signInStart }) => {
         navigate("/");
       }
     } catch (error) {
-      alert(error);
-      alert("catch");
+      alert("Failed to sign in, Please try again.");
       console.log(error);
     }
   };

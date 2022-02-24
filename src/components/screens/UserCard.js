@@ -1,6 +1,6 @@
 import { Link } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { FetchWithAuth, LOCAL_API } from "../../Constants";
+import { DEFAULT_IMG, FetchWithAuth, LOCAL_API } from "../../Constants";
 import styled from "styled-components";
 import { Navigate, useNavigate } from "react-router";
 const ProfileWrap = styled.div`
@@ -22,7 +22,7 @@ const UserCard = ({ avatar, userName, subText, onClick, date }) => {
         onClick={() => navigate(`/profile/${userName}`)}
       >
         <ProfileWrap>
-          <img src={avatar} className={"imgFit"} />
+          <img src={avatar || DEFAULT_IMG} className={"imgFit"} />
         </ProfileWrap>
       </div>
 
@@ -31,17 +31,15 @@ const UserCard = ({ avatar, userName, subText, onClick, date }) => {
           style={{ textDecoration: "none" }}
           onClick={() => navigate(`/profile/${userName}`)}
         >
-          <p className="heading-4 font-bold">{userName}</p>
+          <p className="bold">{userName}</p>
         </div>
 
         {subText && (
           <p>
-            {subText}
-            {date && (
-              <span className="color-grey ml-sm">
-                {/* {formatDateDistance(date)} */}
-              </span>
-            )}
+            <span className={"lightGray"} style={{ fontSize: "0.85em" }}>
+              {subText}
+            </span>
+            {date && <span>{/* {formatDateDistance(date)} */}</span>}
           </p>
         )}
       </div>

@@ -1,7 +1,5 @@
-import axios from "axios";
 import notificationTypes from "../actionTypes/notificationTypes";
 import { FetchWithAuth, LOCAL_API } from "../Constants";
-import store from "../redux/store";
 
 export const fetchNotificationsSuccess = (res) => (dispatch) => {
   dispatch({
@@ -11,7 +9,6 @@ export const fetchNotificationsSuccess = (res) => (dispatch) => {
 };
 
 export const fetchNotificationsStart = (authToken) => async (dispatch) => {
-  console.log("hi");
   if (authToken) {
     const response = await fetch(LOCAL_API + "/notification", {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -26,7 +23,7 @@ export const fetchNotificationsStart = (authToken) => async (dispatch) => {
       //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       //body: JSON.stringify({ email, password }), // body data type must match "Content-Type" header
     }).then((res) => res.json());
-    console.log("dfdf", response);
+
     if (response.success) {
       dispatch(fetchNotificationsSuccess(response));
     }

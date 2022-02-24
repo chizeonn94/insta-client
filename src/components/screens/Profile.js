@@ -57,7 +57,6 @@ const Profile = () => {
     alert(followOrUnfollow);
     FetchWithAuth(`/${followOrUnfollow}/${userInfo?._id}`, "PUT").then(
       (res) => {
-        console.log("after", res);
         if (res.success) {
           setIsFollowing(!isFollowing);
           if (followOrUnfollow == "follow") {
@@ -88,10 +87,7 @@ const Profile = () => {
               style={{ width: 100, height: 100 }}
               className={"overhidden radius50"}
             >
-              <img
-                className={"width100"}
-                src={userInfo?.photo || DEFAULT_IMG}
-              />
+              <img className={"imgFit"} src={userInfo?.photo || DEFAULT_IMG} />
             </p>
             <h4 className={"textCenter"} style={{ paddingTop: 8 }}>
               {userName}

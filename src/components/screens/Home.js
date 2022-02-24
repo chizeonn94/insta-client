@@ -14,13 +14,14 @@ import PostFooter from "./post/PostFooter";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import PostDetail from "./PostDetail";
+import Loading from "../Loading";
 
 const Home = () => {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
   const [data, setData] = useState("");
   const token = sessionStorage.getItem("token");
-  // console.log("data", data);
+
   useEffect(() => {
     if (token) {
       GetfetchWithAuth(`/allpost`).then((data) => {
@@ -33,6 +34,8 @@ const Home = () => {
 
   return (
     <PostContainer className="home">
+      {!data && <Loading />}
+      {/* <Loading /> */}
       {data &&
         data.map((post) => {
           return <PostDetail key={post._id} postInfo={post} />;

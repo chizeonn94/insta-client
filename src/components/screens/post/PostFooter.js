@@ -119,7 +119,7 @@ const PostFooter = ({
             <i className="far fa-comment pointer"></i>
           </span>
         </IconContainer>
-        <i style={{ fontSize: 25 }} className="far fa-bookmark"></i>
+        {/* <i style={{ fontSize: 25 }} className="far fa-bookmark"></i> */}
       </Container>
 
       <Content expended={isExpended}>

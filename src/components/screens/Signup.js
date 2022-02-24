@@ -58,7 +58,7 @@ const Signin = () => {
           Sign up to see photos and videos <br />
           from your friends.
         </SubTitle>
-        <CustomButton
+        {/* <CustomButton
           style={{ fontSize: "1.1rem" }}
           fullWidth
           variant="contained"
@@ -69,12 +69,12 @@ const Signin = () => {
             Log in with Facebook
           </span>
         </CustomButton>
-        <Divider style={{ margin: "5px 0", fontSize: "0.9em" }}>OR</Divider>
+        <Divider style={{ margin: "5px 0", fontSize: "0.9em" }}>OR</Divider> */}
         <TextField
           fullWidth
           size={"small"}
           type="email"
-          placeholder="Mobile number or email address"
+          placeholder="email address"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
         />

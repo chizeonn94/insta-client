@@ -8,6 +8,7 @@ export const INITIAL_STATE = {
   token: null,
   following: [],
   followres: [],
+  fetching: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -20,6 +21,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case userTypes.SIGN_IN_SUCCESS: {
       return {
         ...action.payload,
+        fetching: false,
       };
     }
     case userTypes.SIGN_UP_FAILURE:
@@ -36,72 +38,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         user: null,
       };
     }
-    case userTypes.BOOKMARK_POST: {
-      const { operation, postId } = action.payload;
-      let bookmarks = JSON.parse(JSON.stringify(state.currentUser.bookmarks));
-      if (operation === "add") {
-        bookmarks.push({ post: postId });
-      } else {
-        bookmarks = bookmarks.filter((bookmark) => bookmark.post !== postId);
-      }
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          bookmarks,
-        },
-      };
-    }
-    case userTypes.REMOVE_AVATAR_START:
-    case userTypes.CHANGE_AVATAR_START: {
-      return { ...state, fetchingAvatar: true };
-    }
-    case userTypes.CHANGE_AVATAR_SUCCESS: {
-      return {
-        ...state,
-        currentUser: { ...state.currentUser, avatar: action.payload },
-        fetchingAvatar: false,
-      };
-    }
-    case userTypes.REMOVE_AVATAR_FAILURE:
-    case userTypes.CHANGE_AVATAR_FAILURE: {
-      return {
-        ...state,
-        fetchingAvatar: false,
-        error: action.payload,
-      };
-    }
-    case userTypes.REMOVE_AVATAR_SUCCESS: {
-      // Removing the avatar key from the currentUser object
-      const { avatar, ...additionalKeys } = state.currentUser;
-      return {
-        ...state,
-        currentUser: { ...additionalKeys },
-        fetchingAvatar: false,
-        error: false,
-      };
-    }
-    case userTypes.UPDATE_PROFILE_START: {
-      return {
-        ...state,
-        updatingProfile: true,
-      };
-    }
-    case userTypes.UPDATE_PROFILE_SUCCESS: {
-      return {
-        ...state,
-        error: false,
-        updatingProfile: false,
-        currentUser: { ...state.currentUser, ...action.payload },
-      };
-    }
-    case userTypes.UPDATE_PROFILE_FAILURE: {
-      return {
-        ...state,
-        updatingProfile: false,
-        error: action.payload,
-      };
-    }
+
     default:
       return state;
   }

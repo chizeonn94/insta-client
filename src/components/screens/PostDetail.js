@@ -7,6 +7,7 @@ import { PostHeader } from "./homeStyle";
 import PostFooter from "./post/PostFooter";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import Loading from "../Loading";
 
 const PostDetail = ({ postInfo }) => {
   const state = useSelector((state) => state);
@@ -16,23 +17,29 @@ const PostDetail = ({ postInfo }) => {
   useEffect(() => {
     if (postId) {
       FetchWithAuth(`/post/${postId}`, "GET").then((res) => {
-        setPost(res.post);
+        console.log(res);
+        if (res?.post) {
+          setPost(res.post);
+        } else {
+          alert("It's invalid post");
+          navigate("/");
+        }
       });
     }
   }, [postId]);
   const clickDelete = (postId) => {
     alert("delte post");
     FetchWithAuth(`/delete-post/${postId}`, "DELETE").then((res) => {
-      if (res.status) {
-        alert("successfully deleted!");
+      if (res.success) {
+        alert("Successfully deleted!");
       } else {
-        console.log(res);
-        alert("failed to delete");
+        alert("Failed to delete. Please try again.");
       }
     });
   };
   return (
     <>
+      {!post && <Loading />}
       {post && (
         <div
           className="card home-card"

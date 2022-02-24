@@ -109,6 +109,9 @@ textarea:focus {
 .shadow {
   filter: drop-shadow(0px 0px 3px #dbdbdb);
 }
+.marginAuto {
+  margin: 0 auto;
+}
 @media only screen and (max-width: 600px) {
   .item {
     width: 33.3vw;
