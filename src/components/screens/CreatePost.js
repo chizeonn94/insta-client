@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL, API_URL2 } from "../../Constants";
+import { API_URL } from "../../Constants";
 
 const CreatePost = () => {
   const navigate = useNavigate();

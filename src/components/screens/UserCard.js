@@ -1,6 +1,6 @@
 import { Link } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { DEFAULT_IMG, FetchWithAuth, LOCAL_API } from "../../Constants";
+import { DEFAULT_IMG, FetchWithAuth } from "../../Constants";
 import styled from "styled-components";
 import { Navigate, useNavigate } from "react-router";
 const ProfileWrap = styled.div`

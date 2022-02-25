@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import userTypes from "../actionTypes/userTypes";
-import { LOCAL_API } from "../Constants";
+import { API_URL } from "../Constants";
 import store from "../redux/store";
 
 export const signInSuccess = (res) => {
@@ -16,7 +16,7 @@ export const signInStart = (email, password, authToken) => async (dispatch) => {
   dispatch({ type: userTypes.SIGN_IN_START });
 
   if (authToken) {
-    const response = await fetch(LOCAL_API + "/signin", {
+    const response = await fetch(API_URL + "/signin", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       //mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -34,7 +34,7 @@ export const signInStart = (email, password, authToken) => async (dispatch) => {
       dispatch(signInSuccess(response));
     }
   } else {
-    const response = await fetch(LOCAL_API + "/signin", {
+    const response = await fetch(API_URL + "/signin", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       //mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

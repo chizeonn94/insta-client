@@ -2,7 +2,7 @@ import { Avatar, Button, TextField } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { UserContext } from "../../App";
-import { DEFAULT_IMG, FetchWithAuth, LOCAL_API } from "../../Constants";
+import { DEFAULT_IMG, FetchWithAuth, API_URL } from "../../Constants";
 //import { connect } from "react-redux";
 //import { createStructuredSelector } from "reselect";
 
@@ -41,7 +41,7 @@ const ChangePW = ({ currentUser, token, showAlert }) => {
     try {
       setFetching(true);
 
-      await fetch(`${LOCAL_API}/changepassword`, {
+      await fetch(`${API_URL}/changepassword`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

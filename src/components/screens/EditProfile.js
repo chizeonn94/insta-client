@@ -4,11 +4,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   API_URL,
-  API_URL2,
   CLOUD_API,
   DEFAULT_IMG,
   GetfetchWithAuth,
-  LOCAL_API,
 } from "../../Constants";
 import { UserContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,7 +78,7 @@ const EditProfile = () => {
       });
   };
   const postData = (photoUrl) => {
-    fetch(`${LOCAL_API}/profile`, {
+    fetch(`${API_URL}/profile`, {
       method: "PUT", // or 'PUT'
       headers: {
         "Content-Type": "application/json",

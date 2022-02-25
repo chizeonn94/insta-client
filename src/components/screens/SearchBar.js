@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { FetchWithAuth, LOCAL_API } from "../../Constants";
+import { FetchWithAuth, API_URL } from "../../Constants";
 import UserCard from "./UserCard";
 import styled from "styled-components";
 import PopupCard from "./PopupCard";
@@ -36,7 +36,7 @@ const SearchBar = ({ hide }) => {
   }, [result, setResult]);
   useEffect(() => {
     if (query) {
-      fetch(`${LOCAL_API}/search-users`, {
+      fetch(`${API_URL}/search-users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

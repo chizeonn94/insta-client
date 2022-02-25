@@ -1,5 +1,5 @@
 import notificationTypes from "../actionTypes/notificationTypes";
-import { FetchWithAuth, LOCAL_API } from "../Constants";
+import { FetchWithAuth, API_URL } from "../Constants";
 
 export const fetchNotificationsSuccess = (res) => (dispatch) => {
   dispatch({
@@ -10,7 +10,7 @@ export const fetchNotificationsSuccess = (res) => (dispatch) => {
 
 export const fetchNotificationsStart = (authToken) => async (dispatch) => {
   if (authToken) {
-    const response = await fetch(LOCAL_API + "/notification", {
+    const response = await fetch(API_URL + "/notification", {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       //mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

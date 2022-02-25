@@ -8,7 +8,6 @@ import {
   DEFAULT_IMG,
   FetchWithAuth,
   GetfetchWithAuth,
-  LOCAL_API,
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
 import { FollowButton } from "./homeStyle";
@@ -124,7 +123,7 @@ const Comments = () => {
     );
   };
   const submitComment = async () => {
-    await fetch(LOCAL_API + `/comment/${postId}`, {
+    await fetch(API_URL + `/comment/${postId}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       //mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

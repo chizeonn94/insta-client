@@ -4,7 +4,7 @@ import styled from "styled-components";
 import PostModal from "./PostModal";
 import moment from "moment";
 import PostInput from "./PostInput";
-import { FetchWithAuth, LOCAL_API } from "../../../Constants";
+import { FetchWithAuth, API_URL } from "../../../Constants";
 import { UserContext } from "../../../App";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";

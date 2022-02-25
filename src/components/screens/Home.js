@@ -6,7 +6,6 @@ import {
   DEFAULT_IMG,
   FetchWithAuth,
   GetfetchWithAuth,
-  LOCAL_API,
 } from "../../Constants";
 import { Avatar } from "@mui/material";
 import { PostContainer, PostHeader } from "./homeStyle";

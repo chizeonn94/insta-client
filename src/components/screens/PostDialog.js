@@ -11,11 +11,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import {
   API_URL,
-  API_URL2,
   CLOUD_API,
   DEFAULT_IMG,
   GetfetchWithAuth,
-  LOCAL_API,
 } from "../../Constants";
 import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -65,7 +63,7 @@ export default function PostDialog({ openPostDialog, setOpenPostDialog }) {
   };
   const postData = async (url) => {
     console.log({ title, body, photo: url });
-    await fetch(`${LOCAL_API}/createpost`, {
+    await fetch(`${API_URL}/createpost`, {
       method: "POST", // or 'PUT'
       //mode: "no-cors",
       headers: {
