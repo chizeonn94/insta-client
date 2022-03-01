@@ -7,7 +7,7 @@ import FollowButton from "./FollowButton";
 import { Menu } from "@mui/material";
 import NotificationBubble from "./NotificationBubble";
 import notificationTypes from "../actionTypes/notificationTypes";
-import { FetchWithAuth, LOCAL_API } from "../Constants";
+import { FetchWithAuth, API_URL } from "../Constants";
 import {
   fetchNotificationsStart,
   readNotification,
@@ -77,6 +77,7 @@ const NotificationBox = ({ readNotification }) => {
       <span
         onClick={(e) => {
           setOpen(true);
+          readNotification();
           e.stopPropagation();
         }}
       >
