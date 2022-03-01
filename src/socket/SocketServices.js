@@ -1,10 +1,8 @@
 import io from "socket.io-client";
+import { API_URL } from "../Constants";
 
 export const connect = () => {
-  // const socket = io({
-  //   query: { token: localStorage.getItem("token") },
-  // });
-  const socket = io("http://localhost:5000", {
+  const socket = io(API_URL, {
     query: { token: sessionStorage.getItem("token") },
   });
   return socket;

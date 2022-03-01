@@ -38,10 +38,10 @@ export default function PostDialog({ openPostDialog, setOpenPostDialog }) {
 
   const postDetails = () => {
     let data = new FormData();
-    // console.log("file", file instanceof File);
-    // data.append("file", file);
-    // data.append("upload_preset", "insta-clone");
-    // data.append("cloud_name", "leah-instagram");
+    //console.log("file", file instanceof File);
+    data.append("file", file);
+    data.append("upload_preset", "insta-clone");
+    data.append("cloud_name", "leah-instagram");
 
     fetch(CLOUD_API, {
       method: "POST", // or 'PUT'
@@ -50,7 +50,7 @@ export default function PostDialog({ openPostDialog, setOpenPostDialog }) {
       .then((res) => res.json())
       .then(async (data) => {
         // alert("success");
-        console.log(data);
+        //console.log(data);
         await setPhotoUrl(data.url);
         if (data.url) {
           postData(data.url);
