@@ -66,14 +66,14 @@ const EditProfile = () => {
     })
       .then((res) => res.json())
       .then(async (data) => {
-        alert("success");
-        console.log(data.url);
+        // alert("success");
+        // console.log(data.url);
         if (data.url) {
           postData(data.url);
         }
       })
       .catch((err) => {
-        alert("fail!");
+        // alert("fail!");
         console.log(err);
       });
   };
@@ -250,7 +250,7 @@ const EditProfile = () => {
           part of your public profile.
         </div>
       </div>
-      <div className={"flex alignCenter bottom12"}>
+      {/* <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}>Phone number</p>
         <div className={classes.inputDiv}>
           <TextField
@@ -263,7 +263,7 @@ const EditProfile = () => {
             className={classes.inputField}
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="file-field input-field">
         <p>

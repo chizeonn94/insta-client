@@ -1,7 +1,8 @@
 import { Button } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
+import { signInStart } from "../../actions/userActions";
 import { UserContext } from "../../App";
 import {
   API_URL,
@@ -9,9 +10,9 @@ import {
   FetchWithAuth,
   GetfetchWithAuth,
 } from "../../Constants";
-import { FollowButton } from "./homeStyle";
+import { FollowBtnStyle } from "./homeStyle";
 
-const Profile = () => {
+const Profile = ({ signInStart }) => {
   const location = useLocation();
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -26,30 +27,28 @@ const Profile = () => {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    console.log(location);
+    // console.log(location);
+    // console.log(state);
     FetchWithAuth(`/profile/${userName}`, "GET").then((res) => {
-      console.log("profile", res);
+      // console.log("profile", res);
       const userData = res.userInfo;
       setUserInfo(userData);
       setIsFollowing(userData.isFollowing);
     });
     FetchWithAuth(`/usersposts/${userName}`, "GET").then((data) => {
-      console.log("sgsgs", data);
       setData(data.posts);
     });
     FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
-      console.log(res);
+      // console.log(res);
       setFollowers(res.result.followers);
     });
     FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
-      console.log(res);
+      // console.log(res);
       setFollowing(res.result.following);
     });
-    console.log(state);
-  }, []);
-  useEffect(() => {
-    console.log("userInfo>>", userInfo);
-  }, [userInfo]);
+    // console.log(state);
+  }, [state]);
+
   const handleClick = () => {
     const followOrUnfollow = isFollowing ? "unfollow" : "follow";
     // alert(followOrUnfollow);
@@ -57,18 +56,20 @@ const Profile = () => {
       (res) => {
         if (res.success) {
           setIsFollowing(!isFollowing);
-          if (followOrUnfollow == "follow") {
-            let followers = userInfo.followers;
-            setUserInfo({
-              ...userInfo,
-              followers: followers.push(state?.user?._id),
-            });
-          } else {
-            let followers = userInfo.followers;
-            followers.indexOf(state?.user?._id) !== -1 &&
-              followers.splice(followers.indexOf(state?.user?._id), 1);
-            setUserInfo({ ...userInfo, followers: followers });
-          }
+          let followers = userInfo.followers;
+          // if (followOrUnfollow == "follow") {
+          //   followers.push(state?.user?._id),
+          //     setUserInfo({
+          //       ...userInfo,
+          //       followers,
+          //     });
+          // } else {
+          //   let followers = userInfo.followers;
+          //   followers.indexOf(state?.user?._id) !== -1 &&
+          //     followers.splice(followers.indexOf(state?.user?._id), 1);
+          //   setUserInfo({ ...userInfo, followers: followers });
+          // }
+          signInStart(null, null);
           console.log(userInfo);
         } else {
           alert(`failed to ${followOrUnfollow}`);
@@ -128,6 +129,9 @@ const Profile = () => {
             </p>
           </div>
         </div>
+        <p className={""} style={{ paddingBottom: 8 }}>
+          {userInfo.bio}
+        </p>
         <div>
           {userName == state?.user.userName && (
             <Button
@@ -142,9 +146,9 @@ const Profile = () => {
           )}
           <p style={{ height: 12 }} />
           {userName !== state?.user.userName && (
-            <FollowButton isFollowing={isFollowing} onClick={handleClick}>
+            <FollowBtnStyle isFollowing={isFollowing} onClick={handleClick}>
               {isFollowing ? "Following" : "Follow"}
-            </FollowButton>
+            </FollowBtnStyle>
           )}
           <p style={{ height: 12 }} />
         </div>
@@ -165,5 +169,8 @@ const Profile = () => {
     </div>
   );
 };
-
-export default Profile;
+const mapDispatchToProps = (dispatch) => ({
+  signInStart: (usernameOrEmail, password, token) =>
+    dispatch(signInStart(usernameOrEmail, password, token)),
+});
+export default connect(null, mapDispatchToProps)(Profile);

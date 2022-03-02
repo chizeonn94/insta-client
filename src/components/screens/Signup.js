@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL, axiosInstance } from "../../Constants";
+import { API_URL, axiosInstance, emailValidation } from "../../Constants";
 import { UserContext } from "../../App";
 import {
   CustomButton,
@@ -27,27 +27,43 @@ const Signin = () => {
   }, [email, password]);
 
   const submitHandler = async () => {
-    try {
-      const response = await axiosInstance.post(`${API_URL}/signup`, {
+    if (!emailValidation(email)) {
+      alert("Invalid email");
+      document.getElementById("email").focus();
+      return;
+    }
+    await fetch(`${API_URL}/signup`, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        //authorization: sessionStorage.getItem("token"),
+      },
+      body: JSON.stringify({
         email,
         password,
         fullName,
         userName,
+      }),
+    })
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          alert("successfully signed up");
+          navigate("/signin");
+          setEmail("");
+          setPassword("");
+        } else {
+          alert(res.error);
+        }
+      })
+      .catch((error) => {
+        alert("Failed to sign up. Please try again.");
+        console.log("Error:", error);
       });
-      console.log("signup res ", response);
-      if (response.status === 201) {
-        alert("successfully signed up");
-
-        navigate("/signin");
-        setEmail("");
-        setPassword("");
-      } else {
-        alert("unable to signin");
-        throw new Error("Could not log in");
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -74,6 +90,7 @@ const Signin = () => {
           fullWidth
           size={"small"}
           type="email"
+          id={"email"}
           placeholder="email address"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
@@ -109,6 +126,9 @@ const Signin = () => {
           value={password || ""}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <p style={{ color: "#777", fontSize: "0.8em", paddingTop: 10 }}>
+          Password should be more than 8 characters
+        </p>
         <p style={{ height: 8 }} />
 
         <CustomButton

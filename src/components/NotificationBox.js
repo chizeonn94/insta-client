@@ -157,12 +157,12 @@ const NotificationBox = ({ readNotification }) => {
                       ""
                     )}
 
-                    {noti.notificationType === "follow" && (
+                    {/* {noti.notificationType === "follow" && (
                       <FollowButton
                         isFollowing={noti.isFollowing}
                         userId={noti.sender._id}
                       />
-                    )}
+                    )} */}
                   </div>
                 </div>
               );

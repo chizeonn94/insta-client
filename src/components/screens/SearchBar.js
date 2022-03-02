@@ -79,15 +79,17 @@ const SearchBar = ({ hide }) => {
         <PopupCard hideModal={() => setQuery("")} style={style}>
           <div>
             {result.length === 0 && !fetching ? (
-              <h3 style={{ padding: "1rem 0" }}>No results found.</h3>
+              <h3 style={{ padding: "1em" }}>No results found.</h3>
             ) : (
               result &&
               result.map((user, idx) => (
                 <div key={user._id}>
                   <UserCard
+                    userId={user?._id}
                     avatar={user?.photo}
                     userName={user.userName}
                     subText={user.fullName}
+                    isFollowing={user.isFollowing}
                     onClick={() => {
                       navigate(`/${user.userName}`);
                       setQuery("");

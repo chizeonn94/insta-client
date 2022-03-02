@@ -75,6 +75,7 @@ const Signin = ({ signInStart }) => {
             fontWeight: "bold",
             fontSize: "0.9em",
             padding: "12px 0 20px",
+            display: "none",
           }}
         >
           <a className={"pointer blueColor"}>Forgot password?</a>

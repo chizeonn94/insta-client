@@ -10,7 +10,7 @@ import {
   GetfetchWithAuth,
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
-import { FollowButton } from "./homeStyle";
+import { FollowBtnStyle } from "./homeStyle";
 import { useDispatch, useSelector } from "react-redux";
 
 const UserListSkeleton = ({ user, isFollowing }) => {
@@ -78,14 +78,14 @@ const UserListSkeleton = ({ user, isFollowing }) => {
           </div>
         </div>
         {user._id !== state?.user?._id && (
-          <FollowButton
+          <FollowBtnStyle
             isFollowing={following}
             onClick={() =>
               following ? clickUnfollow(user._id) : clickFollow(user._id)
             }
           >
             {following ? "Following" : "Follow"}
-          </FollowButton>
+          </FollowBtnStyle>
         )}
       </div>
     </div>

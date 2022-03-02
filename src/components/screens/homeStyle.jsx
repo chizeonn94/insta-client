@@ -7,7 +7,7 @@ export const PostHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-export const FollowButton = styled.span`
+export const FollowBtnStyle = styled.span`
   border: 1px solid #ccc;
   padding: 5px 10px;
   cursor: pointer;

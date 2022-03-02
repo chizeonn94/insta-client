@@ -48,7 +48,7 @@ export function App({
   useEffect(() => {
     // console.log("token in app.js", token);
     if (token) {
-      signInStart(null, null, token);
+      signInStart(null, null);
       connectSocket();
       fetchNotificationsStart(token);
     } else {

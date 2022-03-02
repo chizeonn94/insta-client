@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchWithAuth } from "../Constants";
+import { FollowBtnStyle } from "./screens/homeStyle";
 
 /////////////////////////////////////////
 const FollowButton = ({ isFollowing, userId }) => {
@@ -28,13 +29,15 @@ const FollowButton = ({ isFollowing, userId }) => {
   };
 
   return (
-    <div>
+    <FollowBtnStyle isFollowing={followingNow}>
       {followingNow ? (
         <p onClick={clickUnfollow}>Following</p>
       ) : (
-        <p onClick={clickFollow}>Follow</p>
+        <p onClick={clickFollow} style={{ color: "white" }}>
+          Follow
+        </p>
       )}
-    </div>
+    </FollowBtnStyle>
   );
 };
 

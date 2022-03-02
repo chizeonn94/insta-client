@@ -10,7 +10,7 @@ import {
   GetfetchWithAuth,
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
-import { FollowButton } from "./homeStyle";
+import { FollowButtonStyle } from "./homeStyle";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -107,7 +107,7 @@ const Comments = () => {
           }
         >
           <img
-            src={data.photo}
+            src={data?.postedBy?.photo || DEFAULT_IMG}
             alt={"follower profile pic"}
             className={"imgFit"}
           />
@@ -141,7 +141,7 @@ const Comments = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        //  console.log(res);
         setData(res.comment.comments);
         setCommentValue("");
       });

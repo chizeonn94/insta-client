@@ -2,6 +2,7 @@ const axios = require("axios");
 
 export const API_URL =
   "http://ec2-3-34-181-253.ap-northeast-2.compute.amazonaws.com:5000";
+// export const API_URL = "http://localhost:5000";
 export const LOCAL_API = "http://15.165.159.144:5000";
 
 export const CLOUD_API =
@@ -53,4 +54,13 @@ export const FetchWithAuth = async (url, method) => {
     // body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
   return response.json(); // parses JSON response into native JavaScript objects
+};
+export const EMAIL_REG =
+  /^([-_\.0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+export const emailValidation = (email) => {
+  if (EMAIL_REG.test(email)) {
+    return true;
+  } else {
+    return false;
+  }
 };

@@ -10,7 +10,7 @@ import {
   GetfetchWithAuth,
 } from "../../Constants";
 import { useLocation } from "react-router-dom";
-import { FollowButton } from "./homeStyle";
+import { FollowBtnStyle } from "./homeStyle";
 import UserListSkeleton from "./UserListSkeleton";
 import { useDispatch, useSelector } from "react-redux";
 

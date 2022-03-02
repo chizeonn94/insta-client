@@ -24,7 +24,7 @@ const Home = () => {
   useEffect(() => {
     if (token) {
       GetfetchWithAuth(`/allpost`).then((data) => {
-        console.log(data);
+        // console.log(data);
         data.posts.sort((a, b) => b.createdAt - a.createdAt);
         setData(data?.posts);
       });
