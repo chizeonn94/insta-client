@@ -40,7 +40,7 @@ const UserListSkeleton = ({ user, isFollowing }) => {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto" }}>
+    <div style={{ maxWidth: 600, margin: "0 auto 16px" }}>
       <div className={"flex alignCenter spacebt"}>
         <div className={"flex alignCenter"}>
           <p
@@ -53,7 +53,7 @@ const UserListSkeleton = ({ user, isFollowing }) => {
             }
           >
             <img
-              src={user.photo}
+              src={user?.photo || DEFAULT_IMG}
               alt={"follower profile pic"}
               className={"imgFit"}
             />
@@ -79,11 +79,12 @@ const UserListSkeleton = ({ user, isFollowing }) => {
         </div>
         {user._id !== state?.user?._id && (
           <FollowButton
+            isFollowing={following}
             onClick={() =>
               following ? clickUnfollow(user._id) : clickFollow(user._id)
             }
           >
-            <b>{following ? "Following" : "Follow"}</b>
+            {following ? "Following" : "Follow"}
           </FollowButton>
         )}
       </div>

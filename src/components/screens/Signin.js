@@ -33,15 +33,17 @@ const Signin = ({ signInStart }) => {
 
   const submitHandler = async () => {
     try {
-      signInStart(email, password, null);
-      if (state.user) {
-        navigate("/");
-      }
+      await signInStart(email, password, null);
     } catch (error) {
       alert("Failed to sign in, Please try again.");
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (state?.user?._id) {
+      navigate("/");
+    }
+  }, [state?.user]);
 
   return (
     <RootContainer>

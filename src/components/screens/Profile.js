@@ -47,14 +47,12 @@ const Profile = () => {
     });
     console.log(state);
   }, []);
-  const logout = () => {
-    sessionStorage.clear();
-    dispatch({ type: "CLEAR" });
-    navigate("/signin");
-  };
+  useEffect(() => {
+    console.log("userInfo>>", userInfo);
+  }, [userInfo]);
   const handleClick = () => {
     const followOrUnfollow = isFollowing ? "unfollow" : "follow";
-    alert(followOrUnfollow);
+    // alert(followOrUnfollow);
     FetchWithAuth(`/${followOrUnfollow}/${userInfo?._id}`, "PUT").then(
       (res) => {
         if (res.success) {
@@ -142,13 +140,13 @@ const Profile = () => {
               edit profile
             </Button>
           )}
+          <p style={{ height: 12 }} />
           {userName !== state?.user.userName && (
-            <FollowButton>
-              <b onClick={handleClick}>
-                {isFollowing ? "Following" : "Follow"}
-              </b>
+            <FollowButton isFollowing={isFollowing} onClick={handleClick}>
+              {isFollowing ? "Following" : "Follow"}
             </FollowButton>
           )}
+          <p style={{ height: 12 }} />
         </div>
       </div>
 

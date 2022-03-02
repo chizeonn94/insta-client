@@ -33,10 +33,9 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case userTypes.SIGN_OUT: {
-      return {
-        ...state,
-        user: null,
-      };
+      localStorage.clear();
+      sessionStorage.clear();
+      return null;
     }
 
     default:

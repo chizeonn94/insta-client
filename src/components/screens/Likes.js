@@ -34,13 +34,13 @@ const Likes = () => {
     });
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto" }}>
+    <div style={{ maxWidth: 600, margin: "0 auto 16px" }}>
       <p className={"textCenter padding12"}>
         <b>Likes</b>
       </p>
 
       <div style={{ padding: 10 }}>
-        <TextField fullWidth size={"small"} placeholder={"search"} />
+        {/* <TextField fullWidth size={"small"} placeholder={"search"} /> */}
         <div>{renderUsers(location.state.likes)}</div>
       </div>
     </div>

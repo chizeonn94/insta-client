@@ -54,7 +54,7 @@ export function App({
     } else {
       navigate("/signin");
     }
-  }, [signInStart, token]);
+  }, [token]);
   const renderAllRoutes = () => {
     return (
       <div>

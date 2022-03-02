@@ -46,14 +46,10 @@ const Followers = () => {
       setSelectedData(following);
     }
   }, [selectedMode]);
-  // useEffect(() => {
-  //   console.log("followers!1", followers);
-  //   console.log("following!!", following);
-  // }, [followers, following]);
+
   const clickFollow = async (_id) => {
     alert("follow");
     await FetchWithAuth(`/follow/${_id}`, "PUT").then((res) => {
-      console.log("hh-------", res);
       dispatch({
         type: "UPDATE",
         payload: { following: res.result.myData.following },
@@ -68,43 +64,8 @@ const Followers = () => {
         })
       );
     });
-    // await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
-    //   console.log("followers==", res);
-
-    //   setFollowers(res.result.followers);
-    // });
-    // await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
-    //   console.log("following==", res);
-    //   setFollowing(res.result.following);
-    // });
   };
-  const clickUnfollow = async (_id) => {
-    alert("unfollow");
-    await FetchWithAuth(`/unfollow/${_id}`, "PUT").then((res) => {
-      console.log("kmkm", res);
-      dispatch({
-        type: "UPDATE",
-        payload: { following: res.result.myData.following },
-      });
-      const user = JSON.parse(sessionStorage.getItem("user"));
 
-      sessionStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...user,
-          following: res.result.myData.following,
-        })
-      );
-    });
-    // await FetchWithAuth(`/followers/${userName}`, "GET").then((res) => {
-    //   console.log("followers//", res);
-    //   setFollowers(res.result.followers);
-    // });
-    // await FetchWithAuth(`/following/${userName}`, "GET").then((res) => {
-    //   console.log("following//", res);
-    //   setFollowing(res.result.following);
-    // });
-  };
   const renderUsers = (users) =>
     users.map((user, i) => {
       return (
@@ -148,7 +109,7 @@ const Followers = () => {
       </div>
 
       <div style={{ padding: 10 }}>
-        <TextField fullWidth size={"small"} placeholder={"search"} />
+        {/* <TextField fullWidth size={"small"} placeholder={"search"} /> */}
         <p style={{ padding: "20px 0" }}>
           <b>All Followers</b>
         </p>

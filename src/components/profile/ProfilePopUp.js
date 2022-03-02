@@ -8,6 +8,7 @@ import { DEFAULT_IMG, GetfetchWithAuth } from "../../Constants";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
+import userTypes from "../../actionTypes/userTypes";
 // import { FacebookShareButton, InstapaperShareButton, TwitterShareButton } from 'react-share';
 
 const FaceBookCard = styled.div`
@@ -44,8 +45,7 @@ const ProfilePopUp = () => {
     setAnchorEl(null);
   };
   const logout = () => {
-    sessionStorage.clear();
-    dispatch({ type: "CLEAR" });
+    dispatch({ type: userTypes.SIGN_OUT });
     navigate("/signin");
   };
   useEffect(() => {

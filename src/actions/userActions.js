@@ -1,3 +1,4 @@
+import { ElevatorSharp } from "@mui/icons-material";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import userTypes from "../actionTypes/userTypes";
@@ -46,10 +47,13 @@ export const signInStart = (email, password, authToken) => async (dispatch) => {
       //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify({ email, password }), // body data type must match "Content-Type" header
     }).then((res) => res.json());
-
+    console.log(response);
     if (response.success) {
       const parsed = JSON.parse(JSON.stringify(response));
       dispatch(signInSuccess(parsed));
+    } else {
+      dispatch({ type: userTypes.SIGN_IN_FAILURE, action: response.error });
+      alert(response.error);
     }
   }
 };

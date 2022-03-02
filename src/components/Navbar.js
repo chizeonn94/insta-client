@@ -50,12 +50,6 @@ const Navbar = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [openPostDialog, setOpenPostDialog] = useState(false);
 
-  const logout = () => {
-    sessionStorage.clear();
-    dispatch({ type: "CLEAR" });
-    navigate("/signin");
-  };
-
   const user = sessionStorage.getItem("token");
   return (
     <NavCoverOuter>
@@ -75,7 +69,7 @@ const Navbar = () => {
             <NotificationBox />
           </CustomLink>
 
-          <ProfilePopUp onClick={() => alert("hi")} />
+          <ProfilePopUp />
           <PostDialog
             openPostDialog={openPostDialog}
             setOpenPostDialog={setOpenPostDialog}
