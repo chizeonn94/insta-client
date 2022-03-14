@@ -112,7 +112,7 @@ const Comments = () => {
             className={"imgFit"}
           />
         </p>
-        <div>
+        <div style={{ width: "calc(100% - 40px)" }}>
           <span>
             <b>{data.postedBy.userName}</b>
           </span>

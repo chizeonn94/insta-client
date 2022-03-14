@@ -16,7 +16,6 @@ const SearchInput = styled.input`
 `;
 
 const style = {
-  width: "250px",
   maxHeight: "30rem",
   overflowY: "auto",
   left: "50%",

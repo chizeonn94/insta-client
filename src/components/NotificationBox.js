@@ -7,7 +7,7 @@ import FollowButton from "./FollowButton";
 import { Menu } from "@mui/material";
 import NotificationBubble from "./NotificationBubble";
 import notificationTypes from "../actionTypes/notificationTypes";
-import { FetchWithAuth, API_URL } from "../Constants";
+import { FetchWithAuth, API_URL, DEFAULT_IMG } from "../Constants";
 import {
   fetchNotificationsStart,
   readNotification,
@@ -122,7 +122,7 @@ const NotificationBox = ({ readNotification }) => {
                       }}
                     >
                       <img
-                        src={noti.sender.photo}
+                        src={noti?.sender?.photo || DEFAULT_IMG}
                         alt={""}
                         className={"imgFit"}
                       />

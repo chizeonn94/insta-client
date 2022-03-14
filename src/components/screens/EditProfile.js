@@ -19,6 +19,10 @@ const useStyles = makeStyles({
   },
   inputDiv: { width: "70%", textAlign: "left" },
   inputField: { width: "100%" },
+  subTxt: {
+    fontSize: "0.85em",
+    color: "#999",
+  },
 });
 const EditProfile = () => {
   const state = useSelector((state) => state);
@@ -173,7 +177,7 @@ const EditProfile = () => {
       </div>
       <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}></p>
-        <div className={classes.inputDiv}>
+        <div className={`${classes.inputDiv} ${classes.subTxt}`}>
           Help people discover your account by using the name that you're known
           by: either your full name, nickname or business name. You can only
           change your name twice within 14 days.
@@ -195,7 +199,7 @@ const EditProfile = () => {
       </div>
       <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}></p>
-        <div className={classes.inputDiv}>
+        <div className={`${classes.inputDiv} ${classes.subTxt}`}>
           In most cases, you'll be able to change your username back to
           chizeon_lea for another 14 days. Learn more
         </div>
@@ -244,7 +248,7 @@ const EditProfile = () => {
       </div>
       <div className={"flex alignCenter bottom12"}>
         <p className={classes.fieldName}></p>
-        <div className={classes.inputDiv}>
+        <div className={`${classes.inputDiv} ${classes.subTxt}`}>
           Personal information Provide your personal information, even if the
           account is used for a business, pet or something else. This won't be
           part of your public profile.
@@ -265,8 +269,9 @@ const EditProfile = () => {
         </div>
       </div> */}
 
-      <div className="file-field input-field">
-        <p>
+      <div className={"flex alignCenter bottom12"}>
+        <p className={classes.fieldName}></p>
+        <p className={classes.inputDiv}>
           <Button
             variant={"contained"}
             className="btn waves-effect waves-light"

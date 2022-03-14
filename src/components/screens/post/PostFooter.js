@@ -153,7 +153,7 @@ const PostFooter = ({
             </div>
           </>
         )}
-        <p style={{ color: "#999", fontSize: "0.9em", paddingTop: 10 }}>
+        <p style={{ color: "#999", fontSize: "0.9em", padding: "10px 0" }}>
           {moment(date).fromNow()}
         </p>
         <div>

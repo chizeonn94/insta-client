@@ -162,9 +162,17 @@ const Profile = ({ signInStart }) => {
               key={`photo-${i}`}
               onClick={() => navigate(`/post/${post._id}`)}
             >
-              <img key={post._id} src={post.photo} />
+              <img key={post._id} src={post.photo} className={"width100"} />
             </p>
           ))}
+        {data?.length < 1 && (
+          <div style={{ padding: "2rem", width: "100%", textAlign: "center" }}>
+            <h3 style={{ fontSize: "1.4rem", paddingBottom: "2em" }}>
+              No Posts
+            </h3>
+            <h4 style={{ fontSize: "1.2rem" }}>This user has no posts yet</h4>
+          </div>
+        )}
       </div>
     </div>
   );

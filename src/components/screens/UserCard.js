@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { Navigate, useNavigate } from "react-router";
 import FollowButton from "../FollowButton";
 const ProfileWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -41,7 +43,7 @@ const UserCard = ({
 
         <div className="pointer">
           <div
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", marginRight: 10 }}
             onClick={() => navigate(`/profile/${userName}`)}
           >
             <p className="bold">{userName}</p>

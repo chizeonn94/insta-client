@@ -221,16 +221,12 @@ export default function PostDialog({ openPostDialog, setOpenPostDialog }) {
               <div className={"flex alignCenter"} style={{ paddingBottom: 12 }}>
                 <p
                   className={"radius50 overhidden"}
-                  style={{ width: 30, marginRight: 12 }}
+                  style={{ width: 30, height: 30, marginRight: 12 }}
                 >
                   <img
                     src={userInfo.photo || DEFAULT_IMG}
                     alt={""}
-                    style={{
-                      height: 30,
-                      borderRadius: "50%",
-                    }}
-                    className={"width100"}
+                    className={"imgFit"}
                   />
                 </p>
 
