@@ -28,7 +28,6 @@ export const signInStart = (email, password) => async (dispatch) => {
       //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       //body: JSON.stringify({ email, password }), // body data type must match "Content-Type" header
     }).then((res) => res.json());
-
     if (response.success) {
       dispatch(signInSuccess(response));
     }

@@ -23,11 +23,34 @@ const Home = () => {
 
   useEffect(() => {
     if (token) {
-      GetfetchWithAuth(`/allpost`).then((data) => {
-        // console.log(data);
-        data.posts.sort((a, b) => b.createdAt - a.createdAt);
-        setData(data?.posts);
-      });
+      // FetchWithAuth(`/allpost`, "GET").then((data) => {
+      //   console.log(data);
+      //   data.posts.sort((a, b) => b.createdAt - a.createdAt);
+      //   setData(data?.posts);
+      // });
+
+      fetch(API_URL + `/allpost`, {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        //mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          authorization: sessionStorage.getItem("token"),
+        },
+        redirect: "follow", // manual, *follow, error
+        //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        // body: JSON.stringify(data), // body data type must match "Content-Type" header
+      })
+        .then((res) => {
+          // console.log(res);
+          return res.json();
+        })
+        .then((res) => {
+          //console.log(",,,,jj", res);
+          res.posts.sort((a, b) => b.createdAt - a.createdAt);
+          setData(res?.posts);
+        });
     }
   }, [token]);
 

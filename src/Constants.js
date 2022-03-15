@@ -3,6 +3,7 @@ const axios = require("axios");
 export const API_URL =
   "http://ec2-3-34-181-253.ap-northeast-2.compute.amazonaws.com:5000";
 // export const API_URL = "http://localhost:5000";
+// export const API_URL = "http://localhost:5000";
 export const LOCAL_API = "http://15.165.159.144:5000";
 
 export const CLOUD_API =

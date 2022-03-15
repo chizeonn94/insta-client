@@ -31,7 +31,6 @@ const PostDetail = ({ postInfo }) => {
     FetchWithAuth(`/delete-post/${postId}`, "DELETE").then((res) => {
       if (res.success) {
         alert("Successfully deleted!");
-        
       } else {
         alert("Failed to delete. Please try again.");
       }

@@ -129,7 +129,7 @@ const NotificationBox = ({ readNotification }) => {
                     </p>
                     <div>
                       <p style={{ fontSize: "0.9em" }}>
-                        <b>{noti.sender.userName}</b>
+                        <b>{noti.sender?.userName}</b>
                       </p>
                       <p style={{ fontSize: "0.9em" }}>
                         {renderType(noti.notificationType)}

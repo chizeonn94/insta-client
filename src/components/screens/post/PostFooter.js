@@ -62,7 +62,7 @@ const PostFooter = ({
     });
   };
 
-  const renderComments = (datas) =>
+  const renderComments = (datas) => {
     datas.splice(0, 1).map((data, i) => {
       return (
         <div key={data._id} className={"flex alignCenter spacebt"}>
@@ -75,7 +75,7 @@ const PostFooter = ({
                 })
               }
             >
-              <b>{data.postedBy.userName}</b>&nbsp;
+              <b>{data?.postedBy?.userName}</b>&nbsp;
               <span
                 className={"lightGray"}
                 style={{ fontSize: "0.9em", paddingTop: 4 }}
@@ -87,7 +87,7 @@ const PostFooter = ({
         </div>
       );
     });
-
+  };
   return (
     <div>
       <Container>
@@ -163,7 +163,7 @@ const PostFooter = ({
               &nbsp;
               {content}
             </p>
-          )}{" "}
+          )}
           <div>{comments && renderComments(comments)}</div>
           {comments?.length > 0 && (
             <p

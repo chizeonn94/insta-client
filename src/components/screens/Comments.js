@@ -68,7 +68,7 @@ const Comments = () => {
               }
             >
               <img
-                src={data.postedBy?.photo}
+                src={data.postedBy?.photo || DEFAULT_IMG}
                 alt={"follower profile pic"}
                 className={"imgFit"}
               />
